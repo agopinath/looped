@@ -3,6 +3,10 @@
     <string name="app_name">SchoolLoop\'d</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+
     <color name="sl_pale">#F2F5EB</color>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_log_in">SchoolLoop\'d</string>
 
 </resources>
