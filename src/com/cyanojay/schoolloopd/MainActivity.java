@@ -32,11 +32,11 @@ public class MainActivity extends Activity {
     	
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
     	String pass = ((EditText) findViewById(R.id.sl_password)).getText().toString();
-    	String login_url = ((EditText) findViewById(R.id.sl_url)).getText().toString();
+    	String loginUrl = ((EditText) findViewById(R.id.sl_url)).getText().toString();
     	
     	loginIntent.putExtra(USERNAME, username);
     	loginIntent.putExtra(PASS, pass);
-    	loginIntent.putExtra(LOGIN_URL, login_url);
+    	loginIntent.putExtra(LOGIN_URL, loginUrl);
     	
     	startActivity(loginIntent);
     }
