@@ -28,16 +28,19 @@ public class MainActivity extends Activity {
     }
     
     public void logIn(View view) {
-    	Intent loginIntent = new Intent(this, LogInActivity.class);
+    	//Intent loginIntent = new Intent(this, LogInActivity.class);
     	
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
     	String pass = ((EditText) findViewById(R.id.sl_password)).getText().toString();
     	String loginUrl = ((EditText) findViewById(R.id.sl_url)).getText().toString();
     	
-    	loginIntent.putExtra(USERNAME, username);
+    	/*loginIntent.putExtra(USERNAME, username);
     	loginIntent.putExtra(PASS, pass);
     	loginIntent.putExtra(LOGIN_URL, loginUrl);
     	
-    	startActivity(loginIntent);
+    	startActivity(loginIntent);*/
+    	
+    	LogInTask logInTask = new LogInTask(username, pass, loginUrl, this); 
+    	logInTask.execute();
     }
 }
