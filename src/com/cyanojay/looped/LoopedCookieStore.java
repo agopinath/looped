@@ -16,11 +16,11 @@ public class LoopedCookieStore {
 		cookies.put(id, cookie);
 	}
 	
-	public static void removeCookie(String id) {
-		cookies.remove(id);
+	public static CookieStore removeCookie(String id) {
+		return cookies.remove(id);
 	}
 	
-	public static void getCookie(String id) {
-		cookies.get(id);
+	public static CookieStore getCookie(String id) {
+		return cookies.get(id);
 	}
 }

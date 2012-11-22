@@ -53,7 +53,9 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     protected Boolean doInBackground(String... args) {
     	CookieStore cookies = getCookies(loginUrl + "/portal/login");
     	
-		return logIn(cookies); 
+    	LoopedCookieStore.addCookie("login", cookies);
+    	
+		return logIn(); 
     }
     
     private CookieStore getCookies(String url) {
@@ -69,7 +71,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	return client.getCookieStore();
     }
     
-    private boolean logIn(CookieStore cookies) {
+    private boolean logIn() {
     	HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = new BasicHttpContext();
     	HttpPost httpPost = new HttpPost(loginUrl + "/portal/login?etarget=login_form");
@@ -81,7 +83,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         nameValuePairs.add(new BasicNameValuePair("event.login.x", "0"));
         nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
         
-        context.setAttribute(ClientContext.COOKIE_STORE, cookies);
+        context.setAttribute(ClientContext.COOKIE_STORE, LoopedCookieStore.getCookie("login"));
         
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -97,16 +99,16 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         }
         
         // check if this page, which is only accessible by logged-in sessions, returns a valid response
-        return checkLogInStatus(logInCheck, cookies);
+        return checkLogInStatus(logInCheck);
     }
     
-    private boolean checkLogInStatus(String testURL, CookieStore cookies) {
+    private boolean checkLogInStatus(String testURL) {
     	HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = new BasicHttpContext();
     	HttpGet httpGet = new HttpGet(testURL);
     	HttpResponse response = null;
     	
-    	context.setAttribute(ClientContext.COOKIE_STORE, cookies);
+    	context.setAttribute(ClientContext.COOKIE_STORE, LoopedCookieStore.getCookie("login"));
     	
     	client.getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.FALSE);
     	
