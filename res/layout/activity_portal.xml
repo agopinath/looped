@@ -26,13 +26,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
 
-                    <Button
-                        android:id="@+id/button1"
-                        android:layout_width="102dp"
-                        android:layout_height="wrap_content"
-                        android:onClick="setNewTitle"
-                        android:text="Button" />
-
                     <TabWidget
                         android:id="@android:id/tabs"
                         android:layout_width="match_parent"
