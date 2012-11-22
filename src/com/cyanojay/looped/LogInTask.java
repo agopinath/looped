@@ -89,8 +89,6 @@ public class LogInTask extends AsyncTask<String, String, Void> {
             if (response.getEntity() != null) {
                Utils.printHTTPResponse(response.getEntity().getContent());
             }
-            
-            
         } catch (Exception e) {
         	e.printStackTrace();
         	return false;
