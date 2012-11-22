@@ -6,8 +6,8 @@ import java.util.Map;
 import org.apache.http.client.CookieStore;
 
 public class LoopedCookieStore {
-	private static final Map<String, CookieStore> cookies = new HashMap<String, CookieStore>();
-
+	private static final Map<String, CookieStore> cookies = new HashMap<String, CookieStore>();	
+	
 	public static Map<String, CookieStore> getCookies() {
 		return cookies;
 	}

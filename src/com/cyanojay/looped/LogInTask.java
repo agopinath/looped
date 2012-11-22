@@ -31,15 +31,13 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 	private String loginUrl;
 	private Activity parent;
 	
-	private final String logInCheck;
-	
 	public LogInTask(String username, String password, String loginUrl, Activity parent) {
 		this.username = username;
 		this.pass = password;
 		this.loginUrl = "https://" + loginUrl + ".schoolloop.com";
 		this.parent = parent;
 		
-		this.logInCheck = this.loginUrl + "/student/prior_schedule";
+		API.get().setLoginTestUrl(this.loginUrl + "/student/prior_schedule");
 	}
 	
     @Override
@@ -52,12 +50,12 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     protected Boolean doInBackground(String... args) {
     	CookieStore cookies = getLogInCookies(loginUrl + "/portal/login");
     	
-    	LoopedCookieStore.addCookie("login", cookies);
+    	API.get().setAuthCookies(cookies);
     	
-		logIn();
+		API.get().logIn(username, pass, loginUrl);
 		
 		// check if this page, which is only accessible by logged-in sessions, returns a valid response
-        return isLogInSuccess(logInCheck);
+        return API.get().isLoggedIn();
     }
     
     private CookieStore getLogInCookies(String url) {
@@ -74,42 +72,11 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     }
     
     private void logIn() {
-    	HttpClient client = new DefaultHttpClient();
-    	BasicHttpContext context = Utils.getCookifiedHttpContext(LoopedCookieStore.getCookie("login"));
-    	HttpPost httpPost = new HttpPost(loginUrl + "/portal/login?etarget=login_form");
     	
-    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-        nameValuePairs.add(new BasicNameValuePair("login_name", username));
-        nameValuePairs.add(new BasicNameValuePair("password", pass));
-        nameValuePairs.add(new BasicNameValuePair("event.login.x", "0"));
-        nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
-        
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            client.execute(httpPost, context);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
     }
     
     private boolean isLogInSuccess(String testURL) {
-    	HttpClient client = new DefaultHttpClient();
-    	BasicHttpContext context = Utils.getCookifiedHttpContext(LoopedCookieStore.getCookie("login"));
-    	HttpGet httpGet = new HttpGet(testURL);
-    	HttpResponse response = null;
-    	
-    	client.getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.FALSE);
-    	
-        try {
-            response = client.execute(httpGet, context);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	return false;
-        }
-        
-        BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-        System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
-        return (responseStatus.getStatusCode() == HttpStatus.SC_OK) ? true : false;
+    	return false;
     }
     
     @Override
