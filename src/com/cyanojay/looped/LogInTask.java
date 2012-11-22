@@ -32,11 +32,15 @@ public class LogInTask extends AsyncTask<String, String, Void> {
 	private String loginUrl;
 	private Activity parent;
 	
+	private final String logInCheck;
+	
 	public LogInTask(String username, String password, String loginUrl, Activity parent) {
 		this.username = username;
 		this.pass = password;
 		this.loginUrl = "https://" + loginUrl + ".schoolloop.com";
 		this.parent = parent;
+		
+		logInCheck = loginUrl + "/student/prior_schedule";
 	}
 	
     @Override
@@ -97,7 +101,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
         }
         
         // check if this page, which is only accessible by logged-in sessions, returns a valid response
-        return checkLogInStatus(loginUrl + "/student/prior_schedule", cookies);
+        return checkLogInStatus(logInCheck, cookies);
     }
     
     private boolean checkLogInStatus(String testURL, CookieStore cookies) {
