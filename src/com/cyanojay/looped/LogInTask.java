@@ -1,13 +1,10 @@
 package com.cyanojay.looped;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
@@ -17,8 +14,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -43,7 +40,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(parent, "SchoolLoop'd", "Logging in...");
+        progressDialog = ProgressDialog.show(parent, "Looped", "Logging in...");
     }
 
     @Override
@@ -74,6 +71,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
     	HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = new BasicHttpContext();
     	HttpPost httpPost = new HttpPost(loginUrl + "?etarget=login_form");
+    	HttpResponse response = null;
     	
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
         nameValuePairs.add(new BasicNameValuePair("login_name", username));
@@ -82,22 +80,24 @@ public class LogInTask extends AsyncTask<String, String, Void> {
         nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
         
         context.setAttribute(ClientContext.COOKIE_STORE, cookies);
+        
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             
-            HttpResponse response = client.execute(httpPost, context);
-            //String responseAsText = EntityUtils.toString(response.getEntity());
-            //Log.v("", "Response from server: " + responseAsText);
+            response = client.execute(httpPost, context);
             
             if (response.getEntity() != null) {
-                Utils.printHTTPResponse(response.getEntity().getContent());
+               Utils.printHTTPResponse(response.getEntity().getContent());
             }
+            
+            
         } catch (Exception e) {
         	e.printStackTrace();
         	return false;
         }
         
-        return true;
+        BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
+        return (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY) ? true : false;
     }
     
     @Override
