@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cyanojay.looped.Portal"
+            android:name="com.cyanojay.looped.PortalActivity"
             android:label="@string/title_activity_portal" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

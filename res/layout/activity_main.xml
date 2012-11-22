@@ -1,37 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/sl_pale" >
+    android:layout_height="match_parent" >
 
     <EditText
         android:id="@+id/sl_uname"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="20dp"
-        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/sl_url"
+        android:layout_marginTop="24dp"
+        android:ems="12"
         android:hint="Username" />
 
     <EditText
         android:id="@+id/sl_password"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/sl_uname"
+        android:layout_alignRight="@+id/sl_uname"
         android:layout_below="@+id/sl_uname"
-        android:ems="10"
+        android:ems="12"
         android:hint="Password"
         android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/sl_url"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/sl_password"
-        android:layout_marginTop="20dp"
-        android:ems="10"
+        android:layout_marginTop="32dp"
+        android:ems="16"
         android:hint="SchoolLoop URL" >
 
         <requestFocus />
@@ -39,11 +44,11 @@
 
     <Button
         android:id="@+id/sl_login_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/sl_url"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="75dp"
         android:onClick="logIn"
         android:text="Log In" />
 

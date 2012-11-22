@@ -11,6 +11,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,6 +20,7 @@ import org.apache.http.protocol.BasicHttpContext;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,7 +35,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
 	public LogInTask(String username, String password, String loginUrl, Activity parent) {
 		this.username = username;
 		this.pass = password;
-		this.loginUrl = "https://" + loginUrl + ".schoolloop.com/portal/login";
+		this.loginUrl = "https://" + loginUrl + ".schoolloop.com";
 		this.parent = parent;
 	}
 	
@@ -45,7 +47,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
 
     @Override
     protected Void doInBackground(String... args) {
-    	CookieStore cookies = getCookies(loginUrl);
+    	CookieStore cookies = getCookies(loginUrl + "/portal/login");
     	boolean success = logIn(cookies);
     	
     	if(success) Log.v("", "\n\nLOG IN SUCCESS\n\n");
@@ -59,18 +61,18 @@ public class LogInTask extends AsyncTask<String, String, Void> {
     	HttpGet httpGet = new HttpGet(url);
     	
     	try {
-			client.execute(httpGet);
+    		client.execute(httpGet);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	
+
     	return client.getCookieStore();
     }
     
     private boolean logIn(CookieStore cookies) {
     	HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = new BasicHttpContext();
-    	HttpPost httpPost = new HttpPost(loginUrl + "?etarget=login_form");
+    	HttpPost httpPost = new HttpPost(loginUrl + "/portal/login?etarget=login_form");
     	HttpResponse response = null;
     	
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
@@ -94,8 +96,30 @@ public class LogInTask extends AsyncTask<String, String, Void> {
         	return false;
         }
         
+        // check if this page, which is only accessible by logged-in sessions, returns a valid response
+        return checkLogInStatus(loginUrl + "/student/prior_schedule", cookies);
+    }
+    
+    private boolean checkLogInStatus(String testURL, CookieStore cookies) {
+    	HttpClient client = new DefaultHttpClient();
+    	BasicHttpContext context = new BasicHttpContext();
+    	HttpGet httpGet = new HttpGet(testURL);
+    	HttpResponse response = null;
+    	
+    	context.setAttribute(ClientContext.COOKIE_STORE, cookies);
+    	
+    	client.getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.FALSE);
+    	
+        try {
+            response = client.execute(httpGet, context);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	return false;
+        }
+        
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-        return (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY) ? true : false;
+        System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
+        return (responseStatus.getStatusCode() == HttpStatus.SC_OK) ? true : false;
     }
     
     @Override
@@ -107,5 +131,8 @@ public class LogInTask extends AsyncTask<String, String, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
         progressDialog.dismiss();
+        
+        Intent showPortalIntent = new Intent(parent, PortalActivity.class);
+        parent.startActivity(showPortalIntent);
     }
 }

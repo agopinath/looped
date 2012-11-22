@@ -1,5 +1,13 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Light" />
-
+    
+    <style name="LoopedTheme" parent="android:Theme.Light" >
+        <item name="android:background">#B0B0B0</item>
+    </style>
+    
+    <style name="LoopedActivityTheme" parent="android:Theme.Light" >
+        <item name="android:background">#B0B0B0</item>
+        <item name="android:minHeight">0in</item>
+    </style>
 </resources>
