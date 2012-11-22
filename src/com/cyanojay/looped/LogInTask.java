@@ -37,13 +37,14 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     protected Boolean doInBackground(String... args) {
     	CookieStore cookies = getLogInCookies(loginUrl + "/portal/login");
     	
+    	API.get().setCredentials(username, pass, loginUrl);
     	API.get().setAuthCookies(cookies);
 		
     	try {
-    		API.get().logIn(username, pass, loginUrl);
+    		API.get().logIn();
 		
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
-    		return API.get().isLoggedIn();
+    		return API.get().isLoggedIn(false);
     	} catch(Exception e) {}
     	
 		return false;

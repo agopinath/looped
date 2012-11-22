@@ -18,12 +18,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 
 public final class API {
 	private static API instance;
 	private CookieStore authCookies;
 	private String loginTestUrl;
+	private boolean loginStatus;
+	
+	private String username;
+	private String password;
+	private String portalUrl;
 	
 	// instantiation is prevented
 	private API() {}
@@ -40,10 +47,16 @@ public final class API {
 		this.loginTestUrl = testUrl;
 	}
 	
-	public void logIn(String username, String password, String loginUrl) throws ClientProtocolException, IOException {
+	public void setCredentials(String username, String password, String portalUrl) {
+		this.username = username;
+		this.password = password;
+		this.portalUrl = portalUrl;
+	}
+	
+	public boolean logIn() throws ClientProtocolException, IOException {
 		HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
-    	HttpPost httpPost = new HttpPost(loginUrl + "/portal/login?etarget=login_form");
+    	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
     	
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
         nameValuePairs.add(new BasicNameValuePair("login_name", username));
@@ -53,9 +66,13 @@ public final class API {
         
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);
+        
+        return (loginStatus = isLoggedIn(true));
 	}
 
-	public boolean isLoggedIn() throws ClientProtocolException, IOException {
+	public boolean isLoggedIn(boolean deep) throws ClientProtocolException, IOException {
+		if(!deep) return loginStatus;
+		
 		HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(loginTestUrl);
@@ -67,7 +84,12 @@ public final class API {
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
         System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
-        return (responseStatus.getStatusCode() == HttpStatus.SC_OK) ? true : false;
+        return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_OK)) ? true : false;
 	}
-
+	
+	public String getPortalTitle() throws IOException {
+		Document doc = Jsoup.connect(portalUrl).get();
+		
+		return doc.title();
+	}
 }
