@@ -1,8 +1,10 @@
 package com.cyanojay.looped;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -18,6 +20,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -73,7 +77,7 @@ public final class API {
         return (loginStatus = isLoggedIn(true));
 	}
 
-	public boolean isLoggedIn(boolean deep) throws ClientProtocolException, IOException {
+	public boolean isLoggedIn(boolean deep) {
 		if(!deep) return loginStatus;
 		
 		HttpClient client = new DefaultHttpClient();
@@ -82,8 +86,12 @@ public final class API {
     	HttpResponse response = null;
     	
     	client.getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.FALSE);
-
-        response = client.execute(httpGet, context);
+    	
+    	try {
+    		response = client.execute(httpGet, context);
+    	} catch(Exception e) { 
+    		return false; 
+    	}
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
         System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
@@ -91,7 +99,12 @@ public final class API {
 	}
 	
 	public void refreshPortal() throws IOException {
-		portal = Jsoup.connect(portalUrl).get();
+		HttpClient client = new DefaultHttpClient();
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+    	HttpGet httpGet = new HttpGet(portalUrl);
+    	
+		HttpResponse response = client.execute(httpGet, context);
+		portal = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
 	}
 	
 	public String getPortalTitle() throws IOException {
