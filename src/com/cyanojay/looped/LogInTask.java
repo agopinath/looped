@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class LogInTask extends AsyncTask<String, String, Void> {
+public class LogInTask extends AsyncTask<String, String, Boolean> {
 
 	ProgressDialog progressDialog;
 	private String username;
@@ -40,7 +40,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
 		this.loginUrl = "https://" + loginUrl + ".schoolloop.com";
 		this.parent = parent;
 		
-		logInCheck = loginUrl + "/student/prior_schedule";
+		this.logInCheck = this.loginUrl + "/student/prior_schedule";
 	}
 	
     @Override
@@ -50,14 +50,10 @@ public class LogInTask extends AsyncTask<String, String, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... args) {
+    protected Boolean doInBackground(String... args) {
     	CookieStore cookies = getCookies(loginUrl + "/portal/login");
-    	boolean success = logIn(cookies);
     	
-    	if(success) Log.v("", "\n\nLOG IN SUCCESS\n\n");
-    	else Log.v("", "\n\nLOG IN FAIL\n\n");
-    	
-		return null; 
+		return logIn(cookies); 
     }
     
     private CookieStore getCookies(String url) {
@@ -93,7 +89,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
             response = client.execute(httpPost, context);
             
             if (response.getEntity() != null) {
-               Utils.printHTTPResponse(response.getEntity().getContent());
+               //Utils.printHTTPResponse(response.getEntity().getContent());
             }
         } catch (Exception e) {
         	e.printStackTrace();
@@ -132,11 +128,19 @@ public class LogInTask extends AsyncTask<String, String, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void result) {
-        super.onPostExecute(result);
+    protected void onPostExecute(Boolean loginSuccess) {
+        super.onPostExecute(loginSuccess);
+        
         progressDialog.dismiss();
         
-        Intent showPortalIntent = new Intent(parent, PortalActivity.class);
-        parent.startActivity(showPortalIntent);
+        if(loginSuccess) {
+        	Log.v("", "\n\nLOG IN SUCCESS\n\n");
+        	
+        	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
+            parent.startActivity(showPortalIntent);
+        } else {
+        	Log.v("", "\n\nLOG IN FAIL\n\n");
+        	// TODO notify user of login fail
+        }
     }
 }
