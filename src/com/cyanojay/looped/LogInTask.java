@@ -1,5 +1,9 @@
 package com.cyanojay.looped;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,8 +86,23 @@ public class LogInTask extends AsyncTask<String, String, Void> {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             
             HttpResponse response = client.execute(httpPost, context);
-            String responseAsText = EntityUtils.toString(response.getEntity());
-            Log.v("", "Response from server: " + responseAsText);
+            //String responseAsText = EntityUtils.toString(response.getEntity());
+            //Log.v("", "Response from server: " + responseAsText);
+            
+            if (response.getEntity() != null) {
+                InputStream instream = response.getEntity().getContent();
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+                    String result = "";
+                    
+                    while((result = reader.readLine()) != null)
+                    	System.out.println(result);
+                } catch (IOException ex) {
+                    throw ex;
+                } finally {
+                    instream.close();
+                }
+            }
         } catch (Exception e) {
         	e.printStackTrace();
         	return false;
