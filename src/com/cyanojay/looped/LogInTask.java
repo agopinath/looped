@@ -12,7 +12,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.message.BasicStatusLine;
@@ -51,14 +50,17 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... args) {
-    	CookieStore cookies = getCookies(loginUrl + "/portal/login");
+    	CookieStore cookies = getLogInCookies(loginUrl + "/portal/login");
     	
     	LoopedCookieStore.addCookie("login", cookies);
     	
-		return logIn(); 
+		logIn();
+		
+		// check if this page, which is only accessible by logged-in sessions, returns a valid response
+        return isLogInSuccess(logInCheck);
     }
     
-    private CookieStore getCookies(String url) {
+    private CookieStore getLogInCookies(String url) {
     	DefaultHttpClient client = new DefaultHttpClient();
     	HttpGet httpGet = new HttpGet(url);
     	
@@ -71,11 +73,10 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	return client.getCookieStore();
     }
     
-    private boolean logIn() {
+    private void logIn() {
     	HttpClient client = new DefaultHttpClient();
-    	BasicHttpContext context = new BasicHttpContext();
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(LoopedCookieStore.getCookie("login"));
     	HttpPost httpPost = new HttpPost(loginUrl + "/portal/login?etarget=login_form");
-    	HttpResponse response = null;
     	
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
         nameValuePairs.add(new BasicNameValuePair("login_name", username));
@@ -83,32 +84,19 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         nameValuePairs.add(new BasicNameValuePair("event.login.x", "0"));
         nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
         
-        context.setAttribute(ClientContext.COOKIE_STORE, LoopedCookieStore.getCookie("login"));
-        
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            
-            response = client.execute(httpPost, context);
-            
-            if (response.getEntity() != null) {
-               //Utils.printHTTPResponse(response.getEntity().getContent());
-            }
+            client.execute(httpPost, context);
         } catch (Exception e) {
         	e.printStackTrace();
-        	return false;
         }
-        
-        // check if this page, which is only accessible by logged-in sessions, returns a valid response
-        return checkLogInStatus(logInCheck);
     }
     
-    private boolean checkLogInStatus(String testURL) {
+    private boolean isLogInSuccess(String testURL) {
     	HttpClient client = new DefaultHttpClient();
-    	BasicHttpContext context = new BasicHttpContext();
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(LoopedCookieStore.getCookie("login"));
     	HttpGet httpGet = new HttpGet(testURL);
     	HttpResponse response = null;
-    	
-    	context.setAttribute(ClientContext.COOKIE_STORE, LoopedCookieStore.getCookie("login"));
     	
     	client.getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.FALSE);
     	
