@@ -24,13 +24,16 @@ import org.jsoup.nodes.Document;
 
 public final class API {
 	private static API instance;
+	
 	private CookieStore authCookies;
-	private String loginTestUrl;
-	private boolean loginStatus;
+	private Document portal;
 	
 	private String username;
 	private String password;
 	private String portalUrl;
+	private String loginTestUrl;
+	
+	private boolean loginStatus;
 	
 	// instantiation is prevented
 	private API() {}
@@ -87,9 +90,11 @@ public final class API {
         return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_OK)) ? true : false;
 	}
 	
+	public void refreshPortal() throws IOException {
+		portal = Jsoup.connect(portalUrl).get();
+	}
+	
 	public String getPortalTitle() throws IOException {
-		Document doc = Jsoup.connect(portalUrl).get();
-		
-		return doc.title();
+		return portal.title();
 	}
 }
