@@ -38,10 +38,15 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	CookieStore cookies = getLogInCookies(loginUrl + "/portal/login");
     	
     	API.get().setAuthCookies(cookies);
-		API.get().logIn(username, pass, loginUrl);
 		
-		// check if this page, which is only accessible by logged-in sessions, returns a valid response
-        return API.get().isLoggedIn();
+    	try {
+    		API.get().logIn(username, pass, loginUrl);
+		
+    		// check if this page, which is only accessible by logged-in sessions, returns a valid response
+    		return API.get().isLoggedIn();
+    	} catch(Exception e) {}
+    	
+		return false;
     }
     
     private CookieStore getLogInCookies(String url) {
@@ -75,6 +80,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
             parent.startActivity(showPortalIntent);
         } else {
         	Log.v("", "\n\nLOG IN FAIL\n\n");
+        	
         	// TODO notify user of login fail
         }
     }

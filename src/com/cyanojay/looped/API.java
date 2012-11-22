@@ -1,11 +1,13 @@
 package com.cyanojay.looped;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -38,7 +40,7 @@ public final class API {
 		this.loginTestUrl = testUrl;
 	}
 	
-	public void logIn(String username, String password, String loginUrl) {
+	public void logIn(String username, String password, String loginUrl) throws ClientProtocolException, IOException {
 		HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpPost httpPost = new HttpPost(loginUrl + "/portal/login?etarget=login_form");
@@ -49,28 +51,19 @@ public final class API {
         nameValuePairs.add(new BasicNameValuePair("event.login.x", "0"));
         nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
         
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            client.execute(httpPost, context);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
+        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        client.execute(httpPost, context);
 	}
 
-	public boolean isLoggedIn() {
+	public boolean isLoggedIn() throws ClientProtocolException, IOException {
 		HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(loginTestUrl);
     	HttpResponse response = null;
     	
     	client.getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.FALSE);
-    	
-        try {
-            response = client.execute(httpGet, context);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	return false;
-        }
+
+        response = client.execute(httpGet, context);
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
         System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
