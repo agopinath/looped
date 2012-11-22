@@ -4,9 +4,8 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Welcome to Looped</string>
     <string name="title_activity_portal">Portal</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_grades">GradesActivity</string>
-    <string name="title_activity_assignments">AssignmentsActivity</string>
-    <string name="title_activity_news">NewsActivity</string>
+    <string name="title_activity_grades">Grades</string>
+    <string name="title_activity_assignments">Assignments</string>
+    <string name="title_activity_news">News</string>
 
 </resources>
