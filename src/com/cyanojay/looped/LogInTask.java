@@ -4,13 +4,14 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.cyanojay.looped.portal.PortalActivity;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.cyanojay.looped.portal.PortalActivity;
 
 public class LogInTask extends AsyncTask<String, String, Boolean> {
 
@@ -85,7 +86,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         } else {
         	Log.v("", "\n\nLOG IN FAIL\n\n");
         	
-        	// TODO notify user of login fail
+        	Toast.makeText(parent, "Incorrect username/password/login URL.", Toast.LENGTH_SHORT).show();
         }
     }
 }
