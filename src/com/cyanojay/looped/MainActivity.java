@@ -1,10 +1,12 @@
 package com.cyanojay.looped;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
@@ -22,6 +24,9 @@ public class MainActivity extends Activity {
     }
     
     public void logIn(View view) {
+    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	imm.hideSoftInputFromWindow(findViewById(R.id.sl_prefix).getWindowToken(), 0);
+    	
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
     	String pass = ((EditText) findViewById(R.id.sl_password)).getText().toString();
     	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
