@@ -4,6 +4,8 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.cyanojay.looped.portal.PortalActivity;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
