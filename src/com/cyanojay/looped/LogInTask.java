@@ -90,18 +90,7 @@ public class LogInTask extends AsyncTask<String, String, Void> {
             //Log.v("", "Response from server: " + responseAsText);
             
             if (response.getEntity() != null) {
-                InputStream instream = response.getEntity().getContent();
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-                    String result = "";
-                    
-                    while((result = reader.readLine()) != null)
-                    	System.out.println(result);
-                } catch (IOException ex) {
-                    throw ex;
-                } finally {
-                    instream.close();
-                }
+                Utils.printHTTPResponse(response.getEntity().getContent());
             }
         } catch (Exception e) {
         	e.printStackTrace();
