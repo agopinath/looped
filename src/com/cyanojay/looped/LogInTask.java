@@ -42,7 +42,8 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 		
     	try {
     		API.get().logIn();
-		
+    		API.get().refreshPortal();
+    		
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
     		return API.get().isLoggedIn(false);
     	} catch(Exception e) {}
@@ -76,7 +77,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         
         if(loginSuccess) {
         	Log.v("", "\n\nLOG IN SUCCESS\n\n");
-        	
+
         	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
             parent.startActivity(showPortalIntent);
         } else {

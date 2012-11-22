@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -20,8 +19,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
-import org.jsoup.Connection.Method;
-import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -99,6 +96,8 @@ public final class API {
 	}
 	
 	public void refreshPortal() throws IOException {
+		if(!loginStatus) return;
+		
 		HttpClient client = new DefaultHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(portalUrl);
@@ -107,7 +106,7 @@ public final class API {
 		portal = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
 	}
 	
-	public String getPortalTitle() throws IOException {
+	public String getPortalTitle() {
 		return portal.title();
 	}
 }
