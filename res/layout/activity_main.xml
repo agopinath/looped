@@ -47,9 +47,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sl_url"
-        android:layout_marginTop="75dp"
+        android:layout_centerVertical="true"
         android:onClick="logIn"
         android:text="Log In" />
+
+    <Button
+        android:id="@+id/load_prefs_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sl_login_btn"
+        android:layout_alignParentLeft="true"
+        android:onClick="loadPreferences"
+        android:text="Load Preferences" />
+
+    <Button
+        android:id="@+id/save_prefs_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/load_prefs_btn"
+        android:layout_alignParentLeft="true"
+        android:onClick="savePreferences"
+        android:text="Save Preferences" />
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.cyanojay.looped;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -27,5 +28,24 @@ public class MainActivity extends Activity {
     	
     	LogInTask logInTask = new LogInTask(username, pass, loginUrl, this); 
     	logInTask.execute();
+    }
+    
+    public void savePreferences(View view) {
+    	SharedPreferences settings = getSharedPreferences("Looped", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        
+        editor.putString("username", ((EditText) findViewById(R.id.sl_uname)).getText().toString());
+        editor.putString("pass", ((EditText) findViewById(R.id.sl_password)).getText().toString());
+        editor.putString("loginUrl", ((EditText) findViewById(R.id.sl_url)).getText().toString());
+        
+        editor.commit();
+    }
+    
+    public void loadPreferences(View view) {
+    	SharedPreferences settings = getSharedPreferences("Looped", 0);
+    	
+    	((EditText) findViewById(R.id.sl_uname)).setText(settings.getString("username", ""));
+    	((EditText) findViewById(R.id.sl_password)).setText(settings.getString("pass", ""));
+    	((EditText) findViewById(R.id.sl_url)).setText(settings.getString("loginUrl", ""));
     }
 }
