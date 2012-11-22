@@ -1,4 +1,4 @@
-package com.cyanojay.schoolloopd;
+package com.cyanojay.looped;
 
 import java.util.ArrayList;
 import java.util.List;
