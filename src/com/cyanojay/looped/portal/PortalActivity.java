@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
 public class PortalActivity extends TabActivity {
@@ -15,6 +16,8 @@ public class PortalActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portal);
+        
+        setTitle(API.get().getPortalTitle());
         
         TabHost tabHost = getTabHost();
         
