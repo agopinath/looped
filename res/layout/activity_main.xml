@@ -29,7 +29,7 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/sl_url"
+        android:id="@+id/sl_prefix"
         style="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

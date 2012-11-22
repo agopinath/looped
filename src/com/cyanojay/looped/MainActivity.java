@@ -24,9 +24,9 @@ public class MainActivity extends Activity {
     public void logIn(View view) {
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
     	String pass = ((EditText) findViewById(R.id.sl_password)).getText().toString();
-    	String loginUrl = ((EditText) findViewById(R.id.sl_url)).getText().toString();
+    	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
     	
-    	LogInTask logInTask = new LogInTask(username, pass, loginUrl, this); 
+    	LogInTask logInTask = new LogInTask(username, pass, loginPrefix, this); 
     	logInTask.execute();
     }
     
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         
         editor.putString("username", ((EditText) findViewById(R.id.sl_uname)).getText().toString());
         editor.putString("pass", ((EditText) findViewById(R.id.sl_password)).getText().toString());
-        editor.putString("loginUrl", ((EditText) findViewById(R.id.sl_url)).getText().toString());
+        editor.putString("loginPrefix", ((EditText) findViewById(R.id.sl_prefix)).getText().toString());
         
         editor.commit();
     }
@@ -46,6 +46,6 @@ public class MainActivity extends Activity {
     	
     	((EditText) findViewById(R.id.sl_uname)).setText(settings.getString("username", ""));
     	((EditText) findViewById(R.id.sl_password)).setText(settings.getString("pass", ""));
-    	((EditText) findViewById(R.id.sl_url)).setText(settings.getString("loginUrl", ""));
+    	((EditText) findViewById(R.id.sl_prefix)).setText(settings.getString("loginPrefix", ""));
     }
 }

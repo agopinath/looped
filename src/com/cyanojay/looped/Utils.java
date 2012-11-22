@@ -24,4 +24,8 @@ public class Utils {
 		
 		return cookiedContext;
 	}
+	
+	public static String convertPrefixToAddress(String urlPrefix) {
+		return "https://" + urlPrefix + ".schoolloop.com";
+	}
 }

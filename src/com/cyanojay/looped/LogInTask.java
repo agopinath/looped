@@ -18,10 +18,10 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 	private String loginUrl;
 	private Activity parent;
 	
-	public LogInTask(String username, String password, String loginUrl, Activity parent) {
+	public LogInTask(String username, String password, String loginPrefix, Activity parent) {
 		this.username = username;
 		this.pass = password;
-		this.loginUrl = "https://" + loginUrl + ".schoolloop.com";
+		this.loginUrl = Utils.convertPrefixToAddress(loginPrefix);
 		this.parent = parent;
 		
 		API.get().setLoginTestUrl(this.loginUrl + "/student/prior_schedule");
@@ -38,7 +38,6 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	CookieStore cookies = getLogInCookies(loginUrl + "/portal/login");
     	
     	API.get().setAuthCookies(cookies);
-    	
 		API.get().logIn(username, pass, loginUrl);
 		
 		// check if this page, which is only accessible by logged-in sessions, returns a valid response
