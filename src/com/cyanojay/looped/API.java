@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
+import com.cyanojay.looped.portal.GradeDetail;
 import com.cyanojay.looped.portal.NewsArticle;
 
 
@@ -215,5 +216,13 @@ public final class API {
 	    }
 	    
 	    return news;
+	}
+
+	public List<GradeDetail> getGradeDetails(Course course) {
+		List<GradeDetail> details = new ArrayList<GradeDetail>();
+		
+		// TODO: fill details accordingly, given a Course
+	    
+	    return details;
 	}
 }
