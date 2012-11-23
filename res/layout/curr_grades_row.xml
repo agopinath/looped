@@ -3,14 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
-
+
+
     <TextView
         android:id="@+id/grades_course_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Large Text"
+        android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
+
+
     <TextView
         android:id="@+id/grades_pct_grade"
         android:layout_width="wrap_content"
@@ -18,7 +21,7 @@
         android:layout_alignLeft="@+id/grades_course_name"
         android:layout_below="@+id/grades_course_name"
         android:alpha="0.6"
-        android:text="Small Text"
+        android:text="TextView"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -29,7 +32,8 @@
         android:layout_marginRight="14dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
+
     <TextView
         android:id="@+id/grades_num_zeros"
         android:layout_width="wrap_content"

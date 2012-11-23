@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -69,7 +70,28 @@ public class GradesActivity extends ListActivity {
     		  
     		  courseName.setText(course.getName());
     		  lettGrade.setText(course.getLetterGrade());
-    		  pctGrade.setText(course.getPercentGrade());
+    		  
+    		  if(course.getPercentGrade().length() > 0) {
+	    		  String gradeHighlight = "";
+	    		  char tensPlace = course.getPercentGrade().charAt(0);
+	    				  
+	    		  System.out.println('6');
+	    		  if(tensPlace == '9' || tensPlace == '1') {
+	    			  gradeHighlight = "#00B300";
+	    		  } else if(tensPlace <= '8') { 
+	    			  gradeHighlight = "#3333FF";
+	    		  } else if(tensPlace <= '7') {
+	    			  gradeHighlight = "#D1D100";
+	    		  } else if(tensPlace <= '6') {
+	    			  gradeHighlight = "#FFB366";
+	    		  } else {
+	    			  gradeHighlight = "#CC0000";
+	    		  }
+	    		  
+	    		  pctGrade.setText(Html.fromHtml("<font color=\"" + gradeHighlight + "\">" + course.getPercentGrade() + "</font>"));
+    		  } else {
+    			  pctGrade.setText(course.getPercentGrade());
+    		  }
     		  
     		  if(course.getNumZeros()  >= 1) {
     			  TextView numZeros = (TextView) rowView.findViewById(R.id.grades_num_zeros);
