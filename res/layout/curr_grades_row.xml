@@ -29,15 +29,15 @@
         android:layout_marginRight="14dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    <TextView
+
+    <TextView
         android:id="@+id/grades_num_zeros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/grades_pct_grade"
         android:layout_alignBottom="@+id/grades_pct_grade"
         android:layout_alignRight="@+id/grades_lett_grade"
+        android:layout_alignTop="@+id/grades_pct_grade"
         android:alpha="0.6"
-        android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/important_text" />
 
