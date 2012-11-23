@@ -28,7 +28,7 @@ public class Course {
 		this.name = name;
 	}
 
-	public String setPercentGrade() {
+	public String getPercentGrade() {
 		return percentGrade;
 	}
 

@@ -127,7 +127,7 @@ public final class API {
 	    	Course newCourse = new Course();
 	    	
 	    	// only single element present for subject, select the name
-	    	Element subject = courseRow.select("div.list_label_black a").get(0);
+	    	Elements subject = courseRow.select("td.left a");
 	    	
 	    	// select the first three grade elements (percent, letter grade, num of zeroes), exclude 'Progress Report'
 	    	Elements grades = courseRow.select("td.list_text:lt(4)");
