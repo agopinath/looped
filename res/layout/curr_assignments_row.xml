@@ -30,5 +30,14 @@
         android:alpha="0.6"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/assign_due_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/assign_name"
+        android:layout_alignRight="@+id/assign_due_date"
+        android:layout_alignTop="@+id/assign_name"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

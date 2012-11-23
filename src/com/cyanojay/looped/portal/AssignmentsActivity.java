@@ -1,10 +1,12 @@
 package com.cyanojay.looped.portal;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,7 +52,8 @@ public class AssignmentsActivity extends ListActivity {
     private class CurrentAssignmentsAdapter extends ArrayAdapter<CurrentAssignment> {
     	  private final Context context;
     	  private final CurrentAssignment[] values;
-
+    	  private final String TODAY = new SimpleDateFormat("MM/dd/yy").format(Calendar.getInstance().getTime());
+    	  
     	  public CurrentAssignmentsAdapter(Context context, CurrentAssignment[] values) {
     		  super(context, R.layout.curr_assignments_row, values);
     		  this.context = context;
@@ -71,7 +74,14 @@ public class AssignmentsActivity extends ListActivity {
     		  name.setText(assignment.getName());
     		  courseName.setText(assignment.getCourseName().substring(0,assignment.getCourseName().indexOf("Period")));
     		  dueDate.setText("Due " + assignment.getDueDate());
-    	    
+    		  
+    		  if(assignment.getDueDate().equals(TODAY)) {
+    			  TextView dueToday = (TextView) rowView.findViewById(R.id.assign_due_today);
+    			  
+    			  dueToday.setTextColor(Color.RED);
+    			  dueToday.setText("Due Today");
+    		  }
+    		  
     	    return rowView;
     	  }
     	} 
