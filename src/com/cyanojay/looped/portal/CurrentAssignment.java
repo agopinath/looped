@@ -1,23 +1,22 @@
 package com.cyanojay.looped.portal;
 
-import java.util.Date;
 
 public class CurrentAssignment {
 	private String name;
 	private String courseName;
-	private Date assignedDate;
-	private Date dueDate;
+	private String assignedDate;
+	private String dueDate;
 	private int maxPoints;
 
 	public CurrentAssignment() {
 		this.name = "";
 		this.courseName = "";
-		this.assignedDate = null;
-		this.dueDate = null;
+		this.assignedDate = "";
+		this.dueDate = "";
 		this.maxPoints = 0;
 	}
 	
-	public CurrentAssignment(String name, String courseName, Date assignedDate, Date dueDate, int maxPoints) {
+	public CurrentAssignment(String name, String courseName, String assignedDate, String dueDate, int maxPoints) {
 		this.name = name;
 		this.courseName = courseName;
 		this.assignedDate = assignedDate;
@@ -41,19 +40,19 @@ public class CurrentAssignment {
 		this.courseName = courseName;
 	}
 
-	public Date getAssignedDate() {
+	public String getAssignedDate() {
 		return assignedDate;
 	}
 
-	public void setAssignedDate(Date assignedDate) {
+	public void setAssignedDate(String assignedDate) {
 		this.assignedDate = assignedDate;
 	}
 
-	public Date getDueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -63,5 +62,9 @@ public class CurrentAssignment {
 
 	public void setMaxPoints(int maxPoints) {
 		this.maxPoints = maxPoints;
+	}
+	
+	public String toString() {
+		return name + "  " + courseName + "  " + dueDate;
 	}
 }

@@ -170,14 +170,16 @@ public final class API {
 	    	// select the assignment details that include the title, respective course, and due date 
 	    	Elements details = assignmentRow.select("div.list_text");
 	    	
-	    	assignment.setName(details.get(0).text());
-	    	assignment.setCourseName(details.get(1).text());
+	    	// if assignments are  empty, they are invalid, so skip
+	    	if(details.size() == 0) continue;
 	    	
-	    	try {
-				assignment.setDueDate(DateFormat.getInstance().parse(details.get(2).text()));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+	    	for(int i = 0; i < details.size(); i++) {
+	    		Element currAssignment = details.get(i);
+	    		
+	    		if(i == 0) assignment.setName(currAssignment.text());
+	    		if(i == 1) assignment.setCourseName(currAssignment.text());
+	    		if(i == 2) assignment.setDueDate(currAssignment.text());
+	    	}
 	    	
 	    	assignments.add(assignment);
 	    }
