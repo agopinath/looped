@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
+import com.cyanojay.looped.portal.NewsArticle;
 
 
 public final class API {
@@ -182,5 +183,35 @@ public final class API {
 	    }
 	    
 	    return assignments;
+	}
+	
+	public List<NewsArticle> getNews() {
+		List<NewsArticle> news = new ArrayList<NewsArticle>();
+		
+		// select everything in the div holding the article names
+	    Elements articleNames = portal.body().select("div.os a.module_link");
+	    
+	    // select everything in the div holding the article info (date posted and author)
+	    Elements articleInfo = portal.body().select("div.os td.list_text");
+	    
+	    for(int i = 0; i < articleNames.size(); i++) {
+	    	// create new empty news article to store the article info
+	    	NewsArticle article = new NewsArticle();
+	    	
+	    	// select info according to how it is ordered/structured in the HTML
+	    	Element title = articleNames.get(i);
+	    	Element author = articleInfo.get(2*i);
+	    	Element date = articleInfo.get((2*i)+1);
+	    	
+	    	article.setArticleName(title.text());
+	    	article.setAuthor(author.text());
+	    	article.setDatePosted(date.text());
+	    	
+	    	news.add(article);
+	    	
+	    	System.out.println(title.text() + " ~ " + author.text() + " ~ " + date.text());
+	    }
+	    
+	    return news;
 	}
 }
