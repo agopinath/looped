@@ -212,8 +212,6 @@ public final class API {
 	    	article.setDatePosted(date.text());
 	    	
 	    	news.add(article);
-	    	
-	    	System.out.println(title.text() + " ~ " + author.text() + " ~ " + date.text());
 	    }
 	    
 	    return news;

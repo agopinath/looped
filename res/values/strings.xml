@@ -7,6 +7,10 @@
     <string name="title_activity_grades">Grades</string>
     <string name="title_activity_assignments">Assignments</string>
     <string name="title_activity_news">News</string>
+
     <color name="important_text">#EE0000</color>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_grade_details">GradeDetailsActivity</string>
 
 </resources>

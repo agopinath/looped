@@ -14,7 +14,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
             android:name="com.cyanojay.looped.MainActivity"
             android:label="@string/title_activity_main" >
@@ -24,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".portal.PortalActivity"
             android:label="@string/title_activity_portal" >
@@ -34,12 +32,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name=".portal.GradesActivity" android:label="@string/title_activity_grades" />
+            android:name=".portal.GradesActivity"
+            android:label="@string/title_activity_grades" />
         <activity
-            android:name=".portal.AssignmentsActivity" android:label="@string/title_activity_assignments" />
+            android:name=".portal.AssignmentsActivity"
+            android:label="@string/title_activity_assignments" />
         <activity
-            android:name=".portal.NewsActivity" android:label="@string/title_activity_news" />
+            android:name=".portal.NewsActivity"
+            android:label="@string/title_activity_news" />
+        <activity
+            android:name=".GradeDetailsActivity"
+            android:label="@string/title_activity_grade_details" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>
