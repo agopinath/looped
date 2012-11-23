@@ -2,6 +2,8 @@ package com.cyanojay.looped;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.portal.Course;
+import com.cyanojay.looped.portal.CurrentAssignment;
+import com.cyanojay.looped.portal.NewsActivity;
 
 
 public final class API {
@@ -117,10 +121,8 @@ public final class API {
 	public List<Course> getCourses() {
 		List<Course> courses = new ArrayList<Course>();
 		
-		Element body = portal.body();
-		
 		// select everything in the table holding the grades
-	    Elements courseBlock = body.select("tbody.hub_general_body tr");
+	    Elements courseBlock = portal.body().select("tbody.hub_general_body tr");
 	    
 	    for(Element courseRow: courseBlock) {
 	    	// create new empty course to store course information
@@ -138,6 +140,9 @@ public final class API {
 	    	if(grades.size() == 0)
 	    		grades = courseRow.select("td.list_text_light");
 	    	
+	    	// if grades are still empty, they are invalid, so skip
+	    	if(grades.size() == 0) continue;
+	    	
 	    	for(int i = 0; i < grades.size(); i++) {
 	    		Element currGrade = grades.get(i);
 	    		
@@ -150,5 +155,33 @@ public final class API {
 	    }
 	    
 	    return courses;
+	}
+	
+	public List<CurrentAssignment> getCurrentAssignments() {
+		List<CurrentAssignment> assignments = new ArrayList<CurrentAssignment>();
+		
+		// select everything in the table holding the assignments
+	    Elements assignmentsBlock = portal.body().select("tbody.hub_general_body tr");
+	    
+	    for(Element assignmentRow: assignmentsBlock) {
+	    	// create new empty assignment to store course information
+	    	CurrentAssignment assignment = new CurrentAssignment();
+	    	
+	    	// select the assignment details that include the title, respective course, and due date 
+	    	Elements details = assignmentRow.select("div.list_text");
+	    	
+	    	assignment.setName(details.get(0).text());
+	    	assignment.setCourseName(details.get(1).text());
+	    	
+	    	try {
+				assignment.setDueDate(DateFormat.getInstance().parse(details.get(2).text()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+	    	
+	    	assignments.add(assignment);
+	    }
+	    
+	    return assignments;
 	}
 }

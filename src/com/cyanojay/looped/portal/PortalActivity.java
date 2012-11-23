@@ -10,6 +10,7 @@ import android.widget.TabHost.TabSpec;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
+@SuppressWarnings("deprecation")
 public class PortalActivity extends TabActivity {
 
     @Override
