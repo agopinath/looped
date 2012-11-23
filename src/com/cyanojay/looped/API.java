@@ -2,8 +2,8 @@ package com.cyanojay.looped;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,6 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
-import com.cyanojay.looped.portal.NewsActivity;
 
 
 public final class API {
@@ -175,7 +174,7 @@ public final class API {
 	    	
 	    	for(int i = 0; i < details.size(); i++) {
 	    		Element currAssignment = details.get(i);
-	    		
+
 	    		if(i == 0) assignment.setName(currAssignment.text());
 	    		if(i == 1) assignment.setCourseName(currAssignment.text());
 	    		if(i == 2) assignment.setDueDate(currAssignment.text());

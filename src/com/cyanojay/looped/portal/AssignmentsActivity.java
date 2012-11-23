@@ -1,5 +1,6 @@
 package com.cyanojay.looped.portal;
 
+import java.text.DateFormat;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -51,25 +52,25 @@ public class AssignmentsActivity extends ListActivity {
     	  private final CurrentAssignment[] values;
 
     	  public CurrentAssignmentsAdapter(Context context, CurrentAssignment[] values) {
-    	    super(context, R.layout.curr_assignments_row, values);
-    	    this.context = context;
-    	    this.values = values;
+    		  super(context, R.layout.curr_assignments_row, values);
+    		  this.context = context;
+    		  this.values = values;
     	  }
 
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    	    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	    View rowView = inflater.inflate(R.layout.curr_assignments_row, parent, false);
-    	    
-    	    TextView name = (TextView) rowView.findViewById(R.id.assign_name);
-    	    TextView courseName = (TextView) rowView.findViewById(R.id.assign_course_name);
-    	    TextView dueDate = (TextView) rowView.findViewById(R.id.assign_due_date);
-    	    
-    	    CurrentAssignment assignment = values[position];
-    	    
-    	    name.setText(assignment.getName());
-    	    courseName.setText(assignment.getCourseName().substring(0,assignment.getCourseName().indexOf("Period")));
-    	    dueDate.setText("Due " + assignment.getDueDate());
+    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    		  View rowView = inflater.inflate(R.layout.curr_assignments_row, parent, false);
+    		  
+    		  TextView name = (TextView) rowView.findViewById(R.id.assign_name);
+    		  TextView courseName = (TextView) rowView.findViewById(R.id.assign_course_name);
+    		  TextView dueDate = (TextView) rowView.findViewById(R.id.assign_due_date);
+    		  
+    		  CurrentAssignment assignment = values[position];
+    		  
+    		  name.setText(assignment.getName());
+    		  courseName.setText(assignment.getCourseName().substring(0,assignment.getCourseName().indexOf("Period")));
+    		  dueDate.setText("Due " + assignment.getDueDate());
     	    
     	    return rowView;
     	  }
@@ -83,7 +84,7 @@ public class AssignmentsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-      CurrentAssignment item = (CurrentAssignment) getListAdapter().getItem(position);
-      Toast.makeText(this, item.getName() + " selected", Toast.LENGTH_SHORT).show();
+    	CurrentAssignment item = (CurrentAssignment) getListAdapter().getItem(position);
+    	Toast.makeText(this, item.getName() + " selected", Toast.LENGTH_SHORT).show();
     }
 }

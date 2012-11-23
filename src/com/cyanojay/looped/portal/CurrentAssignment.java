@@ -1,6 +1,7 @@
 package com.cyanojay.looped.portal;
 
 
+
 public class CurrentAssignment {
 	private String name;
 	private String courseName;
