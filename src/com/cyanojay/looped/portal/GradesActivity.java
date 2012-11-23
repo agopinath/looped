@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -110,7 +111,12 @@ public class GradesActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-    	Course item = (Course) getListAdapter().getItem(position);
-    	Toast.makeText(this, item.getName() + " selected", Toast.LENGTH_SHORT).show();
+    	Course selectedCourse = (Course) getListAdapter().getItem(position);
+    	Toast.makeText(this, selectedCourse.getName() + " selected", Toast.LENGTH_SHORT).show();
+    	
+    	Intent detailsIntent = new Intent(this, GradeDetailsActivity.class);
+    	detailsIntent.putExtra("COURSE_SELECTED", selectedCourse);
+    	
+    	this.startActivity(detailsIntent);
     }
 }

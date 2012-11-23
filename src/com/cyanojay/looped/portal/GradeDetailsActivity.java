@@ -18,16 +18,12 @@ import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
 public class GradeDetailsActivity extends ListActivity {
-	private Course currCourse;
-	
-	public GradeDetailsActivity(Course course) {
-		this.currCourse = course;
-	}
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_details);
+        
+        Course currCourse = (Course) getIntent().getSerializableExtra("COURSE_SELECTED");
         
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);

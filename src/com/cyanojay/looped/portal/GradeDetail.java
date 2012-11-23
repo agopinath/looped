@@ -1,6 +1,8 @@
 package com.cyanojay.looped.portal;
 
-public class GradeDetail {
+import java.io.Serializable;
+
+public class GradeDetail implements Serializable {
 	private String detailName;
 	private String category;
 	private String dueDate;

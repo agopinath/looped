@@ -1,6 +1,8 @@
 package com.cyanojay.looped.portal;
 
-public class NewsArticle {
+import java.io.Serializable;
+
+public class NewsArticle implements Serializable {
 	private String articleName;
 	private String author;
 	private String datePosted;

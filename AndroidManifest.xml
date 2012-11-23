@@ -42,14 +42,8 @@
             android:name=".portal.NewsActivity"
             android:label="@string/title_activity_news" />
         <activity
-            android:name=".GradeDetailsActivity"
-            android:label="@string/title_activity_grade_details" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".portal.GradeDetailsActivity"
+            android:label="@string/title_activity_grade_details" />
     </application>
 
 </manifest>
