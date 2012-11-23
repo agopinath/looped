@@ -77,12 +77,10 @@ public class AssignmentsActivity extends ListActivity {
     		  
     		  if(assignment.getDueDate().equals(TODAY)) {
     			  TextView dueToday = (TextView) rowView.findViewById(R.id.assign_due_today);
-    			  
-    			  dueToday.setTextColor(Color.RED);
     			  dueToday.setText("Due Today");
     		  }
     		  
-    	    return rowView;
+    		  return rowView;
     	  }
     	} 
     

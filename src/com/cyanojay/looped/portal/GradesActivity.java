@@ -2,19 +2,23 @@ package com.cyanojay.looped.portal;
 
 import java.util.List;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.widget.TableLayout;
-import android.widget.TableLayout.LayoutParams;
-import android.widget.TableRow;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class GradesActivity extends Activity {
+public class GradesActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,66 +28,67 @@ public class GradesActivity extends Activity {
         ScrapeGradesTask task = new ScrapeGradesTask();
         task.execute();
     }
-
+    
     private class ScrapeGradesTask extends AsyncTask<String, Void, List<Course>> {
-		@Override
+    	@Override
 		protected List<Course> doInBackground(String... params) {
-	        List<Course> courses = API.get().getCourses();
-	        
-			return courses;
+			return API.get().getCourses();
 		}
 		
 		@Override
 	    protected void onPostExecute(List<Course> result) {
 	        super.onPostExecute(result);
-	        TableLayout table = (TableLayout) findViewById(R.id.grades_table);
 	        
-	        TableRow headers = new TableRow(GradesActivity.this);
+	        Course[] values = result.toArray(new Course[0]);
+	        GradesAdapter adapter = new GradesAdapter(GradesActivity.this, values);
 	        
-	        TextView subj_head = new TextView(GradesActivity.this);
-	        TextView lett_head = new TextView(GradesActivity.this);
-	        TextView pct_head = new TextView(GradesActivity.this);
-	        
-	        subj_head.setTextSize(20.0f);
-	        subj_head.setText("  Course Name  \n");
-	        lett_head.setTextSize(20.0f);
-	        lett_head.setText("  Letter Grade  \n");
-	        pct_head.setTextSize(20.0f);
-	        pct_head.setText("  % Grade  \n");
-	        
-	        headers.addView(subj_head);
-	        headers.addView(lett_head);
-	        headers.addView(pct_head);
-	        
-	        table.addView(headers, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-	        
-	        for(Course currCourse: result) {
-		        TableRow row = new TableRow(GradesActivity.this);
-		         
-		        TextView subject = new TextView(GradesActivity.this);
-		        TextView lettGrade = new TextView(GradesActivity.this);
-		        TextView pctGrade = new TextView(GradesActivity.this);
-		        
-		        subject.setTextSize(18.0f);
-		        lettGrade.setTextSize(18.0f);
-		        pctGrade.setTextSize(18.0f);
-		        
-		        subject.setText("  " + currCourse.getName() + "  ");
-		        lettGrade.setText("  " + currCourse.getLetterGrade() + "  ");
-		        pctGrade.setText("  " + currCourse.getPercentGrade() + "  ");
-
-		        row.addView(subject);
-		        row.addView(lettGrade);
-		        row.addView(pctGrade);
-		        
-		        table.addView(row, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			}
+	        GradesActivity.this.setListAdapter(adapter);
 		}
     };
+    
+    private class GradesAdapter extends ArrayAdapter<Course> {
+    	  private final Context context;
+    	  private final Course[] values;
+    	  
+    	  public GradesAdapter(Context context, Course[] values) {
+    		  super(context, R.layout.curr_grades_row, values);
+    		  this.context = context;
+    		  this.values = values;
+    	  }
+
+    	  @Override
+    	  public View getView(int position, View convertView, ViewGroup parent) {
+    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    		  View rowView = inflater.inflate(R.layout.curr_grades_row, parent, false);
+    		  
+    		  TextView courseName = (TextView) rowView.findViewById(R.id.grades_course_name);
+    		  TextView lettGrade = (TextView) rowView.findViewById(R.id.grades_lett_grade);
+    		  TextView pctGrade = (TextView) rowView.findViewById(R.id.grades_pct_grade);
+    		  
+    		  Course course = values[position];
+    		  
+    		  courseName.setText(course.getName());
+    		  lettGrade.setText(course.getLetterGrade());
+    		  pctGrade.setText(course.getPercentGrade());
+    		  
+    		  if(course.getNumZeros() >= 0) {
+    			  TextView numZeros = (TextView) rowView.findViewById(R.id.grades_num_zeros);
+    			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
+    		  }
+    		  
+    		  return rowView;
+    	} 
+    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_grades, menu);
         return true;
+    }
+    
+    @Override
+    protected void onListItemClick(ListView list, View view, int position, long id) {
+    	Course item = (Course) getListAdapter().getItem(position);
+    	Toast.makeText(this, item.getName() + " selected", Toast.LENGTH_SHORT).show();
     }
 }
