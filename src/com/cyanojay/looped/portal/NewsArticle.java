@@ -4,16 +4,19 @@ public class NewsArticle {
 	private String articleName;
 	private String author;
 	private String datePosted;
+	private String authorType;
 
 	public NewsArticle() {
 		this.articleName = "";
 		this.author = "";
+		this.setAuthorType("");
 		this.datePosted = "";
 	}
 	
-	public NewsArticle(String articleName, String author, String datePosted) {
+	public NewsArticle(String articleName, String author, String authorType, String datePosted) {
 		this.articleName = articleName;
 		this.author = author;
+		this.setAuthorType(authorType);
 		this.datePosted = datePosted;
 	}
 
@@ -39,5 +42,13 @@ public class NewsArticle {
 
 	public void setDatePosted(String datePosted) {
 		this.datePosted = datePosted;
+	}
+
+	public String getAuthorType() {
+		return authorType;
+	}
+
+	public void setAuthorType(String authorType) {
+		this.authorType = authorType;
 	}
 }

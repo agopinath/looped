@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -68,7 +69,8 @@ public class NewsActivity extends ListActivity {
     		  NewsArticle article = values[position];
     		  
     		  articleName.setText(article.getArticleName());
-    		  articleAuthor.setText(article.getAuthor());
+    		  articleAuthor.setText(Html.fromHtml("<b>" + article.getAuthor() + "</b>" +
+    				  							  " - " + article.getAuthorType()));
     		  articleDate.setText(article.getDatePosted());
     		  
     		  return rowView;

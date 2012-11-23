@@ -3,13 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
-
+
     <TextView
         android:id="@+id/assign_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/assign_course_name"

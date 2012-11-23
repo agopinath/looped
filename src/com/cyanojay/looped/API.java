@@ -203,8 +203,12 @@ public final class API {
 	    	Element author = articleInfo.get(2*i);
 	    	Element date = articleInfo.get((2*i)+1);
 	    	
+	    	// split the author field into the author's name and the author's type
+	    	String authorData[] = author.text().split(" - ");
+	    	
 	    	article.setArticleName(title.text());
-	    	article.setAuthor(author.text());
+	    	article.setAuthor(authorData[0]);
+	    	article.setAuthorType(authorData[1]);
 	    	article.setDatePosted(date.text());
 	    	
 	    	news.add(article);
