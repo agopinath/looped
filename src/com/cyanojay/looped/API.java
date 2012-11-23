@@ -21,6 +21,10 @@ import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.cyanojay.looped.portal.Course;
 
 
 public final class API {
@@ -108,5 +112,43 @@ public final class API {
 	
 	public String getPortalTitle() {
 		return portal.title();
+	}
+	
+	public List<Course> getCourses() {
+		List<Course> courses = new ArrayList<Course>();
+		
+		Element body = portal.body();
+		
+		// select everything in the table holding the grades
+	    Elements courseBlock = body.select("tbody.hub_general_body tr");
+	    
+	    for(Element courseRow: courseBlock) {
+	    	// create new empty course to store course information
+	    	Course newCourse = new Course();
+	    	
+	    	// only single element present for subject, select the name
+	    	Element subject = courseRow.select("div.list_label_black a").get(0);
+	    	
+	    	// select the first three grade elements (percent, letter grade, num of zeroes), exclude 'Progress Report'
+	    	Elements grades = courseRow.select("td.list_text:lt(4)");
+	    	
+	    	newCourse.setName(subject.text());
+	    	
+	    	// if no grades listed, grade must be listed as 'None Published', so select that
+	    	if(grades.size() == 0)
+	    		grades = courseRow.select("td.list_text_light");
+	    	
+	    	for(int i = 0; i < grades.size(); i++) {
+	    		Element currGrade = grades.get(i);
+	    		
+	    		if(i == 0) newCourse.setLetterGrade(currGrade.text());
+	    		if(i == 1) newCourse.setPercentGrade(currGrade.text());
+	    		if(i == 2) newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
+	    	}
+	    	
+	    	courses.add(newCourse);
+	    }
+	    
+	    return courses;
 	}
 }
