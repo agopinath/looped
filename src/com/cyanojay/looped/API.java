@@ -131,7 +131,7 @@ public final class API {
 	    	Elements subject = courseRow.select("td.left a");
 	    	
 	    	// select the first three grade elements (percent, letter grade, num of zeroes), exclude 'Progress Report'
-	    	Elements grades = courseRow.select("td.list_text:lt(4)");
+	    	Elements grades = courseRow.select("td.list_text");
 	    	
 	    	newCourse.setName(subject.text());
 	    	
@@ -148,6 +148,10 @@ public final class API {
 	    		if(i == 0) newCourse.setLetterGrade(currGrade.text());
 	    		if(i == 1) newCourse.setPercentGrade(currGrade.text());
 	    		if(i == 2) newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
+	    		if(i == 3) {
+	    			String detailsUrl = portalUrl + currGrade.child(0).attr("href");
+	    			newCourse.setDetailsUrl(detailsUrl);
+	    		}
 	    	}
 	    	
 	    	courses.add(newCourse);

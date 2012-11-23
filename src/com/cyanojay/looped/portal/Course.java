@@ -5,19 +5,22 @@ public class Course {
 	private String percentGrade;
 	private String letterGrade;
 	private int numZeros;
+	private String detailsUrl;
 
 	public Course() {
 		this.name = "";
 		this.percentGrade = "";
 		this.letterGrade = "";
 		this.numZeros = 0;
+		this.setDetailsUrl("");
 	}
 	
-	public Course(String name, String grade, String letterGrade, int numZeros) {
+	public Course(String name, String grade, String letterGrade, int numZeros, String detailsUrl) {
 		this.name = name;
 		this.percentGrade = grade;
 		this.letterGrade = letterGrade;
 		this.numZeros = numZeros;
+		this.setDetailsUrl(detailsUrl);
 	}
 
 	public String getName() {
@@ -50,5 +53,13 @@ public class Course {
 
 	public void setNumZeros(int numZeros) {
 		this.numZeros = numZeros;
+	}
+
+	public String getDetailsUrl() {
+		return detailsUrl;
+	}
+
+	public void setDetailsUrl(String detailsUrl) {
+		this.detailsUrl = detailsUrl;
 	}
 }
