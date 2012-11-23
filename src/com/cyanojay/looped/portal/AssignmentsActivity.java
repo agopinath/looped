@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -76,8 +77,7 @@ public class AssignmentsActivity extends ListActivity {
     		  dueDate.setText("Due " + assignment.getDueDate());
     		  
     		  if(assignment.getDueDate().equals(TODAY)) {
-    			  TextView dueToday = (TextView) rowView.findViewById(R.id.assign_due_today);
-    			  dueToday.setText("Due Today");
+    			  dueDate.setText(Html.fromHtml(dueDate.getText() + "<font color=\"#FF0000\"> (today)</font>"));
     		  }
     		  
     		  return rowView;
