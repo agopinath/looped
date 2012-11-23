@@ -1,6 +1,9 @@
 package com.cyanojay.looped.portal;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -32,7 +35,15 @@ public class GradeDetailsActivity extends ListActivity {
     private class ScrapeGradeDetailsTask extends AsyncTask<Course, Void, List<GradeDetail>> {
     	@Override
 		protected List<GradeDetail> doInBackground(Course... params) {
-			return API.get().getGradeDetails(params[0]);
+			try {
+				return API.get().getGradeDetails(params[0]);
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
 		}
 		
 		@Override

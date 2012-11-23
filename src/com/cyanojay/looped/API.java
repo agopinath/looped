@@ -222,11 +222,51 @@ public final class API {
 	    return news;
 	}
 
-	public List<GradeDetail> getGradeDetails(Course course) {
-		List<GradeDetail> details = new ArrayList<GradeDetail>();
+	public List<GradeDetail> getGradeDetails(Course course) throws ClientProtocolException, IOException {
+		List<GradeDetail> detailsList = new ArrayList<GradeDetail>();
 		
-		// TODO: fill details accordingly, given a Course
-	    
-	    return details;
+		// construct and send a GET request to the URL where the Course grade details are stored
+		HttpClient client = new DefaultHttpClient();
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+    	HttpGet httpGet = new HttpGet(course.getDetailsUrl());
+    	
+		HttpResponse response = client.execute(httpGet, context);
+		Document detailsPage = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
+		
+		// select all rows of the table containing grade details
+	    Elements details = detailsPage.body().select("tbody.general_body tr");
+
+	    for(Element detail: details) {
+	    	GradeDetail newDetail = new GradeDetail();
+	    	
+	    	// select all individual elements in each row
+	    	Elements data = detail.select("td");
+	    	
+	    	newDetail.setCategory(data.get(0).text());
+	    	newDetail.setDueDate(data.get(1).text());
+	    	newDetail.setDetailName(data.get(2).text());
+	    	newDetail.setComment(data.get(5).text());
+	    	newDetail.setSubmissions(data.get(6).text());
+	    	
+	    	String scoreData = data.get(4).text().trim();
+	    	
+	    	// if the score is entered/valid, split the grade into total points and earned points
+	    	if(!scoreData.equals("-")) {
+	    		// remove trailing '=' and percentage data
+	    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
+	    		
+	    		// split into respective parts and parse
+	    		String[] scoreParts = scoreData.split(" / ");
+	    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
+	    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
+	    	}
+	    	
+	    	System.out.println(data.get(0).text() + " ~ " + data.get(1).text() + " ~ " + 
+	    	data.get(2).text() + " ~ " + data.get(4).text()  + " ~ " + data.get(5).text()  + " ~ " + data.get(6).text());
+	    	
+	    	detailsList.add(newDetail);
+	    }
+		
+	    return detailsList;
 	}
 }
