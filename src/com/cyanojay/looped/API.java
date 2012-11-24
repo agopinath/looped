@@ -180,7 +180,11 @@ public final class API {
 	    	for(int i = 0; i < details.size(); i++) {
 	    		Element currAssignment = details.get(i);
 
-	    		if(i == 0) assignment.setName(currAssignment.text());
+	    		if(i == 0) {
+	    			String detailsUrl = portalUrl + currAssignment.child(0).attr("href");
+	    			assignment.setDetailsUrl(detailsUrl);
+	    			assignment.setName(currAssignment.text());
+	    		}
 	    		if(i == 1) assignment.setCourseName(currAssignment.text());
 	    		if(i == 2) assignment.setDueDate(currAssignment.text());
 	    	}

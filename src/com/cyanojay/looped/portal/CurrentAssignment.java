@@ -5,24 +5,21 @@ package com.cyanojay.looped.portal;
 public class CurrentAssignment {
 	private String name;
 	private String courseName;
-	private String assignedDate;
 	private String dueDate;
-	private int maxPoints;
+	private String detailsUrl;
 	
 	public CurrentAssignment() {
 		this.name = "";
 		this.courseName = "";
-		this.assignedDate = "";
 		this.dueDate = "";
-		this.maxPoints = 0;
+		this.detailsUrl = "";
 	}
 	
-	public CurrentAssignment(String name, String courseName, String assignedDate, String dueDate, int maxPoints) {
+	public CurrentAssignment(String name, String courseName, String dueDate, String detailsUrl) {
 		this.name = name;
 		this.courseName = courseName;
-		this.assignedDate = assignedDate;
 		this.dueDate = dueDate;
-		this.maxPoints = maxPoints;
+		this.detailsUrl = detailsUrl;
 	}
 
 	public String getName() {
@@ -41,14 +38,6 @@ public class CurrentAssignment {
 		this.courseName = courseName;
 	}
 
-	public String getAssignedDate() {
-		return assignedDate;
-	}
-
-	public void setAssignedDate(String assignedDate) {
-		this.assignedDate = assignedDate;
-	}
-
 	public String getDueDate() {
 		return dueDate;
 	}
@@ -57,15 +46,11 @@ public class CurrentAssignment {
 		this.dueDate = dueDate;
 	}
 
-	public int getMaxPoints() {
-		return maxPoints;
+	public String getDetailsUrl() {
+		return detailsUrl;
 	}
 
-	public void setMaxPoints(int maxPoints) {
-		this.maxPoints = maxPoints;
-	}
-	
-	public String toString() {
-		return name + "  " + courseName + "  " + dueDate;
+	public void setDetailsUrl(String detailsUrl) {
+		this.detailsUrl = detailsUrl;
 	}
 }
