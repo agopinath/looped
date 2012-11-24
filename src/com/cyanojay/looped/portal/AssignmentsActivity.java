@@ -9,7 +9,6 @@ import org.apache.http.client.ClientProtocolException;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -21,12 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
@@ -129,8 +126,9 @@ public class AssignmentsActivity extends ListActivity {
 	        int height = display.getHeight(); 
 	        
 	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
+	        ScrollView flow = (ScrollView) inflater.inflate(R.layout.assignment_details_popup, null, false);
 	        
+	        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
 	        TextView title = (TextView) flow.findViewById(R.id.assigndet_title);
 	        TextView audience = (TextView) flow.findViewById(R.id.assigndet_audi);
 	        TextView info = (TextView) flow.findViewById(R.id.assigndet_info);
@@ -162,7 +160,7 @@ public class AssignmentsActivity extends ListActivity {
 	        
 	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.4*height)), true);
 	        
-	        flow.setOnClickListener(new View.OnClickListener() {
+	        wrapper.setOnClickListener(new View.OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
 	                pw.dismiss();
