@@ -13,12 +13,18 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,10 +123,41 @@ public class AssignmentsActivity extends ListActivity {
 		}
 		
 		@Override
-	    protected void onPostExecute(AssignmentDetail result) {
-	        super.onPostExecute(result);
+	    protected void onPostExecute(AssignmentDetail assignDetail) {
+	        super.onPostExecute(assignDetail);
+	        Display display = getWindowManager().getDefaultDisplay(); 
+	        int width = display.getWidth();
+	        int height = display.getHeight(); 
 	        
-	        // TODO: display the assignment details appropriately in a PopUpWindow
+	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
+	        
+	        TextView title = (TextView) flow.findViewById(R.id.assigndet_title);
+	        TextView audience = (TextView) flow.findViewById(R.id.assigndet_audi);
+	        TextView info = (TextView) flow.findViewById(R.id.assigndet_info);
+	        TextView explanation = (TextView) flow.findViewById(R.id.assigndet_expl);
+	        
+	        title.setText(assignDetail.getName());
+	        audience.setText(assignDetail.getTargetAudience());
+	        explanation.setText(assignDetail.getExplanation());
+	        
+	        String infoStr = "";
+	        for(String detail : assignDetail.getDetails()) {
+	        	infoStr += detail + "\n";
+	        }
+	        
+	        info.setText(infoStr);
+	        
+	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.25*height)), true);
+	        
+	        flow.setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                pw.dismiss();
+	            }
+	        });
+	        
+	        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
 		}
     };
 }
