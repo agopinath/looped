@@ -102,7 +102,15 @@ public class NewsActivity extends ListActivity {
     private class ScrapeNewsDetailsTask extends AsyncTask<NewsArticle, Void, NewsDetail> {
 		@Override
 		protected NewsDetail doInBackground(NewsArticle... params) {
-			return API.get().getNewsDetails(params[0]);
+			try {
+				return API.get().getNewsDetails(params[0]);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
 		}
 		
 		@Override

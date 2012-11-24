@@ -305,10 +305,32 @@ public final class API {
 		return details;
 	}
 	
-	public NewsDetail getNewsDetails(NewsArticle article) {
+	public NewsDetail getNewsDetails(NewsArticle article) throws IllegalStateException, IOException {
 		NewsDetail details = new NewsDetail();
+
+		// construct and send a GET request to the URL where the news article info is stored
+		HttpClient client = new DefaultHttpClient();
+		BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+		HttpGet httpGet = new HttpGet(article.getArticleUrl());
+			
+		HttpResponse response = client.execute(httpGet, context);
+		Document detailsPage = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
 		
-		// TODO: add retrieval of news details given a news article
+		// select the block containing news article info
+		Elements infoBlock = detailsPage.body().select("div.published");
+		
+		// select block containing more specific details
+		Elements newsDetails = infoBlock.select("div.highlight_box td");
+		
+		String newsTitle = infoBlock.select("div.title_page").text();
+		String newsContent = infoBlock.select("div.content").html();
+		
+		details.setTitle(newsTitle);
+		details.setContent(newsContent);
+		
+		for(Element detail : newsDetails) {
+			details.addDetail(detail.text());
+		}
 		
 		return details;
 	}
