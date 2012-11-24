@@ -300,7 +300,6 @@ public final class API {
 			details.addDetail(detail.text());
 		}
 		
-		
 		return details;
 	}
 }

@@ -143,10 +143,23 @@ public class AssignmentsActivity extends ListActivity {
 	        
 	        String infoStr = "";
 	        for(String detail : assignDetail.getDetails()) {
-	        	infoStr += detail + "\n";
+	        	if(detail.startsWith("Assigned")) {
+	        		int idx = detail.indexOf("Due");
+	        		String assigned = detail.substring(0, idx);
+	        		String due = detail.substring(idx);
+	        		
+	        		String parts1[] = assigned.split(": ");
+	        		String parts2[] = due.split(": ");
+	        		
+	        		infoStr += "<b>" + parts1[0] + "</b>: " + parts1[1] + "<br />" +
+	        				   "<b>" + parts2[0] + "</b>: " + parts2[1] + "<br />";
+	        	} else {
+	        		String parts[] = detail.split(": ");
+	        		infoStr += "<b>" + parts[0] + "</b>: " + parts[1] + "<br />";
+	        	}
 	        }
 	        
-	        info.setText(infoStr);
+	        info.setText(Html.fromHtml(infoStr));
 	        
 	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.25*height)), true);
 	        
