@@ -7,7 +7,6 @@
     </style>
     
     <style name="LoopedActivityTheme" parent="android:Theme.Light" >
-        <item name="android:background">#B0B0B0</item>
-        <item name="android:minHeight">0in</item>
+        <item name="android:background">#ecf0e0</item>
     </style>
 </resources>

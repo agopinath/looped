@@ -70,6 +70,10 @@ public class GradesActivity extends ListActivity {
     		  Course course = values[position];
     		  
     		  courseName.setText(course.getName());
+    		  
+    		  if(course.getLetterGrade().equals(Course.INVALID_LETT_GRADE))
+    			  course.setLetterGrade(Course.SUBST_LETT_GRADE);
+    		  
     		  lettGrade.setText(course.getLetterGrade());
     		  
     		  if(course.getPercentGrade().length() > 0) {
@@ -78,7 +82,7 @@ public class GradesActivity extends ListActivity {
 	    				  
 	    		  System.out.println('6');
 	    		  if(tensPlace == '9' || tensPlace == '1') {
-	    			  gradeHighlight = "#00B300";
+	    			  gradeHighlight = "#009900";
 	    		  } else if(tensPlace <= '8') { 
 	    			  gradeHighlight = "#3333FF";
 	    		  } else if(tensPlace <= '7') {
@@ -113,6 +117,8 @@ public class GradesActivity extends ListActivity {
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
     	Toast.makeText(this, selectedCourse.getName() + " selected", Toast.LENGTH_SHORT).show();
+    	
+    	if(selectedCourse.getLetterGrade().equals(Course.SUBST_LETT_GRADE)) return;
     	
     	Intent detailsIntent = new Intent(this, GradeDetailsActivity.class);
     	detailsIntent.putExtra("COURSE_SELECTED", selectedCourse);

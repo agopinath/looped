@@ -73,17 +73,28 @@ public class GradeDetailsActivity extends ListActivity {
 	  		  View rowView = inflater.inflate(R.layout.grade_detail_row, parent, false);
 	  		  
 	  		  TextView name = (TextView) rowView.findViewById(R.id.gradedet_name);
-	  		  TextView category = (TextView) rowView.findViewById(R.id.gradedet_categ);
-	  		  TextView date = (TextView) rowView.findViewById(R.id.gradedet_date);
-	  		  TextView percent = (TextView) rowView.findViewById(R.id.grades_pct_grade);
+	  		  TextView categoryDate = (TextView) rowView.findViewById(R.id.gradedet_categ_date);
+	  		  TextView percent = (TextView) rowView.findViewById(R.id.gradedet_pct);
 	  		  TextView score = (TextView) rowView.findViewById(R.id.gradedet_score);
 	  		
 	  		  GradeDetail detail = values[position];
 	  		  
-	  		  // TODO: fill information into Views accordingly
+	  		  name.setText(detail.getDetailName());
+	  		  categoryDate.setText(detail.getCategory() + "\n" + detail.getDueDate());
+	  		  
+	  		  if(!((int) detail.getTotalPoints() == 0)) {
+		  		  String percentDetail = String.format("%.2f", ((detail.getPointsEarned() / detail.getTotalPoints()) * 100)) + "%";
+		  		  percent.setText(percentDetail);
+		  		  
+		  		  String scoreDetail = String.format("%d/%d", (int) detail.getPointsEarned(), (int) detail.getTotalPoints());
+		  		  score.setText(scoreDetail);
+	  		  } else {
+	  			  percent.setText("--");
+	  			  score.setText("");
+	  		  }
 	  		  
 	  		  return rowView;
-	  	} 
+	  	}
 	}
     
     @Override

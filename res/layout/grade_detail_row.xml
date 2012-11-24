@@ -11,46 +11,41 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
         android:text="Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <TextView
         android:id="@+id/gradedet_pct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
         android:text="Percent"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <TextView
-        android:id="@+id/gradedet_categ"
+        android:id="@+id/gradedet_categ_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/gradedet_name"
-        android:alpha="0.6"
+        android:layout_marginLeft="10dp"
+        android:alpha="0.8"
         android:text="Category"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/gradedet_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/gradedet_categ"
-        android:alpha="0.6"
-        android:text="Date"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
+
     <TextView
         android:id="@+id/gradedet_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gradedet_date"
+        android:layout_alignBaseline="@+id/gradedet_categ_date"
+        android:layout_alignBottom="@+id/gradedet_categ_date"
         android:layout_alignParentRight="true"
-        android:alpha="0.6"
+        android:layout_marginRight="10dp"
+        android:alpha="0.8"
         android:text="Score"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

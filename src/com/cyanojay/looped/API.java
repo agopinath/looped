@@ -251,7 +251,7 @@ public final class API {
 	    	String scoreData = data.get(4).text().trim();
 	    	
 	    	// if the score is entered/valid, split the grade into total points and earned points
-	    	if(!scoreData.equals("-")) {
+	    	if(scoreData.length() > 5) {
 	    		// remove trailing '=' and percentage data
 	    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
 	    		
@@ -260,9 +260,6 @@ public final class API {
 	    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
 	    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
 	    	}
-	    	
-	    	System.out.println(data.get(0).text() + " ~ " + data.get(1).text() + " ~ " + 
-	    	data.get(2).text() + " ~ " + data.get(4).text()  + " ~ " + data.get(5).text()  + " ~ " + data.get(6).text());
 	    	
 	    	detailsList.add(newDetail);
 	    }
