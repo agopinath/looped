@@ -288,9 +288,11 @@ public final class API {
 		
 		String assignTitle = detailBlock.select("div.title_page").text();
 		String assignAudience = detailBlock.select("div.highlight_box").text();
+		String assignExplanation = detailBlock.select("div.content p").text();
 		
 		details.setName(assignTitle);
 		details.setTargetAudience(assignAudience);
+		details.setExplanation(assignExplanation);
 		
 		Elements assignDetails = detailBlock.select("td.info");
 		
