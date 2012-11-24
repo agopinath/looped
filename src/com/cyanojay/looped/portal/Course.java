@@ -9,15 +9,15 @@ public class Course implements Serializable {
 	private String name;
 	private String percentGrade;
 	private String letterGrade;
-	private int numZeros;
 	private String detailsUrl;
-
+	private int numZeros;
+	
 	public Course() {
 		this.name = "";
 		this.percentGrade = "";
 		this.letterGrade = "";
 		this.numZeros = 0;
-		this.setDetailsUrl("");
+		this.detailsUrl = "";
 	}
 	
 	public Course(String name, String grade, String letterGrade, int numZeros, String detailsUrl) {
@@ -25,7 +25,7 @@ public class Course implements Serializable {
 		this.percentGrade = grade;
 		this.letterGrade = letterGrade;
 		this.numZeros = numZeros;
-		this.setDetailsUrl(detailsUrl);
+		this.detailsUrl = detailsUrl;
 	}
 
 	public String getName() {

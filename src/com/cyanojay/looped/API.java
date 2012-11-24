@@ -259,6 +259,9 @@ public final class API {
 	    	
 	    	// if the score is entered/valid, split the grade into total points and earned points
 	    	if(scoreData.length() > 5) {
+	    		String displayPct = scoreData.split(" = ")[1].trim();
+	    		newDetail.setDisplayPercent(displayPct);
+	    		
 	    		// remove trailing '=' and percentage data
 	    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
 	    		
@@ -266,6 +269,9 @@ public final class API {
 	    		String[] scoreParts = scoreData.split(" / ");
 	    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
 	    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
+	    		
+	    		String displayScore = scoreData.replaceAll(" ", "");
+	    		newDetail.setDisplayScore(displayScore);
 	    	}
 	    	
 	    	detailsList.add(newDetail);

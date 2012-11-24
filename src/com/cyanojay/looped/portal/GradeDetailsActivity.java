@@ -83,11 +83,8 @@ public class GradeDetailsActivity extends ListActivity {
 	  		  categoryDate.setText(detail.getCategory() + "\n" + detail.getDueDate());
 	  		  
 	  		  if(!((int) detail.getTotalPoints() == 0)) {
-		  		  String percentDetail = String.format("%.2f", ((detail.getPointsEarned() / detail.getTotalPoints()) * 100)) + "%";
-		  		  percent.setText(percentDetail);
-		  		  
-		  		  String scoreDetail = String.format("%d/%d", (int) detail.getPointsEarned(), (int) detail.getTotalPoints());
-		  		  score.setText(scoreDetail);
+		  		  percent.setText(detail.getDisplayPercent());
+		  		  score.setText(detail.getDisplayScore());
 	  		  } else {
 	  			  percent.setText("--");
 	  			  score.setText("");

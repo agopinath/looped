@@ -6,11 +6,13 @@ public class GradeDetail implements Serializable {
 	private String detailName;
 	private String category;
 	private String dueDate;
-	private double pointsEarned;
-	private double totalPoints;
 	private String comment;
 	private String submissions;
-
+	private String displayScore;
+	private String displayPercent;
+	private double pointsEarned;
+	private double totalPoints;
+	
 	public GradeDetail() {
 		this.detailName = "";
 		this.category = "";
@@ -88,4 +90,19 @@ public class GradeDetail implements Serializable {
 		this.submissions = submissions;
 	}
 
+	public String getDisplayScore() {
+		return displayScore;
+	}
+
+	public void setDisplayScore(String displayScore) {
+		this.displayScore = displayScore;
+	}
+
+	public String getDisplayPercent() {
+		return displayPercent;
+	}
+
+	public void setDisplayPercent(String displayPercent) {
+		this.displayPercent = displayPercent;
+	}
 }
