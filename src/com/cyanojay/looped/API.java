@@ -272,8 +272,32 @@ public final class API {
 	    return detailsList;
 	}
 
-	public AssignmentDetail getAssignmentDetails(CurrentAssignment assignment) {
-		// TODO: return details of a given assignment
-		return null;
+	public AssignmentDetail getAssignmentDetails(CurrentAssignment assignment) throws ClientProtocolException, IOException {
+		AssignmentDetail details = new AssignmentDetail();
+		
+		// construct and send a GET request to the URL where the assignment details are stored
+		HttpClient client = new DefaultHttpClient();
+		BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+		HttpGet httpGet = new HttpGet(assignment.getDetailsUrl());
+			
+		HttpResponse response = client.execute(httpGet, context);
+		Document detailsPage = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
+		
+		// select the div containing assignment details
+		Elements detailBlock = detailsPage.body().select("div.course");
+		
+		String assignTitle = detailBlock.select("div.title_page").text();
+		String assignAudience = detailBlock.select("div.highlight_box").text();
+		
+		details.setName(assignTitle);
+		details.setTargetAudience(assignAudience);
+		
+		Elements assignDetails = detailBlock.select("td.info");
+		
+		for(Element detail: assignDetails) {
+			details.addDetail(detail.text());
+		}
+		
+		return details;
 	}
 }

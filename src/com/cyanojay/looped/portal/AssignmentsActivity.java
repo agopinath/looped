@@ -1,8 +1,11 @@
 package com.cyanojay.looped.portal;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -102,7 +105,15 @@ public class AssignmentsActivity extends ListActivity {
     private class ScrapeAssignmentDetailsTask extends AsyncTask<CurrentAssignment, Void, AssignmentDetail> {
 		@Override
 		protected AssignmentDetail doInBackground(CurrentAssignment... params) {
-	        return API.get().getAssignmentDetails(params[0]);
+	        try {
+				return API.get().getAssignmentDetails(params[0]);
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        
+			return null;
 		}
 		
 		@Override
