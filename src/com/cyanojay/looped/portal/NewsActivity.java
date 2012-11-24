@@ -94,7 +94,6 @@ public class NewsActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);
-    	Toast.makeText(this, selected.getArticleName() + " selected", Toast.LENGTH_SHORT).show();
     	
     	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask();
     	task.execute(selected);

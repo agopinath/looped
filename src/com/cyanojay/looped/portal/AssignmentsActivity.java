@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -132,11 +133,11 @@ public class AssignmentsActivity extends ListActivity {
 	        TextView title = (TextView) flow.findViewById(R.id.assigndet_title);
 	        TextView audience = (TextView) flow.findViewById(R.id.assigndet_audi);
 	        TextView info = (TextView) flow.findViewById(R.id.assigndet_info);
-	        TextView explanation = (TextView) flow.findViewById(R.id.assigndet_expl);
+	        WebView explanation = (WebView) flow.findViewById(R.id.assigndet_expl);
 	        
 	        title.setText(assignDetail.getName());
 	        audience.setText(assignDetail.getTargetAudience());
-	        explanation.setText(assignDetail.getExplanation());
+	        explanation.loadData(assignDetail.getExplanation(), "text/html", "UTF-8");
 	        
 	        String infoStr = "";
 	        for(String detail : assignDetail.getDetails()) {
