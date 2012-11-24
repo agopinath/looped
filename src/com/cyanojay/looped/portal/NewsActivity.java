@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -124,6 +125,7 @@ public class NewsActivity extends ListActivity {
 	        ScrollView flow = (ScrollView) inflater.inflate(R.layout.news_details_popup, null, false);
 	        flow.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	        
+	        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
 	        TextView title = (TextView) flow.findViewById(R.id.newsdet_title);
 	        TextView info = (TextView) flow.findViewById(R.id.newsdet_info);
 	        TextView content = (TextView) flow.findViewById(R.id.newsdet_content);
@@ -141,7 +143,7 @@ public class NewsActivity extends ListActivity {
 	        
 	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.25*height)), true);
 	        
-	        flow.setOnClickListener(new View.OnClickListener() {
+	        wrapper.setOnClickListener(new View.OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
 	                pw.dismiss();

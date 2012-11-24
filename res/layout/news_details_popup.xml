@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 	<LinearLayout
-	    android:id="@+id/LinearLayout2"
+	    android:id="@+id/newsdet_wrapper"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:background="#F5F1E2"
