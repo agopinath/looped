@@ -102,7 +102,6 @@ public class AssignmentsActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
-    	Toast.makeText(this, selected.getName() + " selected", Toast.LENGTH_SHORT).show();
     	
     	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask();
     	task.execute(selected);
@@ -161,7 +160,7 @@ public class AssignmentsActivity extends ListActivity {
 	        
 	        info.setText(Html.fromHtml(infoStr));
 	        
-	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.25*height)), true);
+	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.4*height)), true);
 	        
 	        flow.setOnClickListener(new View.OnClickListener() {
 	            @Override

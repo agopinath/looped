@@ -5,11 +5,14 @@
     android:layout_height="200dp"
     android:background="#F5F1E2"
     android:orientation="vertical" >
-
+
 	<TextView
 	    android:id="@+id/assigndet_title"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:layout_marginTop="15dp"
 	    android:text="Large Text"
 	    android:textAppearance="?android:attr/textAppearanceLarge"
 	    android:textSize="28dp" />
@@ -18,11 +21,13 @@
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:background="@android:color/darker_gray" />
-
+
     <TextView
         android:id="@+id/assigndet_audi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -30,11 +35,12 @@
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:background="@android:color/darker_gray" />
-
+
     <TextView
         android:id="@+id/assigndet_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -42,11 +48,14 @@
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:background="@android:color/darker_gray" />
-
+
     <TextView
         android:id="@+id/assigndet_expl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

@@ -80,7 +80,6 @@ public class GradesActivity extends ListActivity {
 	    		  String gradeHighlight = "";
 	    		  char tensPlace = course.getPercentGrade().charAt(0);
 	    				  
-	    		  System.out.println('6');
 	    		  if(tensPlace == '9' || tensPlace == '1') {
 	    			  gradeHighlight = "#009900";
 	    		  } else if(tensPlace <= '8') { 
@@ -116,7 +115,6 @@ public class GradesActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
-    	Toast.makeText(this, selectedCourse.getName() + " selected", Toast.LENGTH_SHORT).show();
     	
     	if(selectedCourse.getLetterGrade().equals(Course.SUBST_LETT_GRADE)) return;
     	
