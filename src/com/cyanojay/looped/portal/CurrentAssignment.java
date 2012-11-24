@@ -8,7 +8,7 @@ public class CurrentAssignment {
 	private String assignedDate;
 	private String dueDate;
 	private int maxPoints;
-
+	
 	public CurrentAssignment() {
 		this.name = "";
 		this.courseName = "";

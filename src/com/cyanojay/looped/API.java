@@ -24,6 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
 import com.cyanojay.looped.portal.GradeDetail;
@@ -265,5 +266,10 @@ public final class API {
 	    }
 		
 	    return detailsList;
+	}
+
+	public AssignmentDetail getAssignmentDetails(CurrentAssignment assignment) {
+		// TODO: return details of a given assignment
+		return null;
 	}
 }

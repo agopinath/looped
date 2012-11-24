@@ -92,7 +92,24 @@ public class AssignmentsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-    	CurrentAssignment item = (CurrentAssignment) getListAdapter().getItem(position);
-    	Toast.makeText(this, item.getName() + " selected", Toast.LENGTH_SHORT).show();
+    	CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
+    	Toast.makeText(this, selected.getName() + " selected", Toast.LENGTH_SHORT).show();
+    	
+    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask();
+    	task.execute(selected);
     }
+    
+    private class ScrapeAssignmentDetailsTask extends AsyncTask<CurrentAssignment, Void, AssignmentDetail> {
+		@Override
+		protected AssignmentDetail doInBackground(CurrentAssignment... params) {
+	        return API.get().getAssignmentDetails(params[0]);
+		}
+		
+		@Override
+	    protected void onPostExecute(AssignmentDetail result) {
+	        super.onPostExecute(result);
+	        
+	        // TODO: display the assignment details appropriately in a PopUpWindow
+		}
+    };
 }
