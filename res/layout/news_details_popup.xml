@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout2"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
-    android:background="#F5F1E2"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/newsdet_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/black" />
-    
-     <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
-
-     <TextView
-         android:id="@+id/newsdet_info"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Medium Text"
-         android:textAppearance="?android:attr/textAppearanceMedium"
-         android:textColor="@android:color/black" />
-
-     <View
-         android:layout_width="fill_parent"
-         android:layout_height="2dp"
-         android:background="@android:color/darker_gray" />
-
-     <TextView
-         android:id="@+id/newsdet_content"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Medium Text"
-         android:textAppearance="?android:attr/textAppearanceMedium"
-         android:textColor="@android:color/black" />
-
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+	<LinearLayout
+	    android:id="@+id/LinearLayout2"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#F5F1E2"
+	    android:orientation="vertical" >
+				
+	    <TextView
+	        android:id="@+id/newsdet_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Large Text"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:textColor="@android:color/black" />
+	    
+	     <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="2dp"
+	        android:background="@android:color/darker_gray" />
+		
+	     <TextView
+	         android:id="@+id/newsdet_info"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:text="Medium Text"
+	         android:textAppearance="?android:attr/textAppearanceMedium"
+	         android:textColor="@android:color/black" />
+	
+	     <View
+	         android:layout_width="fill_parent"
+	         android:layout_height="2dp"
+	         android:background="@android:color/darker_gray" />
+			
+	     <TextView
+	         android:id="@+id/newsdet_content"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:text="Medium Text"
+	         android:textAppearance="?android:attr/textAppearanceMedium"
+	         android:textColor="@android:color/black" />
+	
+	</LinearLayout>
+</ScrollView>

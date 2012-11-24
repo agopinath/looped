@@ -221,7 +221,7 @@ public final class API {
 	    	article.setAuthor(authorData[0]);
 	    	article.setAuthorType(authorData[1]);
 	    	article.setDatePosted(date.text());
-	    	article.setArticleUrl(title.attr("href"));
+	    	article.setArticleUrl(portalUrl + title.attr("href"));
 	    	
 	    	news.add(article);
 	    }

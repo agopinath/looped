@@ -3,8 +3,6 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,9 +15,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,7 +116,39 @@ public class NewsActivity extends ListActivity {
 	    protected void onPostExecute(NewsDetail newsDetail) {
 	        super.onPostExecute(newsDetail);
 	        
-	        // TODO: show popup window containing HTML-formatted content and relevant details of a news article
+	        Display display = getWindowManager().getDefaultDisplay(); 
+	        int width = display.getWidth();
+	        int height = display.getHeight(); 
+	        
+	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        ScrollView flow = (ScrollView) inflater.inflate(R.layout.news_details_popup, null, false);
+	        flow.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+	        
+	        TextView title = (TextView) flow.findViewById(R.id.newsdet_title);
+	        TextView info = (TextView) flow.findViewById(R.id.newsdet_info);
+	        TextView content = (TextView) flow.findViewById(R.id.newsdet_content);
+	        
+	        title.setText(newsDetail.getTitle());
+	        content.setText(Html.fromHtml(newsDetail.getContent()));
+	        
+	        String infoStr = "";
+	        for(String detail : newsDetail.getDetails()) {
+	        	String parts[] = detail.split(":");
+        		infoStr += "<b>" + parts[0] + "</b>: " + parts[1] + "<br />";
+	        }
+	        
+	        info.setText(Html.fromHtml(infoStr));
+	        
+	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.25*height)), true);
+	        
+	        flow.setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                pw.dismiss();
+	            }
+	        });
+	        
+	        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
 		}
     };
 }
