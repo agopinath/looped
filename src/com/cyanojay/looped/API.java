@@ -29,6 +29,7 @@ import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
 import com.cyanojay.looped.portal.GradeDetail;
 import com.cyanojay.looped.portal.NewsArticle;
+import com.cyanojay.looped.portal.NewsDetail;
 
 
 public final class API {
@@ -299,6 +300,14 @@ public final class API {
 		for(Element detail: assignDetails) {
 			details.addDetail(detail.text());
 		}
+		
+		return details;
+	}
+	
+	public NewsDetail getNewsDetails(NewsArticle article) {
+		NewsDetail details = new NewsDetail();
+		
+		// TODO: add retrieval of news details given a news article
 		
 		return details;
 	}

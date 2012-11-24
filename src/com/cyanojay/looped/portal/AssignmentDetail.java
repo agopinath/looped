@@ -12,7 +12,7 @@ public class AssignmentDetail {
 	public AssignmentDetail() {
 		this.name = "";
 		this.targetAudience = "";
-		this.setExplanation("");
+		this.explanation = "";
 		this.details = new ArrayList<String>();
 	}
 	
@@ -20,7 +20,7 @@ public class AssignmentDetail {
 		this.name = name;
 		this.targetAudience = audience;
 		this.details = details;
-		this.setExplanation(explanation);
+		this.explanation = explanation;
 	}
 
 	public String getName() {

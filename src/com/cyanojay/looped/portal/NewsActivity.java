@@ -1,18 +1,25 @@
 package com.cyanojay.looped.portal;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
 
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +92,24 @@ public class NewsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-    	NewsArticle item = (NewsArticle) getListAdapter().getItem(position);
-    	Toast.makeText(this, item.getArticleName() + " selected", Toast.LENGTH_SHORT).show();
+    	NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);
+    	Toast.makeText(this, selected.getArticleName() + " selected", Toast.LENGTH_SHORT).show();
+    	
+    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask();
+    	task.execute(selected);
     }
+    
+    private class ScrapeNewsDetailsTask extends AsyncTask<NewsArticle, Void, NewsDetail> {
+		@Override
+		protected NewsDetail doInBackground(NewsArticle... params) {
+			return API.get().getNewsDetails(params[0]);
+		}
+		
+		@Override
+	    protected void onPostExecute(NewsDetail newsDetail) {
+	        super.onPostExecute(newsDetail);
+	        
+	        // TODO: show popup window containing HTML-formatted content and relevant details of a news article
+		}
+    };
 }
