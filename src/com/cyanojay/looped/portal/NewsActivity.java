@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -128,10 +129,10 @@ public class NewsActivity extends ListActivity {
 	        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
 	        TextView title = (TextView) flow.findViewById(R.id.newsdet_title);
 	        TextView info = (TextView) flow.findViewById(R.id.newsdet_info);
-	        TextView content = (TextView) flow.findViewById(R.id.newsdet_content);
+	        WebView content = (WebView) flow.findViewById(R.id.newsdet_content);
 	        
 	        title.setText(newsDetail.getTitle());
-	        content.setText(Html.fromHtml(newsDetail.getContent()));
+	        content.loadData(newsDetail.getContent(), "text/html", "UTF-8");
 	        
 	        String infoStr = "";
 	        for(String detail : newsDetail.getDetails()) {
