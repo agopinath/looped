@@ -3,11 +3,14 @@ package com.cyanojay.looped;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
@@ -27,6 +30,11 @@ public class MainActivity extends Activity {
     	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     	imm.hideSoftInputFromWindow(findViewById(R.id.sl_prefix).getWindowToken(), 0);
     	
+    	if(!isOnline()) {
+    		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", 
+    					   Toast.LENGTH_SHORT).show();
+    	}
+    	
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
     	String pass = ((EditText) findViewById(R.id.sl_password)).getText().toString();
     	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
@@ -35,7 +43,18 @@ public class MainActivity extends Activity {
     	logInTask.execute();
     }
     
-    public void savePreferences(View view) {
+    private boolean isOnline() {
+    	ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    	NetworkInfo netInfo = cm.getActiveNetworkInfo();
+    	
+    	if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+    		return true;
+    	}
+    	
+    	return false;
+	}
+
+	public void savePreferences(View view) {
     	SharedPreferences settings = getSharedPreferences("Looped", 0);
         SharedPreferences.Editor editor = settings.edit();
         
