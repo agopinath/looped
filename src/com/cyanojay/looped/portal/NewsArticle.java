@@ -7,19 +7,22 @@ public class NewsArticle implements Serializable {
 	private String author;
 	private String datePosted;
 	private String authorType;
-
+	private String articleUrl;
+	
 	public NewsArticle() {
 		this.articleName = "";
 		this.author = "";
-		this.setAuthorType("");
+		this.author = "";
 		this.datePosted = "";
+		this.setArticleUrl("");
 	}
 	
-	public NewsArticle(String articleName, String author, String authorType, String datePosted) {
+	public NewsArticle(String articleName, String author, String authorType, String datePosted, String articleUrl) {
 		this.articleName = articleName;
 		this.author = author;
-		this.setAuthorType(authorType);
+		this.author = "";
 		this.datePosted = datePosted;
+		this.setArticleUrl(articleUrl);
 	}
 
 	public String getArticleName() {
@@ -52,5 +55,13 @@ public class NewsArticle implements Serializable {
 
 	public void setAuthorType(String authorType) {
 		this.authorType = authorType;
+	}
+
+	public String getArticleUrl() {
+		return articleUrl;
+	}
+
+	public void setArticleUrl(String articleUrl) {
+		this.articleUrl = articleUrl;
 	}
 }
