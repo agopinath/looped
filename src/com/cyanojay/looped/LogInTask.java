@@ -79,12 +79,12 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         progressDialog.dismiss();
         
         if(loginSuccess) {
-        	Log.v("", "\n\nLOG IN SUCCESS\n\n");
+        	System.out.println("\n\nLOG IN SUCCESS\n\n");
 
         	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
             parent.startActivity(showPortalIntent);
         } else {
-        	Log.v("", "\n\nLOG IN FAIL\n\n");
+        	System.out.println("\n\nLOG IN FAIL\n\n");
         	
         	Toast.makeText(parent, "Incorrect username/password/login URL.", Toast.LENGTH_SHORT).show();
         }
