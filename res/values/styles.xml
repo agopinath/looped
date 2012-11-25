@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="android:Theme.Light" />
     
     <style name="LoopedCommon" parent="android:Theme.Light" >
-        <item name="android:background">#F5F1E2</item>
+        <item name="android:background">@drawable/activity_background</item>
     </style>
     
     <style name="LoopedCommon.LoopedMain" >
@@ -19,6 +19,15 @@
     </style>
     
     <style name="LoopedCommon.LoopedNews" >
+        
+    </style>
+    
+    <style name="LoopedPopup">
+        <item name="android:background">@drawable/popup_border</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    
+    <style name="LoopedCommon.LoopedGradeDetails" >
         
     </style>
 </resources>
