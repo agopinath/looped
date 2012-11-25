@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="right"
     android:orientation="vertical"
-    android:stretchColumns="2" >
+    android:stretchColumns="2" 
+    style="@style/LoopedListRow" >
 
     <TableRow
         android:id="@+id/tableRow1"
