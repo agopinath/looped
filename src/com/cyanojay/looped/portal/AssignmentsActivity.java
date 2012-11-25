@@ -34,7 +34,8 @@ public class AssignmentsActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            
+        setContentView(R.layout.activity_assignments);
+        
         ScrapeAssignmentsTask task = new ScrapeAssignmentsTask();
         task.execute();
     }

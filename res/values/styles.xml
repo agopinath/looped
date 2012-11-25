@@ -2,11 +2,23 @@
 
     <style name="AppTheme" parent="android:Theme.Light" />
     
-    <style name="LoopedTheme" parent="android:Theme.Light" >
-        <item name="android:background">#B0B0B0</item>
+    <style name="LoopedCommon" parent="android:Theme.Light" >
+        <item name="android:background">#F5F1E2</item>
     </style>
     
-    <style name="LoopedActivityTheme" parent="android:Theme.Light" >
-        <item name="android:background">#ecf0e0</item>
+    <style name="LoopedCommon.LoopedMain" >
+        
+    </style>
+    
+    <style name="LoopedCommon.LoopedGrades" >
+        
+    </style>
+    
+    <style name="LoopedCommon.LoopedAssignments" >
+        
+    </style>
+    
+    <style name="LoopedCommon.LoopedNews" >
+        
     </style>
 </resources>

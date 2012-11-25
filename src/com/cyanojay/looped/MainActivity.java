@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
     	}
     	
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
-    	String pass = ((EditText) findViewById(R.id.sl_password)).getText().toString();
+    	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString();
     	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
     	
     	LogInTask logInTask = new LogInTask(username, pass, loginPrefix, this); 
@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor editor = settings.edit();
         
         editor.putString("username", ((EditText) findViewById(R.id.sl_uname)).getText().toString());
-        editor.putString("pass", ((EditText) findViewById(R.id.sl_password)).getText().toString());
+        editor.putString("pass", ((EditText) findViewById(R.id.sl_pass)).getText().toString());
         editor.putString("loginPrefix", ((EditText) findViewById(R.id.sl_prefix)).getText().toString());
         
         editor.commit();
@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
     	SharedPreferences settings = getSharedPreferences("Looped", 0);
     	
     	((EditText) findViewById(R.id.sl_uname)).setText(settings.getString("username", ""));
-    	((EditText) findViewById(R.id.sl_password)).setText(settings.getString("pass", ""));
+    	((EditText) findViewById(R.id.sl_pass)).setText(settings.getString("pass", ""));
     	((EditText) findViewById(R.id.sl_prefix)).setText(settings.getString("loginPrefix", ""));
     }
 }
