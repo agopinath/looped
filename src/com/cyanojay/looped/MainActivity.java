@@ -1,6 +1,5 @@
 package com.cyanojay.looped;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -12,7 +11,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+import com.cyanojay.looped.portal.BaseActivity;
+
+public class MainActivity extends BaseActivity {
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {

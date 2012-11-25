@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class GradesActivity extends ListActivity {
+public class GradesActivity extends BaseListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,12 +104,6 @@ public class GradesActivity extends ListActivity {
     		  
     		  return rowView;
     	} 
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_grades, menu);
-        return true;
     }
     
     @Override

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class GradeDetailsActivity extends ListActivity {
+public class GradeDetailsActivity extends BaseListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,15 +73,17 @@ public class GradeDetailsActivity extends ListActivity {
 	  		  View rowView = inflater.inflate(R.layout.grade_detail_row, parent, false);
 	  		  
 	  		  TextView name = (TextView) rowView.findViewById(R.id.gradedet_name);
-	  		  TextView categoryDate = (TextView) rowView.findViewById(R.id.gradedet_categ_date);
+	  		  TextView category = (TextView) rowView.findViewById(R.id.gradedet_categ);
+	  		  TextView date = (TextView) rowView.findViewById(R.id.gradedet_date);
 	  		  TextView percent = (TextView) rowView.findViewById(R.id.gradedet_pct);
 	  		  TextView score = (TextView) rowView.findViewById(R.id.gradedet_score);
 	  		
 	  		  GradeDetail detail = values[position];
 	  		  
 	  		  name.setText(detail.getDetailName());
-	  		  categoryDate.setText(detail.getCategory() + "\n" + detail.getDueDate());
-	  		  
+	  		  category.setText(detail.getCategory());
+	  		  date.setText(detail.getDueDate());	  
+	  		
 	  		  if(!((int) detail.getTotalPoints() == 0)) {
 		  		  percent.setText(detail.getDisplayPercent());
 		  		  score.setText(detail.getDisplayScore());
@@ -93,10 +95,4 @@ public class GradeDetailsActivity extends ListActivity {
 	  		  return rowView;
 	  	}
 	}
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_grade_details, menu);
-        return true;
-    }
 }

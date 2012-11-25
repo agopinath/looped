@@ -1,9 +1,7 @@
 package com.cyanojay.looped.portal;
 
-import android.app.TabActivity;
+import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -13,45 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class PortalActivity extends TabActivity {
-	private TabHost tabHost;
-	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_portal);
-        
-        setTitle(API.get().getPortalTitle()); 
-        
-        tabHost = (TabHost) getTabHost();
-        
-        setupTab(new TextView(this), "Grades", new Intent(this, GradesActivity.class));
-        setupTab(new TextView(this), "Assignments", new Intent(this, NewsActivity.class));
-        setupTab(new TextView(this), "News", new Intent(this, AssignmentsActivity.class));
-	}
-
-	private void setupTab(final View view, final String tag, Intent e) {
-	    View tabview = createTabView(tabHost.getContext(), tag);
-	
-	    TabSpec tabSpec = tabHost.newTabSpec(tag).setIndicator(tabview).setContent(e);
-
-	    tabHost.addTab(tabSpec);
-	}
-	
-	private static View createTabView(final Context context, final String text) {
-	    View view = LayoutInflater.from(context).inflate(R.layout.tabs_bg, null);
-	    TextView tv = (TextView) view.findViewById(R.id.tabsText);
-	    tv.setText(text);
-	    return view;
-	}
-	
+public class BaseListActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_portal, menu);
@@ -79,7 +43,7 @@ public class PortalActivity extends TabActivity {
         LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.about_popup, null, false);
         TextView about = (TextView) flow.findViewById(R.id.about_text);
         
-        about.setText(Html.fromHtml("Developed by Ajay Gopinath of <b>CyanoJay Works</b>. Copyright(c) 2012. All Rights Reserved.<br /><br />School Loop(TM) by <b>School Loop, Inc</b>."));
+        about.setText(Html.fromHtml("Developed by Ajay Gopinath of <b>CyanoJay Works</b>. Copyright(c); 2012. All Rights Reserved.<br /><br />School Loop(TM) by <b>School Loop, Inc</b>."));
         
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.8*height)), true);
         

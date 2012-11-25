@@ -13,9 +13,9 @@
 	        android:id="@+id/newsdet_title"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="15dp"
-	        android:layout_marginRight="15dp"
-	        android:layout_marginTop="15dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="10dp"
 	        android:text="Large Text"
 	        android:textAppearance="?android:attr/textAppearanceLarge"
 	        android:textColor="@android:color/black" />
@@ -29,8 +29,8 @@
 	         android:id="@+id/newsdet_info"
 	         android:layout_width="wrap_content"
 	         android:layout_height="wrap_content"
-	         android:layout_marginLeft="15dp"
-	         android:layout_marginRight="15dp"
+	         android:layout_marginLeft="10dp"
+	         android:layout_marginRight="10dp"
 	         android:text="Medium Text"
 	         android:textAppearance="?android:attr/textAppearanceMedium"
 	         android:textColor="@android:color/black" />
@@ -44,6 +44,6 @@
 	         android:id="@+id/newsdet_content"
 	         android:layout_width="match_parent"
 	         android:layout_height="match_parent"
-	         android:layout_margin="15dp"/>
+	         android:layout_margin="10dp"/>
 	</LinearLayout>
 </ScrollView>

@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class AssignmentsActivity extends ListActivity {
+public class AssignmentsActivity extends BaseListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,12 +91,6 @@ public class AssignmentsActivity extends ListActivity {
     		  return rowView;
     	  }
     	} 
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_assignments, menu);
-        return true;
-    }
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {

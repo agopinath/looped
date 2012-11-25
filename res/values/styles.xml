@@ -22,12 +22,17 @@
         
     </style>
     
-    <style name="LoopedPopup">
+    <style name="LoopedPopup" >
         <item name="android:background">@drawable/popup_border</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
     
     <style name="LoopedCommon.LoopedGradeDetails" >
         
+    </style>
+    
+    <style name="LoopedAbout" >
+        <item name="android:background">@drawable/popup_border</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 </resources>

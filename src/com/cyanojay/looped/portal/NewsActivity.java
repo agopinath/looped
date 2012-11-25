@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class NewsActivity extends ListActivity {
+public class NewsActivity extends BaseListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,6 @@ public class NewsActivity extends ListActivity {
     		  
     		  return rowView;
     	} 
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_news, menu);
-        return true;
     }
     
     @Override
