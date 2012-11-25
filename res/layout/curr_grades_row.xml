@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/TableLayout1"
+    style="@style/LoopedListRow"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight" 
-    style="@style/LoopedListRow" >
-
-    <TextView
-        android:id="@+id/grades_course_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/grades_pct_grade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/grades_course_name"
-        android:layout_below="@+id/grades_course_name"
-        android:alpha="0.8"
-        android:text="TextView"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/grades_lett_grade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:stretchColumns="1" >
 
-    <TextView
-        android:id="@+id/grades_num_zeros"
+    <TableRow
+        android:id="@+id/tableRow1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/grades_pct_grade"
-        android:layout_alignRight="@+id/grades_lett_grade"
-        android:layout_alignTop="@+id/grades_pct_grade"
-        android:alpha="0.6"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/important_text" />
+        android:layout_height="wrap_content" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/grades_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/grades_lett_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/grades_num_zeros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:alpha="0.6"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/important_text" />
+
+        <TextView
+            android:id="@+id/grades_pct_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:alpha="0.8"
+            android:gravity="right"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </TableRow>
+
+</TableLayout>
