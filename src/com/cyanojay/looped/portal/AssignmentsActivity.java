@@ -160,7 +160,7 @@ public class AssignmentsActivity extends ListActivity {
 	        
 	        info.setText(Html.fromHtml(infoStr));
 	        
-	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.5*height)), true);
+	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.6*height)), true);
 	        
 	        wrapper.setOnClickListener(new View.OnClickListener() {
 	            @Override
