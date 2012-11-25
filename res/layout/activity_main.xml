@@ -1,42 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     style="@style/LoopedCommon.LoopedMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <Button
-        android:id="@+id/sl_login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:onClick="logIn"
-        android:text="Log In" />
-
-    <Button
-        android:id="@+id/load_prefs_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sl_login_btn"
-        android:layout_alignParentLeft="true"
-        android:onClick="loadPreferences"
-        android:text="Load Preferences" />
-
-    <Button
-        android:id="@+id/save_prefs_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/load_prefs_btn"
-        android:layout_alignParentLeft="true"
-        android:onClick="savePreferences"
-        android:text="Save Preferences" />
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <EditText
         android:id="@+id/sl_uname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
@@ -50,22 +23,45 @@
         android:id="@+id/sl_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sl_uname"
-        android:layout_below="@+id/sl_uname"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
-	
+
     <EditText
         android:id="@+id/sl_prefix"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sl_uname"
-        android:layout_below="@+id/sl_pass"
+        android:layout_marginBottom="35dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="SchoolLoop Site Prefix" />
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/save_prefs_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:onClick="savePreferences"
+        android:text="Save Login Info" />
+
+    <Button
+        android:id="@+id/load_prefs_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:onClick="loadPreferences"
+        android:text="Load Login Info" />
+
+    <Button
+        android:id="@+id/sl_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="15dp"
+        android:onClick="logIn"
+        android:text="Log In" />
+
+</LinearLayout>
