@@ -28,6 +28,10 @@ public class GradeDetailsActivity extends BaseListActivity {
         
         Course currCourse = (Course) getIntent().getSerializableExtra("COURSE_SELECTED");
         
+        setTitle(API.get().getPortalTitle());
+        getActionBar().setSubtitle(currCourse.getName() + " ~ " + 
+        						   currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
+        
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);
     }

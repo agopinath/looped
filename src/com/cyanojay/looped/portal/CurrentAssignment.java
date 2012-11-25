@@ -1,8 +1,10 @@
 package com.cyanojay.looped.portal;
 
+import java.io.Serializable;
 
 
-public class CurrentAssignment {
+
+public class CurrentAssignment implements Serializable {
 	private String name;
 	private String courseName;
 	private String dueDate;

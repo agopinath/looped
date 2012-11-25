@@ -1,9 +1,10 @@
 package com.cyanojay.looped.portal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsDetail {
+public class NewsDetail implements Serializable {
 	private String title;
 	private List<String> details;
 	private String content;
