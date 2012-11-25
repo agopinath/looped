@@ -33,8 +33,8 @@ public class PortalActivity extends TabActivity {
         tabHost = (TabHost) getTabHost();
         
         setupTab(new TextView(this), "Grades", new Intent(this, GradesActivity.class));
-        setupTab(new TextView(this), "Assignments", new Intent(this, NewsActivity.class));
-        setupTab(new TextView(this), "News", new Intent(this, AssignmentsActivity.class));
+        setupTab(new TextView(this), "Assignments", new Intent(this, AssignmentsActivity.class));
+        setupTab(new TextView(this), "News", new Intent(this, NewsActivity.class));
 	}
 
 	private void setupTab(final View view, final String tag, Intent e) {
