@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/TableLayout1"
+    style="@style/LoopedListRow"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight" 
-    style="@style/LoopedListRow" >
-
-    <TextView
-        android:id="@+id/assign_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/assign_course_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/assign_name"
-        android:layout_marginLeft="10dp"
-        android:alpha="0.8"
-        android:paddingBottom="10dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/assign_due_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/assign_course_name"
-        android:layout_alignBottom="@+id/assign_course_name"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:alpha="0.8"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    android:layout_height="match_parent"
+    android:layout_gravity="right"
+    android:orientation="vertical"
+    android:shrinkColumns="0"
+    android:stretchColumns="1" >
 
-</RelativeLayout>
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/assign_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/assign_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:alpha="0.8"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/assign_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:alpha="0.8"
+            android:gravity="right"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </TableRow>
+
+</TableLayout>
