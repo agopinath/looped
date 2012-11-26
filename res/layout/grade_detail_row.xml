@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/TableLayout1"
+    style="@style/LoopedListRow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="right"
     android:orientation="vertical"
-    android:stretchColumns="2" 
-    style="@style/LoopedListRow" >
+    android:shrinkColumns="1"
+    android:stretchColumns="2" >
 
     <TableRow
         android:id="@+id/tableRow1"
@@ -23,7 +24,7 @@
             android:text="Percent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:width="75dp" />
-
+
         <TextView
             android:id="@+id/gradedet_name"
             android:layout_width="wrap_content"
