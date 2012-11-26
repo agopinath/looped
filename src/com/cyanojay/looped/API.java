@@ -257,8 +257,8 @@ public final class API {
 	    	
 	    	String scoreData = data.get(4).text().trim();
 	    	
-	    	// if the score is entered/valid, split the grade into total points and earned points
-	    	if(scoreData.length() > 5) {
+	    	// if the score is a numerical entry, split the grade into total points and earned points
+	    	if(Character.isDigit(scoreData.charAt(0))) {
 	    		String displayPct = scoreData.split(" = ")[1].trim();
 	    		newDetail.setDisplayPercent(displayPct);
 	    		
@@ -272,6 +272,9 @@ public final class API {
 	    		
 	    		String displayScore = scoreData.replaceAll(" ", "");
 	    		newDetail.setDisplayScore(displayScore);
+	    	} else {
+	    		newDetail.setDisplayPercent("--");
+	    		newDetail.setDisplayScore("");
 	    	}
 	    	
 	    	detailsList.add(newDetail);
