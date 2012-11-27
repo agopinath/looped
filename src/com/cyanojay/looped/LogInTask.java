@@ -15,7 +15,7 @@ import com.cyanojay.looped.portal.PortalActivity;
 
 public class LogInTask extends AsyncTask<String, String, Boolean> {
 
-	ProgressDialog progressDialog;
+	private ProgressDialog progressDialog;
 	private String username;
 	private String pass;
 	private String loginUrl;

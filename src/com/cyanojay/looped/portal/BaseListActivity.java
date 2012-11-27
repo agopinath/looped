@@ -2,6 +2,7 @@ package com.cyanojay.looped.portal;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -16,12 +17,13 @@ import android.widget.TextView;
 import com.cyanojay.looped.R;
 
 public class BaseListActivity extends ListActivity {
-    @Override
+	
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_portal, menu);
+    	getMenuInflater().inflate(R.menu.activity_portal, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

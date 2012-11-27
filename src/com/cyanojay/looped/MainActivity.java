@@ -1,5 +1,8 @@
 package com.cyanojay.looped;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -30,18 +33,27 @@ public class MainActivity extends BaseActivity {
     public void logIn(View view) {
     	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     	imm.hideSoftInputFromWindow(findViewById(R.id.sl_prefix).getWindowToken(), 0);
-    	
-    	if(!isOnline()) {
-    		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", 
-    					   Toast.LENGTH_SHORT).show();
-    	}
-    	
+
     	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
     	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString();
     	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
     	
-    	LogInTask logInTask = new LogInTask(username, pass, loginPrefix, this); 
-    	logInTask.execute();
+    	if(!isOnline()) {
+    		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", 
+    					   Toast.LENGTH_LONG).show();
+    	} else if(hasWhitespace(loginPrefix)) {
+    		Toast.makeText(this, "The login prefix cannot contain whitespaces. Please try again.", 
+					   Toast.LENGTH_LONG).show();
+    	} else {
+	    	LogInTask logInTask = new LogInTask(username, pass, loginPrefix, this); 
+	    	logInTask.execute();
+    	}
+    }
+    
+    private boolean hasWhitespace(String s) {
+    	Pattern pattern = Pattern.compile("\\s");
+    	Matcher matcher = pattern.matcher(s);
+    	return matcher.find();
     }
     
     private boolean isOnline() {
