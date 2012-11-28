@@ -199,11 +199,15 @@ public final class API {
 	public List<NewsArticle> getNews() {
 		List<NewsArticle> news = new ArrayList<NewsArticle>();
 		
+		Elements newsBlock = portal.body().select("td.home_right table.module:gt(0)");
+		
+		System.out.println(newsBlock.html());
+		
 		// select everything in the div holding the article names
-	    Elements articleNames = portal.body().select("div.os a.module_link");
+		Elements articleNames = newsBlock.select("a.module_link");
 	    
 	    // select everything in the div holding the article info (date posted and author)
-	    Elements articleInfo = portal.body().select("div.os td.list_text");
+	    Elements articleInfo = newsBlock.select("td.list_text");
 	    
 	    for(int i = 0; i < articleNames.size(); i++) {
 	    	// create new empty news article to store the article info
@@ -218,8 +222,12 @@ public final class API {
 	    	String authorData[] = author.text().split(" - ");
 	    	
 	    	article.setArticleName(title.text());
-	    	article.setAuthor(authorData[0]);
-	    	article.setAuthorType(authorData[1]);
+	    	
+	    	for(int j = 0; j < authorData.length; j++) {
+	    		if(j == 0) article.setAuthor(authorData[0]);
+	    		if(j == 1) article.setAuthorType(authorData[1]);
+	    	}
+	    	
 	    	article.setDatePosted(date.text());
 	    	article.setArticleUrl(portalUrl + title.attr("href"));
 	    	

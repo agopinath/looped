@@ -12,17 +12,17 @@ public class NewsArticle implements Serializable {
 	public NewsArticle() {
 		this.articleName = "";
 		this.author = "";
-		this.author = "";
+		this.authorType = "";
 		this.datePosted = "";
-		this.setArticleUrl("");
+		this.articleUrl = "";
 	}
 	
 	public NewsArticle(String articleName, String author, String authorType, String datePosted, String articleUrl) {
 		this.articleName = articleName;
 		this.author = author;
-		this.author = "";
+		this.authorType = authorType;
 		this.datePosted = datePosted;
-		this.setArticleUrl(articleUrl);
+		this.articleUrl = articleUrl;
 	}
 
 	public String getArticleName() {
