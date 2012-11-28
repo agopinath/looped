@@ -1,9 +1,12 @@
 package com.cyanojay.looped.portal;
 
+import com.cyanojay.looped.API;
+import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -28,10 +31,23 @@ public class BaseActivity extends Activity {
             case R.id.menu_about:
                 showAbout();
                 return true;
+            case R.id.menu_logout:
+                logOut();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    
+    private boolean logOut() {
+    	boolean status = API.get().logOut();
+    	
+    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	startActivity(intent);
+    	
+    	return status;
+	}
         
     private void showAbout() {
     	Display display = getWindowManager().getDefaultDisplay(); 

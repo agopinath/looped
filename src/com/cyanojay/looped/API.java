@@ -82,7 +82,25 @@ public final class API {
         
         return (loginStatus = isLoggedIn(true));
 	}
-
+	
+	public boolean logOut() {
+		HttpClient client = new DefaultHttpClient();
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+    	HttpGet httpGet = new HttpGet(portalUrl + "/portal/logout?d=x");	
+    	HttpResponse response = null;
+    	
+    	try {
+    		response = client.execute(httpGet, context);
+    	} catch(Exception e) { 
+    		return false; 
+    	}
+    	
+    	setAuthCookies(null);
+    	
+    	BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
+    	return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY)) ? false : true;
+	}
+	
 	public boolean isLoggedIn(boolean deep) {
 		if(!deep) return loginStatus;
 		
@@ -200,8 +218,6 @@ public final class API {
 		List<NewsArticle> news = new ArrayList<NewsArticle>();
 		
 		Elements newsBlock = portal.body().select("td.home_right table.module:gt(0)");
-		
-		System.out.println(newsBlock.html());
 		
 		// select everything in the div holding the article names
 		Elements articleNames = newsBlock.select("a.module_link");

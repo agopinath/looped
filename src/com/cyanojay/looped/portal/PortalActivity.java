@@ -18,6 +18,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cyanojay.looped.API;
+import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 
 public class PortalActivity extends TabActivity {
@@ -64,10 +65,23 @@ public class PortalActivity extends TabActivity {
             case R.id.menu_about:
                 showAbout();
                 return true;
+            case R.id.menu_logout:
+                logOut();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    
+    private boolean logOut() {
+    	boolean status = API.get().logOut();
+    	
+    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	startActivity(intent);
+    	
+    	return status;
+	}
         
     private void showAbout() {
     	Display display = getWindowManager().getDefaultDisplay(); 

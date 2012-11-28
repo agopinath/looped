@@ -2,7 +2,7 @@ package com.cyanojay.looped.portal;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.os.Bundle;
+import android.content.Intent;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.cyanojay.looped.API;
+import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 
 public class BaseListActivity extends ListActivity {
@@ -30,12 +32,25 @@ public class BaseListActivity extends ListActivity {
             case R.id.menu_about:
                 showAbout();
                 return true;
+            case R.id.menu_logout:
+                logOut();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
         
-    private void showAbout() {
+    private boolean logOut() {
+    	boolean status = API.get().logOut();
+    	
+    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	startActivity(intent);
+    	
+    	return status;
+	}
+
+	private void showAbout() {
     	Display display = getWindowManager().getDefaultDisplay(); 
 	    int width = display.getWidth();
 	    int height = display.getHeight(); 
