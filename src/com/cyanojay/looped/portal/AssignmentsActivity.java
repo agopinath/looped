@@ -134,6 +134,10 @@ public class AssignmentsActivity extends BaseListActivity {
 	        audience.setText(assignDetail.getTargetAudience());
 	        explanation.loadData(assignDetail.getExplanation(), "text/html", "UTF-8");
 	        
+	        if(assignDetail.getExplanation().length() != 0)
+	        	explanation.loadData(assignDetail.getExplanation(), "text/html", "UTF-8");
+	        else ((LinearLayout) explanation.getParent()).removeView(explanation);
+	        
 	        String infoStr = "";
 	        for(String detail : assignDetail.getDetails()) {
 	        	if(detail.startsWith("Assigned")) {

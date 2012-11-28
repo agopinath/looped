@@ -125,8 +125,11 @@ public class NewsActivity extends BaseListActivity {
 	        WebView content = (WebView) flow.findViewById(R.id.newsdet_content);
 	        
 	        title.setText(newsDetail.getTitle());
-	        content.loadData(newsDetail.getContent(), "text/html", "UTF-8");
 	        
+	        if(newsDetail.getContent().length() != 0)
+	        	content.loadData(newsDetail.getContent(), "text/html", "UTF-8");
+	        else ((LinearLayout) content.getParent()).removeView(content);
+	        	
 	        String infoStr = "";
 	        for(String detail : newsDetail.getDetails()) {
 	        	String parts[] = detail.split(":");

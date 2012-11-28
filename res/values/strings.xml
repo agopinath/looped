@@ -9,6 +9,7 @@
     <string name="title_activity_news">News</string>
 
     <color name="important_text">#EE0000</color>
-    <string name="title_activity_grade_details">Course Grade Details</string>    
+    <string name="title_activity_grade_details">Course Grade Details</string>
+    <string name="exit_text">(tap to exit)</string>    
 
 </resources>
