@@ -43,10 +43,7 @@ public class BaseActivity extends Activity {
         LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.about_popup, null, false);
         TextView about = (TextView) flow.findViewById(R.id.about_text);
         
-        about.setText(Html.fromHtml("Developed by Ajay Gopinath of <b>CyanoJay Works</b>. Copyright(c) 2012. " +
-									"All Rights Reserved.<br /><br />School Loop(R) and the School Loop logo " +
-									"are registered trademarks " +
-									"of <b>School Loop, Inc</b>."));
+        about.setText(Html.fromHtml(getString(R.string.about_text)));
         
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.8*height)), true);
         
