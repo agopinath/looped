@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <EditText
         android:id="@+id/sl_uname"
         android:layout_width="match_parent"
@@ -14,11 +14,12 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="Username" >
+        android:hint="Username"
+        android:maxLines="1" >
 
         <requestFocus />
     </EditText>
-
+
     <EditText
         android:id="@+id/sl_pass"
         android:layout_width="match_parent"
@@ -28,8 +29,9 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword" />
-
+        android:inputType="textPassword"
+        android:maxLines="1" />
+
     <EditText
         android:id="@+id/sl_prefix"
         android:layout_width="match_parent"
@@ -39,7 +41,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="SchoolLoop Site Prefix" />
+        android:hint="SchoolLoop Site Prefix"
+        android:maxLines="1" />
 
     <Button
         android:id="@+id/save_prefs_btn"
