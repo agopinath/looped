@@ -80,7 +80,7 @@ public class PortalActivity extends TabActivity {
         TextView about = (TextView) flow.findViewById(R.id.about_text);
         
         about.setText(Html.fromHtml("Developed by Ajay Gopinath of <b>CyanoJay Works</b>. Copyright(c) 2012. " +
-									"All Rights Reserved.<br /><br />School Loop(R) and the School Loop logo" +
+									"All Rights Reserved.<br /><br />School Loop(R) and the School Loop logo " +
 									"are registered trademarks " +
 									"of <b>School Loop, Inc</b>."));
 					        
