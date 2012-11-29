@@ -17,7 +17,7 @@
             android:id="@+id/assign_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -32,7 +32,7 @@
             android:id="@+id/assign_course_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:alpha="0.8"
             android:text="TextView" />
 
@@ -40,7 +40,7 @@
             android:id="@+id/assign_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:alpha="0.8"
             android:gravity="right"
             android:text="Small Text"

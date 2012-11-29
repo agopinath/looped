@@ -17,7 +17,7 @@
             android:id="@+id/news_post_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -32,7 +32,7 @@
             android:id="@+id/news_post_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:alpha="0.8"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -41,7 +41,7 @@
             android:id="@+id/news_post_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:alpha="0.8"
             android:gravity="right"
             android:text="Small Text"

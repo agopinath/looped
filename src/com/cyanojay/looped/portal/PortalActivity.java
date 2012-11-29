@@ -33,14 +33,14 @@ public class PortalActivity extends TabActivity {
         
         tabHost = (TabHost) getTabHost();
         
-        setupTab(new TextView(this), "Grades", new Intent(this, GradesActivity.class));
-        setupTab(new TextView(this), "Assignments", new Intent(this, AssignmentsActivity.class));
-        setupTab(new TextView(this), "News", new Intent(this, NewsActivity.class));
+        setupTab("Grades", new Intent(this, GradesActivity.class));
+        setupTab("Assignments", new Intent(this, AssignmentsActivity.class));
+        setupTab("News", new Intent(this, NewsActivity.class));
 	}
 
-	private void setupTab(final View view, final String tag, Intent e) {
+	private void setupTab(final String tag, Intent e) {
 	    View tabview = createTabView(tabHost.getContext(), tag);
-	
+	    
 	    TabSpec tabSpec = tabHost.newTabSpec(tag).setIndicator(tabview).setContent(e);
 
 	    tabHost.addTab(tabSpec);
@@ -49,6 +49,7 @@ public class PortalActivity extends TabActivity {
 	private static View createTabView(final Context context, final String text) {
 	    View view = LayoutInflater.from(context).inflate(R.layout.tabs_bg, null);
 	    TextView tv = (TextView) view.findViewById(R.id.tabsText);
+	    tv.setMaxLines(1);
 	    tv.setText(text);
 	    return view;
 	}

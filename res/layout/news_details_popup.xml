@@ -23,8 +23,8 @@
 	        android:id="@+id/newsdet_title"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
 	        android:layout_marginTop="5dp"
 	        android:text="Large Text"
 	        android:textAppearance="?android:attr/textAppearanceLarge"
@@ -39,8 +39,8 @@
 	         android:id="@+id/newsdet_info"
 	         android:layout_width="wrap_content"
 	         android:layout_height="wrap_content"
-	         android:layout_marginLeft="10dp"
-	         android:layout_marginRight="10dp"
+	         android:layout_marginLeft="5dp"
+	         android:layout_marginRight="5dp"
 	         android:text="Medium Text"
 	         android:textAppearance="?android:attr/textAppearanceMedium"
 	         android:textColor="@android:color/black" />
@@ -54,6 +54,6 @@
 	         android:id="@+id/newsdet_content"
 	         android:layout_width="match_parent"
 	         android:layout_height="match_parent"
-	         android:layout_margin="10dp"/>
+	         android:layout_margin="5dp"/>
 	</LinearLayout>
 </ScrollView>
