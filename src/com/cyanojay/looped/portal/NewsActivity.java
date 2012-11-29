@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class NewsActivity extends BaseListActivity {
+public class NewsActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
+import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -21,16 +23,20 @@ import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
 public class GradeDetailsActivity extends BaseListActivity {
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_details);
         
         Course currCourse = (Course) getIntent().getSerializableExtra("COURSE_SELECTED");
         
-        setTitle(API.get().getPortalTitle());
-        getActionBar().setSubtitle(currCourse.getName() + " - " + 
-        						   currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
+        setTitle(currCourse.getName());
+        
+        int apiVer = Build.VERSION.SDK_INT;
+        
+        if(apiVer >= Build.VERSION_CODES.HONEYCOMB)
+        	getActionBar().setSubtitle(currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
         
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);

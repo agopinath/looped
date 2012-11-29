@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class GradesActivity extends BaseListActivity {
+public class GradesActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

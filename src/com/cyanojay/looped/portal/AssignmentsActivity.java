@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
-public class AssignmentsActivity extends BaseListActivity {
+public class AssignmentsActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
