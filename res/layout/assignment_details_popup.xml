@@ -14,13 +14,14 @@
             android:id="@+id/assign_meta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-
+
             <ProgressBar
                 android:id="@+id/assigndet_prog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
                 android:minHeight="14dip"
                 android:minWidth="14dip" />
 
