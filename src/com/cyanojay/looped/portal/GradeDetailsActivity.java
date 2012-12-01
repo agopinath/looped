@@ -6,14 +6,12 @@ import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 
 import android.annotation.SuppressLint;
-import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -43,6 +41,14 @@ public class GradeDetailsActivity extends BaseListActivity {
     }
     
     private class ScrapeGradeDetailsTask extends AsyncTask<Course, Void, List<GradeDetail>> {
+    	private ProgressDialog load;
+    	
+    	@Override
+	    protected void onPreExecute() {
+	        super.onPreExecute();
+	        load = ProgressDialog.show(GradeDetailsActivity.this, "Looped", "Retrieving grades...");
+		}
+    	
     	@Override
 		protected List<GradeDetail> doInBackground(Course... params) {
 			try {
@@ -59,6 +65,8 @@ public class GradeDetailsActivity extends BaseListActivity {
 		@Override
 	    protected void onPostExecute(List<GradeDetail> result) {
 	        super.onPostExecute(result);
+	        
+	        load.dismiss();
 	        
 	        GradeDetail[] values = result.toArray(new GradeDetail[0]);
 	        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
