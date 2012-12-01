@@ -41,11 +41,6 @@
         <activity
             android:name=".portal.LoopMailActivity"
             android:label="@string/title_activity_loop_mail" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
