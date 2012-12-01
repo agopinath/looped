@@ -15,7 +15,6 @@ import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -23,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -96,11 +96,40 @@ public class AssignmentsActivity extends ListActivity {
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
     	
-    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask();
+    	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	ScrollView flow = (ScrollView) inflater.inflate(R.layout.assignment_details_popup, null, false);
+    	LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
+    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.assigndet_prog);
+    	
+    	Display display = getWindowManager().getDefaultDisplay(); 
+        int width = display.getWidth();
+        int height = display.getHeight(); 
+        
+    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.6*height)), true);
+        
+        wrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+        
+        load.setVisibility(View.VISIBLE);
+        
+        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, load);
     	task.execute(selected);
     }
     
     private class ScrapeAssignmentDetailsTask extends AsyncTask<CurrentAssignment, Void, AssignmentDetail> {
+    	private View flow;
+    	private ProgressBar bar;
+    	
+    	public ScrapeAssignmentDetailsTask(View flow, ProgressBar bar) {
+    		this.flow = flow;
+    		this.bar = bar;
+    	}
+    	
 		@Override
 		protected AssignmentDetail doInBackground(CurrentAssignment... params) {
 	        try {
@@ -117,14 +146,7 @@ public class AssignmentsActivity extends ListActivity {
 		@Override
 	    protected void onPostExecute(AssignmentDetail assignDetail) {
 	        super.onPostExecute(assignDetail);
-	        Display display = getWindowManager().getDefaultDisplay(); 
-	        int width = display.getWidth();
-	        int height = display.getHeight(); 
 	        
-	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	        ScrollView flow = (ScrollView) inflater.inflate(R.layout.assignment_details_popup, null, false);
-	        
-	        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
 	        TextView title = (TextView) flow.findViewById(R.id.assigndet_title);
 	        TextView audience = (TextView) flow.findViewById(R.id.assigndet_audi);
 	        TextView info = (TextView) flow.findViewById(R.id.assigndet_info);
@@ -158,16 +180,7 @@ public class AssignmentsActivity extends ListActivity {
 	        
 	        info.setText(Html.fromHtml(infoStr));
 	        
-	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.6*height)), true);
-	        
-	        wrapper.setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	                pw.dismiss();
-	            }
-	        });
-	        
-	        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+	        bar.setVisibility(View.GONE);
 		}
     };
 }
