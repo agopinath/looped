@@ -1,4 +1,7 @@
-package com.cyanojay.looped;
+package com.cyanojay.looped.portal;
+
+import com.cyanojay.looped.R;
+import com.cyanojay.looped.R.layout;
 
 import android.app.ListActivity;
 import android.os.Bundle;

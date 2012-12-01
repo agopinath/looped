@@ -18,7 +18,6 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cyanojay.looped.API;
-import com.cyanojay.looped.LoopMailActivity;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 

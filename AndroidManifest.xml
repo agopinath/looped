@@ -39,7 +39,7 @@
             android:name=".portal.GradeDetailsActivity"
             android:label="@string/title_activity_grade_details" />
         <activity
-            android:name=".LoopMailActivity"
+            android:name=".portal.LoopMailActivity"
             android:label="@string/title_activity_loop_mail" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
