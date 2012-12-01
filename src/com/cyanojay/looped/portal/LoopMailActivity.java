@@ -166,7 +166,7 @@ public class LoopMailActivity extends ListActivity {
 	        List<String> details = mailDetail.getDetails();
 	        
 	        if(details.get(0).length() == 0) {
-	        	((LinearLayout) to.getParent()).removeView(to);
+	        	((ViewGroup) to.getParent()).removeView(to);
 	        }
 	        
 	        to.setText(Html.fromHtml(details.get(0)));

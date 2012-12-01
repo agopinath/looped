@@ -3,18 +3,18 @@
     style="@style/LoopedPopup"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-
+
     <LinearLayout
         android:id="@+id/maildet_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
+
         <RelativeLayout
             android:id="@+id/maildet_meta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-
+
             <ProgressBar
                 android:id="@+id/maildet_prog"
                 android:layout_width="wrap_content"
@@ -35,15 +35,14 @@
                 android:gravity="center_horizontal"
                 android:text="@string/exit_text"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-
         </RelativeLayout>
-
+
         <LinearLayout
             android:id="@+id/maildet_contwrap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/maildet_from"
                 android:layout_width="wrap_content"
@@ -54,18 +53,27 @@
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/maildet_to"
+
+            <HorizontalScrollView
+                android:id="@+id/maildet_to_scroll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:fillViewport="false" >
 
+                <TextView
+                    android:id="@+id/maildet_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="4"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black" />
+
+            </HorizontalScrollView>
+
             <TextView
                 android:id="@+id/maildet_rest"
                 android:layout_width="wrap_content"
@@ -81,14 +89,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@android:color/darker_gray" />
-
+
             <WebView
                 android:id="@+id/maildet_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp" 
+                android:layout_margin="5dp"
                 android:focusable="true" />
-
         </LinearLayout>
     </LinearLayout>
 
