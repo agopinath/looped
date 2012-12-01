@@ -116,7 +116,7 @@ public class AssignmentsActivity extends ListActivity {
         
         load.setVisibility(View.VISIBLE);
         content.setVisibility(View.GONE); 
-        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
         
         CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
     	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, content, load);

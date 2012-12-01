@@ -111,7 +111,7 @@ public class NewsActivity extends ListActivity {
         load.setVisibility(View.VISIBLE);
         contwrap.setVisibility(View.GONE);
         
-        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
         
         NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);
     	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask(flow, contwrap, load);

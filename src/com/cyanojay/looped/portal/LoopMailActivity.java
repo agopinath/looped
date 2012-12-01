@@ -124,7 +124,7 @@ public class LoopMailActivity extends ListActivity {
         
         load.setVisibility(View.VISIBLE);
         contwrap.setVisibility(View.GONE);
-        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
         
         MailEntry selected = (MailEntry) getListAdapter().getItem(position);
         ScrapeMailContentTask task = new ScrapeMailContentTask(flow, contwrap, load);
