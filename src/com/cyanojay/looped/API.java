@@ -126,12 +126,7 @@ public final class API {
 	public void refreshPortal() throws IOException {
 		if(!loginStatus) return;
 		
-		HttpClient client = new DefaultHttpClient();
-    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
-    	HttpGet httpGet = new HttpGet(portalUrl);
-    	
-		HttpResponse response = client.execute(httpGet, context);
-		portal = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
+		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
 	}
 	
 	public String getPortalTitle() {
@@ -266,12 +261,7 @@ public final class API {
 		List<GradeDetail> detailsList = new ArrayList<GradeDetail>();
 		
 		// construct and send a GET request to the URL where the Course grade details are stored
-		HttpClient client = new DefaultHttpClient();
-    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
-    	HttpGet httpGet = new HttpGet(course.getDetailsUrl());
-    	
-		HttpResponse response = client.execute(httpGet, context);
-		Document detailsPage = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
+		Document detailsPage = Utils.getJsoupDocFromUrl(course.getDetailsUrl(), portalUrl, authCookies);
 		
 		// select all rows of the table containing grade details
 	    Elements details = detailsPage.body().select("tbody.general_body tr");
@@ -320,12 +310,7 @@ public final class API {
 		AssignmentDetail details = new AssignmentDetail();
 		
 		// construct and send a GET request to the URL where the assignment details are stored
-		HttpClient client = new DefaultHttpClient();
-		BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
-		HttpGet httpGet = new HttpGet(assignment.getDetailsUrl());
-			
-		HttpResponse response = client.execute(httpGet, context);
-		Document detailsPage = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
+		Document detailsPage = Utils.getJsoupDocFromUrl(assignment.getDetailsUrl(), portalUrl, authCookies);
 		
 		// select the div containing assignment details
 		Elements detailBlock = detailsPage.body().select("div.course");
@@ -351,12 +336,7 @@ public final class API {
 		NewsDetail details = new NewsDetail();
 
 		// construct and send a GET request to the URL where the news article info is stored
-		HttpClient client = new DefaultHttpClient();
-		BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
-		HttpGet httpGet = new HttpGet(article.getArticleUrl());
-			
-		HttpResponse response = client.execute(httpGet, context);
-		Document detailsPage = Jsoup.parse((InputStream) response.getEntity().getContent(), null, portalUrl);
+		Document detailsPage = Utils.getJsoupDocFromUrl(article.getArticleUrl(), portalUrl, authCookies);
 		
 		// select the block containing news article info
 		Elements infoBlock = detailsPage.body().select("div.published");
