@@ -39,4 +39,8 @@
     <style name="LoopedListRow" >
         <item name="android:background">@drawable/list_row</item>
     </style>
+    
+    <style name="LoopedCommon.LoopedMail" >
+        
+    </style>
 </resources>

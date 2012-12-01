@@ -18,6 +18,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cyanojay.looped.API;
+import com.cyanojay.looped.LoopMailActivity;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 
@@ -36,6 +37,7 @@ public class PortalActivity extends TabActivity {
         setupTab("Grades", new Intent(this, GradesActivity.class));
         setupTab("Assignments", new Intent(this, AssignmentsActivity.class));
         setupTab("News", new Intent(this, NewsActivity.class));
+        setupTab("Mail", new Intent(this, LoopMailActivity.class));
 	}
 
 	private void setupTab(final String tag, Intent e) {
