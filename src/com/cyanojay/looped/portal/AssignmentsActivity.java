@@ -99,6 +99,7 @@ public class AssignmentsActivity extends ListActivity {
     	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	ScrollView flow = (ScrollView) inflater.inflate(R.layout.assignment_details_popup, null, false);
     	LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
+    	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
     	ProgressBar load = (ProgressBar) flow.findViewById(R.id.assigndet_prog);
     	
     	Display display = getWindowManager().getDefaultDisplay(); 
@@ -115,19 +116,22 @@ public class AssignmentsActivity extends ListActivity {
         });
         
         load.setVisibility(View.VISIBLE);
+        content.setVisibility(View.GONE);
         
         pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
-    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, load);
+    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, content, load);
     	task.execute(selected);
     }
     
     private class ScrapeAssignmentDetailsTask extends AsyncTask<CurrentAssignment, Void, AssignmentDetail> {
     	private View flow;
+    	private View content;
     	private ProgressBar bar;
     	
-    	public ScrapeAssignmentDetailsTask(View flow, ProgressBar bar) {
+    	public ScrapeAssignmentDetailsTask(View flow, View content, ProgressBar bar) {
     		this.flow = flow;
     		this.bar = bar;
+    		this.content = content;
     	}
     	
 		@Override
@@ -179,8 +183,9 @@ public class AssignmentsActivity extends ListActivity {
 	        }
 	        
 	        info.setText(Html.fromHtml(infoStr));
-	        
 	        bar.setVisibility(View.GONE);
+	        
+	        content.setVisibility(View.VISIBLE);
 		}
     };
 }
