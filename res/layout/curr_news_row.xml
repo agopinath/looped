@@ -8,20 +8,13 @@
     android:shrinkColumns="0"
     android:stretchColumns="1" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    <TextView
+        android:id="@+id/news_post_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/news_post_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    </TableRow>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TableRow
         android:id="@+id/tableRow2"
