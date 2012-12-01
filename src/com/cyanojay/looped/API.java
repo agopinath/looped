@@ -384,16 +384,15 @@ public final class API {
 		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies)
 														.select("div[style^=padding] table");
 		
-		String info = mailBlock.get(1).select("td:eq(0)").html().replaceAll("<br>", "");
-		String from;
-		String to;
-		
+		String info = mailBlock.get(1).select("td:eq(0)").html();
+		String from = "", to = "";
 		if(info.indexOf("<b>To:</b>") != -1) {
-			from = info.substring(0, info.indexOf("<b>To:</b>"));
+			from = info.substring(0, info.indexOf("<b>To:</b>")).replaceAll("<br />", "");
+			
 			to = info.substring(info.indexOf("<b>To:</b>"), info.indexOf("<b>Date:</b>"))
-							.replaceAll("viewed", "<b>viewed</b>");
+							.replaceAll("viewed", "<b>viewed</b>").replaceAll("<br />", "");
 		} else {
-			from = info.substring(0, info.indexOf("<b>Date:</b>"));
+			from = info.substring(0, info.indexOf("<b>Date:</b>")).replaceAll("<br />", "");
 			to = "";
 		}
 			
