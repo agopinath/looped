@@ -4,17 +4,20 @@ public class MailEntry {
 	private String timestamp;
 	private String involvedParties;
 	private String subject;
+	private String contentUrl;
 	
 	public MailEntry() {
 		this.timestamp = "";
 		this.involvedParties = "";
 		this.subject = "";
+		this.contentUrl = "";
 	}
 	
-	public MailEntry(String timestamp, String parties, String subject) {
+	public MailEntry(String timestamp, String parties, String subject, String contentUrl) {
 		this.timestamp = timestamp;
 		this.involvedParties = parties;
 		this.subject = subject;
+		this.contentUrl = contentUrl;
 	}
 
 	public String getTimestamp() {
@@ -39,5 +42,13 @@ public class MailEntry {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public String getContentUrl() {
+		return contentUrl;
+	}
+
+	public void setContentUrl(String contentUrl) {
+		this.contentUrl = contentUrl;
 	}
 }

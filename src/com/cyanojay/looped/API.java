@@ -266,6 +266,7 @@ public final class API {
 			currEntry.setTimestamp(mailInfo.get(0).text());
 			currEntry.setInvolvedParties(mailInfo.get(1).text());
 			currEntry.setSubject(mailInfo.get(2).text());
+			currEntry.setContentUrl(portalUrl + mailInfo.get(2).select("a").attr("href"));
 			
 			mail.add(currEntry);
 		}
