@@ -2,9 +2,9 @@
     android:id="@+id/Scroller"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-
+
     <LinearLayout
-        android:id="@+id/LinLayout"
+        android:id="@+id/about_wrapper"
         style="@style/LoopedAbout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

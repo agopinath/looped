@@ -13,10 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TabHost;
-import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.MainActivity;
@@ -100,14 +101,15 @@ public class PortalActivity extends TabActivity {
 	    
     	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	
-        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.about_popup, null, false);
+    	ScrollView flow = (ScrollView) inflater.inflate(R.layout.about_popup, null, false);
+        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.about_wrapper);
         TextView about = (TextView) flow.findViewById(R.id.about_text);
         
         about.setText(Html.fromHtml(getString(R.string.about_text)));
 					        
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.8*height)), true);
         
-    	flow.setOnClickListener(new View.OnClickListener() {
+    	wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pw.dismiss();
