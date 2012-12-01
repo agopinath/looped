@@ -15,25 +15,31 @@ import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
 
 public class LoopMailActivity extends ListActivity {
-
+	
+	private enum LoopMailBoxType {
+		INBOX, SENT, ARCHIVE
+	}
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loop_mail);
         
         ScrapeLoopMailTask task = new ScrapeLoopMailTask();
-        task.execute("inbox");
+        task.execute(LoopMailBoxType.INBOX);
     }
     
-    private class ScrapeLoopMailTask extends AsyncTask<String, Void, List<MailEntry>> {
+    private class ScrapeLoopMailTask extends AsyncTask<LoopMailBoxType, Void, List<MailEntry>> {
     	@Override
-		protected List<MailEntry> doInBackground(String... params) {
-			if(params[0].equals("inbox")) {
-				return API.get().getInbox();
-			} else {
-				// TODO: handle the case if user doesn't request for inbox
-				return null;
-			}
+		protected List<MailEntry> doInBackground(LoopMailBoxType... params) {
+    		switch(params[0]) {
+    			case INBOX:
+    				return API.get().getMailInfo("/mail/inbox?d=x");
+    			default:
+    				// TODO: handle the case if user doesn't request for inbox
+    		}
+    		
+    		return null;
 		}
 		
 		@Override

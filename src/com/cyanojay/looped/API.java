@@ -249,12 +249,12 @@ public final class API {
 	    return news;
 	}
 	
-	public List<MailEntry> getInbox() {
-		List<MailEntry> news = new ArrayList<MailEntry>();
+	public List<MailEntry> getMailInfo(String mailboxUrl) {
+		List<MailEntry> mail = new ArrayList<MailEntry>();
 
 		// TODO: return list of MailEntry from the LoopMail inbox
 		
-		return null;
+		return mail;
 	}
 	
 	public List<GradeDetail> getGradeDetails(Course course) throws ClientProtocolException, IOException {
