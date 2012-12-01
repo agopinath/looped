@@ -11,8 +11,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cyanojay.looped.API;
@@ -96,4 +99,30 @@ public class LoopMailActivity extends ListActivity {
     protected void onListItemClick(ListView list, View view, int position, long id) {
         // TODO: retrieve the corresponding MailDetail info for the MailEntry selected and display it through a popup
     }
+    
+    private class ScrapeMailContentTask extends AsyncTask<MailEntry, Void, MailDetail> {
+    	private View flow;
+    	private View contwrap;
+    	private ProgressBar bar;
+    	
+    	public ScrapeMailContentTask(View flow, View contwrap, ProgressBar bar) {
+    		this.flow = flow;
+    		this.bar = bar;
+    		this.contwrap = contwrap;
+    	}
+    	
+		@Override
+		protected MailDetail doInBackground(MailEntry... params) {
+			// TODO: retrieve mail info
+			
+			return null;
+		}
+		
+		@Override
+	    protected void onPostExecute(MailDetail mailDetail) {
+	        super.onPostExecute(mailDetail);
+
+	        // TODO: display info in popup
+		}
+    };
 }
