@@ -28,6 +28,7 @@ import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
 import com.cyanojay.looped.portal.GradeDetail;
+import com.cyanojay.looped.portal.MailEntry;
 import com.cyanojay.looped.portal.NewsArticle;
 import com.cyanojay.looped.portal.NewsDetail;
 
@@ -252,7 +253,15 @@ public final class API {
 	    
 	    return news;
 	}
+	
+	public List<MailEntry> getInbox() {
+		List<MailEntry> news = new ArrayList<MailEntry>();
 
+		// TODO: return list of MailEntry from the LoopMail inbox
+		
+		return null;
+	}
+	
 	public List<GradeDetail> getGradeDetails(Course course) throws ClientProtocolException, IOException {
 		List<GradeDetail> detailsList = new ArrayList<GradeDetail>();
 		
