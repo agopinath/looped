@@ -249,10 +249,26 @@ public final class API {
 	    return news;
 	}
 	
-	public List<MailEntry> getMailInfo(String mailboxUrl) {
+	public List<MailEntry> getMailInbox() throws IllegalStateException, IOException {
 		List<MailEntry> mail = new ArrayList<MailEntry>();
-
-		// TODO: return list of MailEntry from the LoopMail inbox
+		
+		// send GET request to the inbox URL and retrieve the table listing the emails
+		Element mailTable = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies)
+													.select("table.list_padding").first();
+		
+		// select all mail listing rows after the first one because it is a header row
+		Elements mailListing = mailTable.select("tr:gt(0)");
+		
+		for(Element currListing : mailListing) {
+			MailEntry currEntry = new MailEntry();
+			Elements mailInfo = currListing.select("td.list_text");
+			
+			currEntry.setTimestamp(mailInfo.get(0).text());
+			currEntry.setInvolvedParties(mailInfo.get(1).text());
+			currEntry.setSubject(mailInfo.get(2).text());
+			
+			mail.add(currEntry);
+		}
 		
 		return mail;
 	}
