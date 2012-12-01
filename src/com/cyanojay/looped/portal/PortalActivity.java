@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
@@ -62,6 +63,11 @@ public class PortalActivity extends TabActivity {
     }
     
     @Override
+    public void onBackPressed() {
+    	logOut();
+    }
+    
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_about:
@@ -77,6 +83,8 @@ public class PortalActivity extends TabActivity {
     
     private boolean logOut() {
     	boolean status = API.get().logOut();
+    	
+    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT);
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
