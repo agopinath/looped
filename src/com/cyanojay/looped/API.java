@@ -28,6 +28,7 @@ import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
 import com.cyanojay.looped.portal.GradeDetail;
+import com.cyanojay.looped.portal.MailDetail;
 import com.cyanojay.looped.portal.MailEntry;
 import com.cyanojay.looped.portal.NewsArticle;
 import com.cyanojay.looped.portal.NewsDetail;
@@ -266,7 +267,7 @@ public final class API {
 			currEntry.setTimestamp(mailInfo.get(0).text());
 			currEntry.setInvolvedParties(mailInfo.get(1).text());
 			currEntry.setSubject(mailInfo.get(2).text());
-			currEntry.setContentUrl(portalUrl + mailInfo.get(2).select("a").attr("href"));
+			currEntry.setContentUrl(portalUrl + mailInfo.get(2).select("a").attr("href") + "&template=print");
 			
 			mail.add(currEntry);
 		}
@@ -370,6 +371,22 @@ public final class API {
 		for(Element detail : newsDetails) {
 			details.addDetail(detail.text());
 		}
+		
+		return details;
+	}
+	
+	public MailDetail getMailDetails(MailEntry entry) throws IllegalStateException, IOException {
+		MailDetail details = new MailDetail();
+
+		// construct and send a GET request to the URL where the mail conent is stored
+		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies)
+														.select("div[style=padding] table");
+		 
+		String info = mailBlock.get(0).text();
+		String content = mailBlock.get(1).html();
+		
+		details.setInfo(info);
+		details.setContent(content);
 		
 		return details;
 	}
