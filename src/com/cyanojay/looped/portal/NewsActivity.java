@@ -152,7 +152,7 @@ public class NewsActivity extends ListActivity {
 	        title.setText(newsDetail.getTitle());
 	        
 	        if(newsDetail.getContent().length() != 0)
-	        	content.loadData(newsDetail.getContent(), "text/html", "UTF-8");
+	        	content.loadDataWithBaseURL(null, newsDetail.getContent(), "text/html", "UTF-8", null);
 	        else ((LinearLayout) content.getParent()).removeView(content);
 	        	
 	        String infoStr = "";

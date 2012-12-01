@@ -174,7 +174,7 @@ public class LoopMailActivity extends ListActivity {
 	        rest.setText(Html.fromHtml(details.get(2)));
 	        
 	        if(mailDetail.getContent().length() != 0)
-	        	content.loadData(mailDetail.getContent(), "text/html", "UTF-8");
+	        	content.loadDataWithBaseURL(null, mailDetail.getContent(), "text/html", "UTF-8", null);
 	        else ((LinearLayout) content.getParent()).removeView(content);
 
 	        bar.setVisibility(View.GONE);
