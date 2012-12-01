@@ -99,7 +99,7 @@ public class NewsActivity extends ListActivity {
         
         LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
         
-        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), height-((int)(0.5*height)), true);
+        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
         
         wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +110,7 @@ public class NewsActivity extends ListActivity {
         
         load.setVisibility(View.VISIBLE);
         contwrap.setVisibility(View.GONE);
+        
         pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
         
         NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);

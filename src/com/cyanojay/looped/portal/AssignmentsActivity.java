@@ -25,6 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
@@ -104,7 +105,7 @@ public class AssignmentsActivity extends ListActivity {
         int width = display.getWidth();
         int height = display.getHeight(); 
         
-    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), height-((int)(0.6*height)), true);
+    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
         
         wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

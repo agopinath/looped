@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
@@ -112,7 +113,7 @@ public class LoopMailActivity extends ListActivity {
         
         LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.maildet_wrapper);
         
-        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), height-((int)(0.4*height)), true);
+        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.05*width)), LayoutParams.WRAP_CONTENT, true);
         
         wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
