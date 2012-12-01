@@ -8,6 +8,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cyanojay.looped.API;
@@ -97,7 +101,33 @@ public class LoopMailActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-        // TODO: retrieve the corresponding MailDetail info for the MailEntry selected and display it through a popup
+    	Display display = getWindowManager().getDefaultDisplay(); 
+        int width = display.getWidth();
+        int height = display.getHeight(); 
+        
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ScrollView flow = (ScrollView) inflater.inflate(R.layout.mail_details_popup, null, false);
+        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.maildet_contwrap);
+    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.maildet_prog);
+        
+        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.maildet_wrapper);
+        
+        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), height-((int)(0.4*height)), true);
+        
+        wrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+        
+        load.setVisibility(View.VISIBLE);
+        contwrap.setVisibility(View.GONE);
+        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        
+        MailEntry selected = (MailEntry) getListAdapter().getItem(position);
+        ScrapeMailContentTask task = new ScrapeMailContentTask(flow, contwrap, load);
+    	task.execute(selected);
     }
     
     private class ScrapeMailContentTask extends AsyncTask<MailEntry, Void, MailDetail> {
@@ -113,7 +143,13 @@ public class LoopMailActivity extends ListActivity {
     	
 		@Override
 		protected MailDetail doInBackground(MailEntry... params) {
-			// TODO: retrieve mail info
+			try {
+				return API.get().getMailDetails(params[0]);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			return null;
 		}
@@ -122,7 +158,27 @@ public class LoopMailActivity extends ListActivity {
 	    protected void onPostExecute(MailDetail mailDetail) {
 	        super.onPostExecute(mailDetail);
 
-	        // TODO: display info in popup
+	        TextView to = (TextView) flow.findViewById(R.id.maildet_to);
+	        TextView from = (TextView) flow.findViewById(R.id.maildet_from);
+	        TextView rest = (TextView) flow.findViewById(R.id.maildet_rest);
+	        WebView content = (WebView) flow.findViewById(R.id.maildet_content);
+	        
+	        List<String> details = mailDetail.getDetails();
+	        
+	        if(details.get(0).length() == 0) {
+	        	((LinearLayout) to.getParent()).removeView(to);
+	        }
+	        
+	        to.setText(Html.fromHtml(details.get(0)));
+	        from.setText(Html.fromHtml(details.get(1)));
+	        rest.setText(Html.fromHtml(details.get(2)));
+	        
+	        if(mailDetail.getContent().length() != 0)
+	        	content.loadData(mailDetail.getContent(), "text/html", "UTF-8");
+	        else ((LinearLayout) content.getParent()).removeView(content);
+
+	        bar.setVisibility(View.GONE);
+	        contwrap.setVisibility(View.VISIBLE);
 		}
     };
 }

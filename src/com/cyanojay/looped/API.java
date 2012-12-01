@@ -380,12 +380,27 @@ public final class API {
 
 		// construct and send a GET request to the URL where the mail conent is stored
 		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies)
-														.select("div[style=padding] table");
-		 
-		String info = mailBlock.get(0).text();
-		String content = mailBlock.get(1).html();
+														.select("div[style^=padding] table");
 		
-		details.setInfo(info);
+		String info = mailBlock.get(1).select("td:eq(0)").html().replaceAll("<br>", "");
+		String from;
+		String to;
+		
+		if(info.indexOf("<b>To:</b>") != -1) {
+			from = info.substring(0, info.indexOf("<b>To:</b>"));
+			to = info.substring(info.indexOf("<b>To:</b>"), info.indexOf("<b>Date:</b>"))
+							.replaceAll("viewed", "<b>viewed</b>");
+		} else {
+			from = info.substring(0, info.indexOf("<b>Date:</b>"));
+			to = "";
+		}
+			
+		String rest = info.substring(info.indexOf("<b>Date:</b>"));
+		String content = mailBlock.get(2).html();
+		
+		details.addDetail(to);
+		details.addDetail(from);
+		details.addDetail(rest);
 		details.setContent(content);
 		
 		return details;

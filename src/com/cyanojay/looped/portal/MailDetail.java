@@ -1,25 +1,28 @@
 package com.cyanojay.looped.portal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MailDetail {
-	private String info;
+	private List<String> details;
 	private String content;
 
 	public MailDetail() {
-		this.info = "";
+		this.details = new ArrayList<String>();
 		this.content = "";
 	}
 
-	public MailDetail(String info, String content) {
-		this.info = info;
+	public MailDetail(List<String> details, String content) {
+		this.details = details;
 		this.content = content;
 	}
 	
-	public String getInfo() {
-		return info;
+	public void addDetail(String detail) {
+		details.add(detail);
 	}
 
-	public void setInfo(String info) {
-		this.info = info;
+	public List<String> getDetails() {
+		return details;
 	}
 
 	public String getContent() {
