@@ -160,8 +160,11 @@ public class AssignmentsActivity extends ListActivity {
 	        audience.setText(assignDetail.getTargetAudience());
 	        explanation.loadData(assignDetail.getExplanation(), "text/html", "UTF-8");
 	        
-	        if(assignDetail.getExplanation().length() != 0)
-	        	explanation.loadDataWithBaseURL(null, assignDetail.getExplanation(), "text/html", "UTF-8", null);
+	        String attachSeparator = "<br />";
+	        String explCont = assignDetail.getExplanation() + attachSeparator + assignDetail.getAttachments();
+	        
+	        if(explCont.replace(attachSeparator, "").length() > 0)
+	        	explanation.loadDataWithBaseURL(null, explCont, "text/html", "UTF-8", null);
 	        else ((LinearLayout) explanation.getParent()).removeView(explanation);
 	        
 	        String infoStr = "";

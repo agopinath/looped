@@ -8,6 +8,7 @@ public class AssignmentDetail implements Serializable {
 	private String name;
 	private String targetAudience;
 	private String explanation;
+	private String attachments;
 	private List<String> details;
 	
 	public AssignmentDetail() {
@@ -15,13 +16,15 @@ public class AssignmentDetail implements Serializable {
 		this.targetAudience = "";
 		this.explanation = "";
 		this.details = new ArrayList<String>();
+		this.attachments = "";
 	}
 	
-	public AssignmentDetail(String name, String audience, String explanation, List<String> details) {
+	public AssignmentDetail(String name, String audience, String explanation, List<String> details, String attachments) {
 		this.name = name;
 		this.targetAudience = audience;
 		this.details = details;
 		this.explanation = explanation;
+		this.attachments = attachments;
 	}
 
 	public String getName() {
@@ -54,5 +57,13 @@ public class AssignmentDetail implements Serializable {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public String getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(String attachments) {
+		this.attachments = attachments;
 	}
 }
