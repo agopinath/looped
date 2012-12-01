@@ -1,15 +1,19 @@
 package com.cyanojay.looped.portal;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
@@ -34,7 +38,13 @@ public class LoopMailActivity extends ListActivity {
 		protected List<MailEntry> doInBackground(LoopMailBoxType... params) {
     		switch(params[0]) {
     			case INBOX:
-    				return API.get().getMailInfo("/mail/inbox?d=x");
+					try {
+						return API.get().getMailInbox();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
     			default:
     				// TODO: handle the case if user doesn't request for inbox
     		}
@@ -65,9 +75,20 @@ public class LoopMailActivity extends ListActivity {
 
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    		  // TODO: return an appropriate list view using MailEntry info
+    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    		  View rowView = inflater.inflate(R.layout.curr_mail_row, parent, false);
     		  
-    		  return null;
+    		  TextView timestamp = (TextView) rowView.findViewById(R.id.mail_date);
+    		  TextView parties = (TextView) rowView.findViewById(R.id.mail_sender);
+    		  TextView subject = (TextView) rowView.findViewById(R.id.mail_subject);
+    		  
+    		  MailEntry entry = values[position];
+    		  
+    		  timestamp.setText(entry.getTimestamp());
+    		  parties.setText(entry.getInvolvedParties());
+    		  subject.setText(entry.getSubject());
+    		  
+    		  return rowView;
     	} 
     }
     
