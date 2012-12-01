@@ -104,7 +104,7 @@ public class AssignmentsActivity extends ListActivity {
         int width = display.getWidth();
         int height = display.getHeight(); 
         
-    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.6*height)), true);
+    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), height-((int)(0.6*height)), true);
         
         wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

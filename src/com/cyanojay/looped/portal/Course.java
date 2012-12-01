@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Course implements Serializable {
 	public static final String INVALID_LETT_GRADE = "None Published";
-	public static final String SUBST_LETT_GRADE = "";
+	public static final String SUBST_LETT_GRADE = "--";
 	
 	private String name;
 	private String percentGrade;

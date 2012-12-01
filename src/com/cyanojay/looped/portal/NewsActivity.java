@@ -99,7 +99,7 @@ public class NewsActivity extends ListActivity {
         
         LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
         
-        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.5*height)), true);
+        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), height-((int)(0.5*height)), true);
         
         wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
