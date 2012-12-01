@@ -94,8 +94,6 @@ public class AssignmentsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-    	CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
-    	
     	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	ScrollView flow = (ScrollView) inflater.inflate(R.layout.assignment_details_popup, null, false);
     	LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
@@ -116,9 +114,10 @@ public class AssignmentsActivity extends ListActivity {
         });
         
         load.setVisibility(View.VISIBLE);
-        content.setVisibility(View.GONE);
-        
+        content.setVisibility(View.GONE); 
         pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        
+        CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
     	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, content, load);
     	task.execute(selected);
     }

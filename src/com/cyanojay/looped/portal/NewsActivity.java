@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,13 +88,46 @@ public class NewsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
-    	NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);
-    	
-    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask();
+        Display display = getWindowManager().getDefaultDisplay(); 
+        int width = display.getWidth();
+        int height = display.getHeight(); 
+        
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ScrollView flow = (ScrollView) inflater.inflate(R.layout.news_details_popup, null, false);
+        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
+    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.newsdet_prog);
+        
+        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
+        
+        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.5*height)), true);
+        
+        wrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+        
+        load.setVisibility(View.VISIBLE);
+        contwrap.setVisibility(View.GONE);
+        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        
+        NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);
+    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask(flow, contwrap, load);
     	task.execute(selected);
     }
     
     private class ScrapeNewsDetailsTask extends AsyncTask<NewsArticle, Void, NewsDetail> {
+    	private View flow;
+    	private View contwrap;
+    	private ProgressBar bar;
+    	
+    	public ScrapeNewsDetailsTask(View flow, View contwrap, ProgressBar bar) {
+    		this.flow = flow;
+    		this.bar = bar;
+    		this.contwrap = contwrap;
+    	}
+    	
 		@Override
 		protected NewsDetail doInBackground(NewsArticle... params) {
 			try {
@@ -110,16 +144,7 @@ public class NewsActivity extends ListActivity {
 		@Override
 	    protected void onPostExecute(NewsDetail newsDetail) {
 	        super.onPostExecute(newsDetail);
-	        
-	        Display display = getWindowManager().getDefaultDisplay(); 
-	        int width = display.getWidth();
-	        int height = display.getHeight(); 
-	        
-	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	        ScrollView flow = (ScrollView) inflater.inflate(R.layout.news_details_popup, null, false);
-	        flow.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-	        
-	        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
+
 	        TextView title = (TextView) flow.findViewById(R.id.newsdet_title);
 	        TextView info = (TextView) flow.findViewById(R.id.newsdet_info);
 	        WebView content = (WebView) flow.findViewById(R.id.newsdet_content);
@@ -137,17 +162,9 @@ public class NewsActivity extends ListActivity {
 	        }
 	        
 	        info.setText(Html.fromHtml(infoStr));
+	        bar.setVisibility(View.GONE);
 	        
-	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), height-((int)(0.5*height)), true);
-	        
-	        wrapper.setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	                pw.dismiss();
-	            }
-	        });
-	        
-	        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+	        contwrap.setVisibility(View.VISIBLE);
 		}
     };
 }
