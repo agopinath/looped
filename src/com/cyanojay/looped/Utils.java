@@ -27,6 +27,8 @@ import org.apache.http.protocol.HTTP;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import android.os.Build;
+
 import com.cyanojay.looped.net.MySSLSocketFactory;
 
 public class Utils {
@@ -81,5 +83,9 @@ public class Utils {
 	    } catch (Exception e) {
 	        return new DefaultHttpClient();
 	    }
+	}
+	
+	public static int getApiVer() {
+		return Build.VERSION.SDK_INT;
 	}
 }

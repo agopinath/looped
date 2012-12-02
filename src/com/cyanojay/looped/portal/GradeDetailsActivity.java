@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
 public class GradeDetailsActivity extends BaseListActivity {
@@ -31,9 +32,7 @@ public class GradeDetailsActivity extends BaseListActivity {
         
         setTitle(currCourse.getName());
         
-        int apiVer = Build.VERSION.SDK_INT;
-        
-        if(apiVer >= Build.VERSION_CODES.HONEYCOMB)
+        if(Utils.getApiVer() >= Build.VERSION_CODES.HONEYCOMB)
         	getActionBar().setSubtitle(currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
         
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
