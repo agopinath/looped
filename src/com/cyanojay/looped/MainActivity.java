@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cyanojay.looped.net.LogInTask;
 import com.cyanojay.looped.portal.BaseActivity;
 
 public class MainActivity extends BaseActivity {

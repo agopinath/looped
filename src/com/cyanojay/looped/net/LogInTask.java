@@ -1,4 +1,4 @@
-package com.cyanojay.looped;
+package com.cyanojay.looped.net;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
@@ -8,9 +8,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.portal.PortalActivity;
 
 public class LogInTask extends AsyncTask<String, String, Boolean> {
@@ -55,7 +55,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     }
     
     private CookieStore getLogInCookies(String url) {
-    	DefaultHttpClient client = new DefaultHttpClient();
+    	DefaultHttpClient client = (DefaultHttpClient) Utils.getNewHttpClient();
     	HttpGet httpGet = new HttpGet(url);
     	
     	try {

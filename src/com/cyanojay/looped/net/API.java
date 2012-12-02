@@ -1,7 +1,6 @@
-package com.cyanojay.looped;
+package com.cyanojay.looped.net;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +14,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
@@ -69,7 +67,7 @@ public final class API {
 	}
 	
 	public boolean logIn() throws ClientProtocolException, IOException {
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
     	
@@ -86,7 +84,7 @@ public final class API {
 	}
 	
 	public boolean logOut() {
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(portalUrl + "/portal/logout?d=x");	
     	HttpResponse response = null;
@@ -106,7 +104,7 @@ public final class API {
 	public boolean isLoggedIn(boolean deep) {
 		if(!deep) return loginStatus;
 		
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(loginTestUrl);
     	HttpResponse response = null;

@@ -27,8 +27,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.net.API;
 
 public class AssignmentsActivity extends ListActivity {
 

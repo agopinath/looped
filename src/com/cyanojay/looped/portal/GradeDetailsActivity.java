@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.net.API;
 
 public class GradeDetailsActivity extends BaseListActivity {
     @SuppressLint("NewApi")

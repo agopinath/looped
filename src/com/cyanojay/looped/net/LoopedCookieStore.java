@@ -1,4 +1,4 @@
-package com.cyanojay.looped;
+package com.cyanojay.looped.net;
 
 import java.util.HashMap;
 import java.util.Map;

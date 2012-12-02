@@ -19,9 +19,9 @@ import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import com.cyanojay.looped.API;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.net.API;
 
 public class PortalActivity extends TabActivity {
 	private TabHost tabHost;

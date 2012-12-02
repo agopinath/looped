@@ -1,8 +1,8 @@
 package com.cyanojay.looped.portal;
 
-import com.cyanojay.looped.API;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.net.API;
 
 import android.app.Activity;
 import android.content.Context;

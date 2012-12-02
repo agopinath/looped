@@ -17,8 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cyanojay.looped.API;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.net.API;
 
 public class GradesActivity extends ListActivity {
 
