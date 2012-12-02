@@ -11,7 +11,6 @@ import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -21,9 +20,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.net.API;
@@ -78,8 +75,13 @@ public class NewsActivity extends ListActivity {
     		  NewsArticle article = values[position];
     		  
     		  articleName.setText(article.getArticleName());
-    		  articleAuthor.setText(Html.fromHtml("<b>" + article.getAuthor() + "</b>" +
+    		  
+    		  if(article.getDisplayAuthor() == null)
+    			  articleAuthor.setText(Html.fromHtml("<b>" + article.getAuthor() + "</b>" +
     				  							  " - " + article.getAuthorType()));
+    		  else
+    			  articleAuthor.setText(Html.fromHtml("<b>" + article.getDisplayAuthor() + "</b>"));
+    		  
     		  articleDate.setText(article.getDatePosted());
     		  
     		  return rowView;

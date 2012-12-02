@@ -230,15 +230,26 @@ public final class API {
 	    	Element date = articleInfo.get((2*i)+1);
 	    	
 	    	// split the author field into the author's name and the author's type
-	    	String authorData[] = author.text().split(" - ");
+	    	String authorData[] = null;
+	    	
+	    	try {
+	    		authorData = author.text().split(" - ");
+	    	} catch(Exception e) {
+	    		e.printStackTrace();
+	    		authorData = null;
+	    	}
 	    	
 	    	article.setArticleName(title.text());
 	    	
-	    	for(int j = 0; j < authorData.length; j++) {
-	    		if(j == 0) article.setAuthor(authorData[0]);
-	    		if(j == 1) article.setAuthorType(authorData[1]);
+	    	if(authorData != null) {
+		    	for(int j = 0; j < authorData.length; j++) {
+		    		if(j == 0) article.setAuthor(authorData[0]);
+		    		if(j == 1) article.setAuthorType(authorData[1]);
+		    	}
+	    	} else {
+	    		article.setDisplayAuthor(author.text());
 	    	}
-	    	
+	    		
 	    	article.setDatePosted(date.text());
 	    	article.setArticleUrl(portalUrl + title.attr("href"));
 	    	

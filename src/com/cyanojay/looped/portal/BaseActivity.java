@@ -1,9 +1,5 @@
 package com.cyanojay.looped.portal;
 
-import com.cyanojay.looped.MainActivity;
-import com.cyanojay.looped.R;
-import com.cyanojay.looped.net.API;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +14,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.cyanojay.looped.MainActivity;
+import com.cyanojay.looped.R;
+import com.cyanojay.looped.net.API;
 
 public class BaseActivity extends Activity {
     @Override
