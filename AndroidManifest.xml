@@ -40,8 +40,13 @@
             android:label="@string/title_activity_grade_details" />
         <activity
             android:name=".portal.LoopMailActivity"
-            android:label="@string/title_activity_loop_mail" >
-        </activity>
+            android:label="@string/title_activity_loop_mail" />
+        <activity
+            android:name=".portal.BaseActivity"
+            android:label="@string/title_activity_loop_mail" />
+        <activity
+            android:name=".portal.BaseListActivity"
+            android:label="@string/title_activity_loop_mail" />
     </application>
 
 </manifest>

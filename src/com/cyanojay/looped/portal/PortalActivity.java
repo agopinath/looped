@@ -85,7 +85,7 @@ public class PortalActivity extends TabActivity {
     private boolean logOut() {
     	boolean status = API.get().logOut();
     	
-    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT);
+    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
