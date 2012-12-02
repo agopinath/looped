@@ -8,6 +8,7 @@
     android:id="@+id/android:list"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    style="@style/LoopedCommon.LoopedGrades"/>
+    style="@style/LoopedCommon.LoopedGrades" 
+    android:cacheColorHint="@android:color/transparent" />
 
 </LinearLayout>
