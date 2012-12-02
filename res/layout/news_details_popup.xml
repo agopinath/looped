@@ -1,87 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/LoopedPopup"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_wrapper"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/newsdet_wrapper"
+    <ScrollView
+        style="@style/LoopedPopup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:id="@+id/newsdet_meta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ProgressBar
-                android:id="@+id/newsdet_prog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="5dp"
-                android:minHeight="14dip"
-                android:minWidth="14dip" />
-
-            <TextView
-                android:id="@+id/exit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:alpha="0.8"
-                android:gravity="center_horizontal"
-                android:text="@string/exit_text"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        </RelativeLayout>
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:id="@+id/newsdet_contwrap"
+            android:id="@+id/newsdet_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/newsdet_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/black" />
-
-            <View
+            <RelativeLayout
+                android:id="@+id/newsdet_meta"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/darker_gray" />
+                android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/newsdet_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                <ProgressBar
+                    android:id="@+id/newsdet_prog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="5dp"
+                    android:minHeight="14dip"
+                    android:minWidth="14dip" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/darker_gray" />
+                <TextView
+                    android:id="@+id/exit_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:alpha="0.8"
+                    android:gravity="center_horizontal"
+                    android:text="@string/exit_text"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </RelativeLayout>
 
-            <WebView
-                android:id="@+id/newsdet_content"
+            <LinearLayout
+                android:id="@+id/newsdet_contwrap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp" 
-                android:focusable="true" />
-        </LinearLayout>
-    </LinearLayout>
+                android:orientation="vertical" >
 
-</ScrollView>
+                <TextView
+                    android:id="@+id/newsdet_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/newsdet_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/darker_gray" />
+
+                <WebView
+                    android:id="@+id/newsdet_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:focusable="true" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

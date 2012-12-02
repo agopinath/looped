@@ -96,7 +96,7 @@ public class AssignmentsActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	ScrollView flow = (ScrollView) inflater.inflate(R.layout.assignment_details_popup, null, false);
+    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
     	LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
     	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
     	ProgressBar load = (ProgressBar) flow.findViewById(R.id.assigndet_prog);

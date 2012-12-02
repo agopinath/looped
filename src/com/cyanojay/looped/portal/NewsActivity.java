@@ -93,7 +93,7 @@ public class NewsActivity extends ListActivity {
         int height = display.getHeight(); 
         
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ScrollView flow = (ScrollView) inflater.inflate(R.layout.news_details_popup, null, false);
+        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
         LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
     	ProgressBar load = (ProgressBar) flow.findViewById(R.id.newsdet_prog);
         
