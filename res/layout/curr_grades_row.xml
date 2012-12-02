@@ -18,13 +18,13 @@
             android:layout_marginLeft="10dp"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
         <TextView
             android:id="@+id/grades_lett_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:gravity="left"
             android:paddingRight="10dp"
             android:text="Large Text"
