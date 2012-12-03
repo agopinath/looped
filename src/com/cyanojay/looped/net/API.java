@@ -305,43 +305,51 @@ public final class API {
 	    	// select all individual elements in each row
 	    	Elements data = detail.select("td");
 	    	
-	    	newDetail.setCategory(data.get(0).text());
-	    	newDetail.setDueDate(data.get(1).text());
-	    	newDetail.setDetailName(data.get(2).text());
-	    	newDetail.setComment(data.get(5).text());
-	    	newDetail.setSubmissions(data.get(6).text());
-	    	
-	    	String scoreData = data.get(4).text().trim();
-	    	
-	    	// if the score is a numerical entry, split the grade into total points and earned points
-	    	if(scoreData.length() > 0 && Character.isDigit(scoreData.charAt(0))) {
-	    		String displayPct = scoreData.split(" = ")[1].trim();
-	    		newDetail.setDisplayPercent(displayPct);
-	    		
-	    		// remove trailing '=' and percentage data
-	    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
-	    		
-	    		// split into respective parts and parse
-	    		String[] scoreParts = scoreData.split(" / ");
-	    		
-	    		try {
-		    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
-		    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
-	    		} catch(NumberFormatException e) {
-	    			newDetail.setDisplayPercent("--");
-		    		newDetail.setDisplayScore("");
-	    		}
-	    		
-	    		String displayScore = scoreData.replaceAll(" ", "");
-	    		newDetail.setDisplayScore(displayScore);
-	    	} else {
-	    		newDetail.setDisplayPercent("--");
-	    		newDetail.setDisplayScore("");
+	    	for(int i = 0; i < data.size(); i++) {
+	    		if(i == 0) newDetail.setCategory(data.get(0).text());
+	    		if(i == 1) newDetail.setDueDate(data.get(1).text());
+	    		if(i == 2) newDetail.setDetailName(data.get(2).text());
+	    		if(i == 5) newDetail.setComment(data.get(5).text());
+	    		if(i == 6) newDetail.setSubmissions(data.get(6).text());
 	    	}
 	    	
-	    	detailsList.add(newDetail);
+	    	
+	    	if(data.size() >= 5) {
+		    	String scoreData = data.get(4).text().trim();
+		    	
+		    	// if the score is a numerical entry, split the grade into total points and earned points
+		    	if(scoreData.length() > 0 && Character.isDigit(scoreData.charAt(0))) {
+		    		String displayPct = scoreData.split(" = ")[1].trim();
+		    		newDetail.setDisplayPercent(displayPct);
+		    		
+		    		// remove trailing '=' and percentage data
+		    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
+		    		
+		    		// split into respective parts and parse
+		    		String[] scoreParts = scoreData.split(" / ");
+		    		
+		    		try {
+			    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
+			    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
+		    		} catch(NumberFormatException e) {
+		    			newDetail.setDisplayPercent("--");
+			    		newDetail.setDisplayScore("");
+		    		}
+		    		
+		    		String displayScore = scoreData.replaceAll(" ", "");
+		    		newDetail.setDisplayScore(displayScore);
+		    	} else {
+		    		newDetail.setDisplayPercent("--");
+		    		newDetail.setDisplayScore("");
+		    	}
+	    	} else {
+		    	newDetail.setDisplayPercent("--");
+	    		newDetail.setDisplayScore("");
+		    }
+	    	
+		    detailsList.add(newDetail);
 	    }
-		
+	    
 	    return detailsList;
 	}
 
