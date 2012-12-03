@@ -43,29 +43,21 @@
         android:ems="10"
         android:hint="SchoolLoop Site Prefix"
         android:maxLines="1" />
-
-    <Button
-        android:id="@+id/save_prefs_btn"
-        android:layout_width="match_parent"
+
+    <CheckBox
+        android:id="@+id/save_login_chk"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:onClick="savePreferences"
-        android:text="Save Login Info" />
-
-    <Button
-        android:id="@+id/load_prefs_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:onClick="loadPreferences"
-        android:text="Load Login Info" />
-
+        android:layout_marginLeft="5dp"
+        android:onClick="toggleSaveInfo"
+        android:text="Remember Me" />
+
     <Button
         android:id="@+id/sl_login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:onClick="logIn"
         android:text="Log In" />
 

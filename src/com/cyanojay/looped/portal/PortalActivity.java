@@ -89,6 +89,8 @@ public class PortalActivity extends TabActivity {
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	intent.putExtra("FROM_LOGOUT", true);
+    	
     	startActivity(intent);
     	
     	return status;
