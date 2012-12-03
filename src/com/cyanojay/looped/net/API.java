@@ -162,7 +162,13 @@ public final class API {
 	    		
 	    		if(i == 0) newCourse.setLetterGrade(currGrade.text());
 	    		if(i == 1) newCourse.setPercentGrade(currGrade.text());
-	    		if(i == 2) newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
+	    		if(i == 2 && currGrade.text().length() > 0) {
+	    			try {
+	    				newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
+	    			} catch(NumberFormatException e) {
+	    				newCourse.setNumZeros(0);
+	    			}
+	    		}
 	    		if(i == 3) {
 	    			String detailsUrl = portalUrl + currGrade.child(0).attr("href");
 	    			newCourse.setDetailsUrl(detailsUrl);
@@ -308,7 +314,7 @@ public final class API {
 	    	String scoreData = data.get(4).text().trim();
 	    	
 	    	// if the score is a numerical entry, split the grade into total points and earned points
-	    	if(Character.isDigit(scoreData.charAt(0))) {
+	    	if(scoreData.length() > 0 && Character.isDigit(scoreData.charAt(0))) {
 	    		String displayPct = scoreData.split(" = ")[1].trim();
 	    		newDetail.setDisplayPercent(displayPct);
 	    		
@@ -317,8 +323,14 @@ public final class API {
 	    		
 	    		// split into respective parts and parse
 	    		String[] scoreParts = scoreData.split(" / ");
-	    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
-	    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
+	    		
+	    		try {
+		    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
+		    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
+	    		} catch(NumberFormatException e) {
+	    			newDetail.setDisplayPercent("--");
+		    		newDetail.setDisplayScore("");
+	    		}
 	    		
 	    		String displayScore = scoreData.replaceAll(" ", "");
 	    		newDetail.setDisplayScore(displayScore);
