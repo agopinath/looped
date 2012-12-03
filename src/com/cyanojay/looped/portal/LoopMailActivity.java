@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +42,14 @@ public class LoopMailActivity extends ListActivity {
     }
     
     private class ScrapeLoopMailTask extends AsyncTask<LoopMailBoxType, Void, List<MailEntry>> {
+    	private ProgressDialog load;
+    	
+    	@Override
+	    protected void onPreExecute() {
+	        super.onPreExecute();
+	        load = ProgressDialog.show(LoopMailActivity.this, "Looped", "Retrieving inbox...");
+		}
+    	
     	@Override
 		protected List<MailEntry> doInBackground(LoopMailBoxType... params) {
     		switch(params[0]) {
@@ -62,6 +71,8 @@ public class LoopMailActivity extends ListActivity {
 		@Override
 	    protected void onPostExecute(List<MailEntry> result) {
 	        super.onPostExecute(result);
+	        
+	        load.dismiss();
 	        
 	        MailEntry[] values = result.toArray(new MailEntry[0]);
 	        LoopMailAdapter adapter = new LoopMailAdapter(LoopMailActivity.this, values);
