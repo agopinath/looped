@@ -110,7 +110,11 @@ public class GradesActivity extends ListActivity {
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
     	
-    	if(selectedCourse.getLetterGrade().equals(Course.SUBST_LETT_GRADE)) return;
+    	if(selectedCourse.getDetailsUrl().length() == 0 || 
+    	   selectedCourse.getLetterGrade().equals(Course.SUBST_LETT_GRADE)) {
+    		Toast.makeText(this, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
+    		return;
+    	}
     	
     	Intent detailsIntent = new Intent(this, GradeDetailsActivity.class);
     	detailsIntent.putExtra("COURSE_SELECTED", selectedCourse);

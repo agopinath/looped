@@ -170,8 +170,10 @@ public final class API {
 	    			}
 	    		}
 	    		if(i == 3) {
-	    			String detailsUrl = portalUrl + currGrade.child(0).attr("href");
-	    			newCourse.setDetailsUrl(detailsUrl);
+	    			if(currGrade.children().hasAttr("href")) {
+		    			String detailsUrl = portalUrl + currGrade.children().attr("href");
+		    			newCourse.setDetailsUrl(detailsUrl);
+	    			}
 	    		}
 	    	}
 	    	
