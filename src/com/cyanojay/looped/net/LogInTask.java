@@ -46,6 +46,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	try {
     		API.get().logIn();
     		API.get().refreshPortal();
+    		API.get().refreshLoopMail();
     		
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
     		return API.get().isLoggedIn(false);

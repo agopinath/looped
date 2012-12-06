@@ -37,6 +37,7 @@ public final class API {
 	
 	private CookieStore authCookies;
 	private Document portal;
+	private Document loopMail;
 	
 	private String username;
 	private String password;
@@ -126,6 +127,12 @@ public final class API {
 		if(!loginStatus) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
+	}
+	
+	public void refreshLoopMail() throws IOException {
+		if(!loginStatus) return;
+		
+		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
 	public String getPortalTitle() {
@@ -271,8 +278,7 @@ public final class API {
 		List<MailEntry> mail = new ArrayList<MailEntry>();
 		
 		// send GET request to the inbox URL and retrieve the table listing the emails
-		Element mailTable = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies)
-													.select("table.list_padding").first();
+		Element mailTable = loopMail.select("table.list_padding").first();
 		
 		// select all mail listing rows after the first one because it is a header row
 		Elements mailListing = mailTable.select("tr:gt(0)");
