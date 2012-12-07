@@ -3,7 +3,6 @@ package com.cyanojay.looped.portal;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Display;
@@ -32,9 +31,6 @@ public class PortalActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portal);
         
-        //unlock orientation after logging in
-    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-    	
         setTitle(API.get().getPortalTitle()); 
         
         tabHost = (TabHost) getTabHost();

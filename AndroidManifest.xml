@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.cyanojay.looped.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:configChanges="orientation|keyboardHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +38,8 @@
             android:label="@string/title_activity_news" />
         <activity
             android:name=".portal.GradeDetailsActivity"
-            android:label="@string/title_activity_grade_details" />
+            android:label="@string/title_activity_grade_details"
+            android:configChanges="orientation|keyboardHidden"  />
         <activity
             android:name=".portal.LoopMailActivity"
             android:label="@string/title_activity_loop_mail" />
