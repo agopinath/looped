@@ -46,11 +46,12 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	try {
     		API.get().logIn();
     		API.get().refreshPortal();
-    		API.get().refreshLoopMail();
     		
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
-    		return API.get().isLoggedIn(false);
-    	} catch(Exception e) {}
+    		return API.get().isLoggedIn();
+    	} catch(Exception e) {
+    		Toast.makeText(parent, "Login unsuccessful", Toast.LENGTH_SHORT).show();
+    	}
     	
 		return false;
     }
@@ -87,7 +88,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         } else {
         	System.out.println("\n\nLOG IN FAIL\n\n");
         	
-        	Toast.makeText(parent, "Incorrect username/password/login URL.", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(parent, "Incorrect username/password/login URL", Toast.LENGTH_SHORT).show();
         }
     }
 }

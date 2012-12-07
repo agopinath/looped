@@ -66,7 +66,7 @@ public final class API {
 		this.portalUrl = portalUrl;
 	}
 	
-	public boolean logIn() throws ClientProtocolException, IOException {
+	public void logIn() throws ClientProtocolException, IOException {
 		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
@@ -79,8 +79,6 @@ public final class API {
         
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);
-        
-        return isLoggedIn();
 	}
 	
 	public boolean logOut() {
@@ -124,11 +122,6 @@ public final class API {
 		if(!isLoggedIn()) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
-	}
-	
-	public void refreshLoopMail() throws IOException {
-		if(!isLoggedIn()) return;
-		
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
