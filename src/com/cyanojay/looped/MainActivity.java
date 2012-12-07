@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +25,10 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        setUpKeys(((EditText) findViewById(R.id.sl_uname)));
+        setUpKeys(((EditText) findViewById(R.id.sl_pass)));
+        setUpKeys(((EditText) findViewById(R.id.sl_prefix)));
     }
 
     @Override
@@ -39,6 +45,11 @@ public class MainActivity extends BaseActivity {
     	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString();
     	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
     	
+    	if(username.trim() .length() == 0 || 
+    		pass.trim() .length() == 0 || 
+    		loginPrefix.trim() .length() == 0)
+    		Toast.makeText(this, "One or more fields are empty Please correct and try again.", Toast.LENGTH_LONG).show();
+    		
     	if(!isOnline()) {
     		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", 
     					   Toast.LENGTH_LONG).show();
@@ -49,6 +60,21 @@ public class MainActivity extends BaseActivity {
 	    	LogInTask logInTask = new LogInTask(username, pass, loginPrefix, this); 
 	    	logInTask.execute();
     	}
+    }
+    
+    private void setUpKeys(EditText text) {
+    	text.addTextChangedListener(new TextWatcher() {
+    		
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void afterTextChanged(Editable s) {
+                for(int i = s.length(); i > 0; i--){
+                    if(s.subSequence(i-1, i).toString().equals("\n"))
+                         s.replace(i-1, i, "");
+                }
+            }
+        });
     }
     
     private boolean hasWhitespace(String s) {
