@@ -167,20 +167,24 @@ public final class API {
 	    	for(int i = 0; i < grades.size(); i++) {
 	    		Element currGrade = grades.get(i);
 	    		
-	    		if(i == 0) newCourse.setLetterGrade(currGrade.text());
-	    		if(i == 1) newCourse.setPercentGrade(currGrade.text());
-	    		if(i == 2 && currGrade.text().length() > 0) {
-	    			try {
-	    				newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
-	    			} catch(NumberFormatException e) {
-	    				newCourse.setNumZeros(0);
-	    			}
-	    		}
-	    		if(i == 3) {
-	    			if(currGrade.children().hasAttr("href")) {
-		    			String detailsUrl = portalUrl + currGrade.children().attr("href");
-		    			newCourse.setDetailsUrl(detailsUrl);
-	    			}
+	    		try {
+		    		if(i == 0) newCourse.setLetterGrade(currGrade.text());
+		    		if(i == 1) newCourse.setPercentGrade(currGrade.text());
+		    		if(i == 2 && currGrade.text().length() > 0) {
+		    			try {
+		    				newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
+		    			} catch(NumberFormatException e) {
+		    				newCourse.setNumZeros(0);
+		    			}
+		    		}
+		    		if(i == 3) {
+		    			if(currGrade.children().hasAttr("href")) {
+			    			String detailsUrl = portalUrl + currGrade.children().attr("href");
+			    			newCourse.setDetailsUrl(detailsUrl);
+		    			}
+		    		}
+	    		} catch(Exception e) {
+	    			continue;
 	    		}
 	    	}
 	    	
@@ -197,28 +201,38 @@ public final class API {
 	    Elements assignmentsBlock = portal.body().select("tbody.hub_general_body tr");
 	    
 	    for(Element assignmentRow: assignmentsBlock) {
-	    	// create new empty assignment to store course information
-	    	CurrentAssignment assignment = new CurrentAssignment();
-	    	
-	    	// select the assignment details that include the title, respective course, and due date 
-	    	Elements details = assignmentRow.select("div.list_text");
-	    	
-	    	// if assignments are  empty, they are invalid, so skip
-	    	if(details.size() == 0) continue;
-	    	
-	    	for(int i = 0; i < details.size(); i++) {
-	    		Element currAssignment = details.get(i);
-
-	    		if(i == 0) {
-	    			String detailsUrl = portalUrl + currAssignment.child(0).attr("href");
-	    			assignment.setDetailsUrl(detailsUrl);
-	    			assignment.setName(currAssignment.text());
-	    		}
-	    		if(i == 1) assignment.setCourseName(currAssignment.text());
-	    		if(i == 2) assignment.setDueDate(currAssignment.text());
+	    	try {
+		    	// create new empty assignment to store course information
+		    	CurrentAssignment assignment = new CurrentAssignment();
+		    	
+		    	// select the assignment details that include the title, respective course, and due date 
+		    	Elements details = assignmentRow.select("div.list_text");
+		    	
+		    	// if assignments are  empty, they are invalid, so skip
+		    	if(details.size() == 0) continue;
+		    	
+		    	for(int i = 0; i < details.size(); i++) {
+		    		Element currAssignment = details.get(i);
+		    		
+		    		try {
+			    		if(i == 0) {
+			    			if(currAssignment.children().hasAttr("href")) {
+				    			String detailsUrl = portalUrl + currAssignment.children().attr("href");
+				    			assignment.setDetailsUrl(detailsUrl);
+			    			}
+			    			assignment.setName(currAssignment.text());
+			    		}
+			    		if(i == 1) assignment.setCourseName(currAssignment.text());
+			    		if(i == 2) assignment.setDueDate(currAssignment.text());
+		    		} catch(Exception e) {
+		    			continue;
+		    		}
+		    	}
+		    	
+		    	assignments.add(assignment);
+	    	} catch(Exception e) {
+	    		continue;
 	    	}
-	    	
-	    	assignments.add(assignment);
 	    }
 	    
 	    return assignments;
@@ -236,39 +250,43 @@ public final class API {
 	    Elements articleInfo = newsBlock.select("td.list_text");
 	    
 	    for(int i = 0; i < articleNames.size(); i++) {
-	    	// create new empty news article to store the article info
-	    	NewsArticle article = new NewsArticle();
-	    	
-	    	// select info according to how it is ordered/structured in the HTML
-	    	Element title = articleNames.get(i);
-	    	Element author = articleInfo.get(2*i);
-	    	Element date = articleInfo.get((2*i)+1);
-	    	
-	    	// split the author field into the author's name and the author's type
-	    	String authorData[] = null;
-	    	
 	    	try {
-	    		authorData = author.text().split(" - ");
-	    	} catch(Exception e) {
-	    		e.printStackTrace();
-	    		authorData = null;
-	    	}
-	    	
-	    	article.setArticleName(title.text());
-	    	
-	    	if(authorData != null) {
-		    	for(int j = 0; j < authorData.length; j++) {
-		    		if(j == 0) article.setAuthor(authorData[0]);
-		    		if(j == 1) article.setAuthorType(authorData[1]);
+		    	// create new empty news article to store the article info
+		    	NewsArticle article = new NewsArticle();
+		    	
+		    	// select info according to how it is ordered/structured in the HTML
+		    	Element title = articleNames.get(i);
+		    	Element author = articleInfo.get(2*i);
+		    	Element date = articleInfo.get((2*i)+1);
+		    	
+		    	// split the author field into the author's name and the author's type
+		    	String authorData[] = null;
+		    	
+		    	try {
+		    		authorData = author.text().split(" - ");
+		    	} catch(Exception e) {
+		    		e.printStackTrace();
+		    		authorData = null;
 		    	}
-	    	} else {
-	    		article.setDisplayAuthor(author.text());
+		    	
+		    	article.setArticleName(title.text());
+		    	
+		    	if(authorData != null) {
+			    	for(int j = 0; j < authorData.length; j++) {
+			    		if(j == 0) article.setAuthor(authorData[0]);
+			    		if(j == 1) article.setAuthorType(authorData[1]);
+			    	}
+		    	} else {
+		    		article.setDisplayAuthor(author.text());
+		    	}
+		    		
+		    	article.setDatePosted(date.text());
+		    	article.setArticleUrl(portalUrl + title.attr("href"));
+		    	
+		    	news.add(article);
+	    	} catch(Exception e) {
+	    		continue;
 	    	}
-	    		
-	    	article.setDatePosted(date.text());
-	    	article.setArticleUrl(portalUrl + title.attr("href"));
-	    	
-	    	news.add(article);
 	    }
 	    
 	    return news;
@@ -284,15 +302,19 @@ public final class API {
 		Elements mailListing = mailTable.select("tr:gt(0)");
 		
 		for(Element currListing : mailListing) {
-			MailEntry currEntry = new MailEntry();
-			Elements mailInfo = currListing.select("td.list_text");
-			
-			currEntry.setTimestamp(mailInfo.get(0).text());
-			currEntry.setInvolvedParties(mailInfo.get(1).text());
-			currEntry.setSubject(mailInfo.get(2).text());
-			currEntry.setContentUrl(portalUrl + mailInfo.get(2).select("a").attr("href") + "&template=print");
-			
-			mail.add(currEntry);
+			try {
+				MailEntry currEntry = new MailEntry();
+				Elements mailInfo = currListing.select("td.list_text");
+				
+				currEntry.setTimestamp(mailInfo.get(0).text());
+				currEntry.setInvolvedParties(mailInfo.get(1).text());
+				currEntry.setSubject(mailInfo.get(2).text());
+				currEntry.setContentUrl(portalUrl + mailInfo.get(2).select("a").attr("href") + "&template=print");
+				
+				mail.add(currEntry);
+			} catch(Exception e) {
+				continue;
+			}
 		}
 		
 		return mail;
@@ -308,54 +330,62 @@ public final class API {
 	    Elements details = detailsPage.body().select("tbody.general_body tr");
 
 	    for(Element detail: details) {
-	    	GradeDetail newDetail = new GradeDetail();
-	    	
-	    	// select all individual elements in each row
-	    	Elements data = detail.select("td");
-	    	
-	    	for(int i = 0; i < data.size(); i++) {
-	    		if(i == 0) newDetail.setCategory(data.get(0).text());
-	    		if(i == 1) newDetail.setDueDate(data.get(1).text());
-	    		if(i == 2) newDetail.setDetailName(data.get(2).text());
-	    		if(i == 5) newDetail.setComment(data.get(5).text());
-	    		if(i == 6) newDetail.setSubmissions(data.get(6).text());
-	    	}
-	    	
-	    	
-	    	if(data.size() >= 5) {
-		    	String scoreData = data.get(4).text().trim();
+	    	try {
+		    	GradeDetail newDetail = new GradeDetail();
 		    	
-		    	// if the score is a numerical entry, split the grade into total points and earned points
-		    	if(scoreData.length() > 0 && Character.isDigit(scoreData.charAt(0))) {
-		    		String displayPct = scoreData.split(" = ")[1].trim();
-		    		newDetail.setDisplayPercent(displayPct);
-		    		
-		    		// remove trailing '=' and percentage data
-		    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
-		    		
-		    		// split into respective parts and parse
-		    		String[] scoreParts = scoreData.split(" / ");
-		    		
+		    	// select all individual elements in each row
+		    	Elements data = detail.select("td");
+		    	
+		    	for(int i = 0; i < data.size(); i++) {
 		    		try {
-			    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
-			    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
-		    		} catch(NumberFormatException e) {
-		    			newDetail.setDisplayPercent("--");
-			    		newDetail.setDisplayScore("");
-		    		}
-		    		
-		    		String displayScore = scoreData.replaceAll(" ", "");
-		    		newDetail.setDisplayScore(displayScore);
-		    	} else {
-		    		newDetail.setDisplayPercent("--");
-		    		newDetail.setDisplayScore("");
+			    		if(i == 0) newDetail.setCategory(data.get(0).text());
+			    		if(i == 1) newDetail.setDueDate(data.get(1).text());
+			    		if(i == 2) newDetail.setDetailName(data.get(2).text());
+			    		if(i == 5) newDetail.setComment(data.get(5).text());
+			    		if(i == 6) newDetail.setSubmissions(data.get(6).text());
+		    		} catch(Exception e) {
+						continue;
+					}
 		    	}
-	    	} else {
-		    	newDetail.setDisplayPercent("--");
-	    		newDetail.setDisplayScore("");
-		    }
-	    	
-		    detailsList.add(newDetail);
+		    	
+		    	
+		    	if(data.size() >= 5) {
+			    	String scoreData = data.get(4).text().trim();
+			    	
+			    	// if the score is a numerical entry, split the grade into total points and earned points
+			    	if(scoreData.length() > 0 && Character.isDigit(scoreData.charAt(0))) {
+			    		String displayPct = scoreData.split(" = ")[1].trim();
+			    		newDetail.setDisplayPercent(displayPct);
+			    		
+			    		// remove trailing '=' and percentage data
+			    		scoreData = scoreData.substring(0, scoreData.indexOf('='));
+			    		
+			    		// split into respective parts and parse
+			    		String[] scoreParts = scoreData.split(" / ");
+			    		
+			    		try {
+				    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
+				    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
+			    		} catch(NumberFormatException e) {
+			    			newDetail.setDisplayPercent("--");
+				    		newDetail.setDisplayScore("");
+			    		}
+			    		
+			    		String displayScore = scoreData.replaceAll(" ", "");
+			    		newDetail.setDisplayScore(displayScore);
+			    	} else {
+			    		newDetail.setDisplayPercent("--");
+			    		newDetail.setDisplayScore("");
+			    	}
+		    	} else {
+			    	newDetail.setDisplayPercent("--");
+		    		newDetail.setDisplayScore("");
+			    }
+		    	
+			    detailsList.add(newDetail);
+	    	} catch(Exception e) {
+				continue;
+			}
 	    }
 	    
 	    return detailsList;
