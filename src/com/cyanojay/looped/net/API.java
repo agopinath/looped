@@ -45,8 +45,6 @@ public final class API {
 	private String portalUrl;
 	private String loginTestUrl;
 	
-	private boolean loginStatus;
-	
 	// instantiation is prevented
 	private API() {}
 	
@@ -82,7 +80,7 @@ public final class API {
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);
         
-        return (loginStatus = isLoggedIn(true));
+        return isLoggedIn();
 	}
 	
 	public boolean logOut() {
@@ -100,12 +98,10 @@ public final class API {
     	setAuthCookies(null);
     	
     	BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-    	return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY)) ? false : true;
+    	return (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY) ? false : true;
 	}
 	
-	public boolean isLoggedIn(boolean deep) {
-		if(!deep) return loginStatus;
-		
+	public boolean isLoggedIn() {
 		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(loginTestUrl);
@@ -121,17 +117,17 @@ public final class API {
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
         System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
-        return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_OK)) ? true : false;
+        return (responseStatus.getStatusCode() == HttpStatus.SC_OK) ? true : false;
 	}
 	
 	public void refreshPortal() throws IOException {
-		if(!loginStatus) return;
+		if(!isLoggedIn()) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
 	}
 	
 	public void refreshLoopMail() throws IOException {
-		if(!loginStatus) return;
+		if(!isLoggedIn()) return;
 		
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
