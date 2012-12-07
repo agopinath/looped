@@ -38,6 +38,7 @@ public final class API {
 	
 	private CookieStore authCookies;
 	private Document portal;
+	private Document coursePortal;
 	private Document loopMail;
 	
 	private String username;
@@ -122,6 +123,7 @@ public final class API {
 		if(!isLoggedIn()) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
+		coursePortal = Utils.getJsoupDocFromUrl(portalUrl + "/portal/student_home?d=x&template=print", portalUrl, authCookies);
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
@@ -133,9 +135,8 @@ public final class API {
 		List<Course> courses = new ArrayList<Course>();
 		
 		// select everything in the table holding the grades
-	    Elements courseBlock = portal.body().select("tbody.hub_general_body tr");
+	    Elements courseBlock = coursePortal.body().select("tbody.hub_general_body tr");
 	    
-	    outer:
 	    for(Element courseRow: courseBlock) {
 	    	boolean isNotPublished = false;
 	    	
