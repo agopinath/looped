@@ -1,10 +1,9 @@
 package com.cyanojay.looped;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -59,6 +58,13 @@ public class MainActivity extends BaseActivity {
     					   Toast.LENGTH_LONG).show();
     		return;
     	} 
+    	
+    	// lock orientation to avoid crash during login
+    	if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+    	   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    	} else {
+    	   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+    	}
     	
 	    LogInTask logInTask = new LogInTask(username, pass, fixedLoginPrefix, this); 
 	    logInTask.execute();
