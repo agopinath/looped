@@ -45,6 +45,8 @@ public final class API {
 	private String password;
 	private String portalUrl;
 	private String loginTestUrl;
+
+	private boolean loginStatus;
 	
 	// instantiation is prevented
 	private API() {}
@@ -67,7 +69,7 @@ public final class API {
 		this.portalUrl = portalUrl;
 	}
 	
-	public void logIn() throws ClientProtocolException, IOException {
+	public boolean logIn() throws ClientProtocolException, IOException {
 		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
@@ -80,6 +82,8 @@ public final class API {
         
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);
+        
+        return isLoggedIn(true);
 	}
 	
 	public boolean logOut() {
@@ -97,10 +101,12 @@ public final class API {
     	setAuthCookies(null);
     	
     	BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-    	return (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY) ? false : true;
+    	return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY) ? false : true);
 	}
 	
-	public boolean isLoggedIn() {
+	public boolean isLoggedIn(boolean deep) {
+		if(!deep) return loginStatus;
+		
 		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(loginTestUrl);
@@ -116,11 +122,11 @@ public final class API {
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
         System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
-        return (responseStatus.getStatusCode() == HttpStatus.SC_OK) ? true : false;
+        return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_OK));
 	}
 	
 	public void refreshPortal() throws IOException {
-		if(!isLoggedIn()) return;
+		if(!isLoggedIn(false)) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
 		coursePortal = Utils.getJsoupDocFromUrl(portalUrl + "/portal/student_home?d=x&template=print", portalUrl, authCookies);
