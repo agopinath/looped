@@ -21,6 +21,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
@@ -367,19 +368,19 @@ public final class API {
 				    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
 				    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
 			    		} catch(NumberFormatException e) {
-			    			newDetail.setDisplayPercent("--");
-				    		newDetail.setDisplayScore("");
+			    			newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
+				    		newDetail.setDisplayScore(Constants.EMPTY_INDIC);
 			    		}
 			    		
 			    		String displayScore = scoreData.replaceAll(" ", "");
 			    		newDetail.setDisplayScore(displayScore);
 			    	} else {
-			    		newDetail.setDisplayPercent("--");
-			    		newDetail.setDisplayScore("");
+			    		newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
+			    		newDetail.setDisplayScore(Constants.EMPTY_INDIC);
 			    	}
 		    	} else {
-			    	newDetail.setDisplayPercent("--");
-		    		newDetail.setDisplayScore("");
+			    	newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
+		    		newDetail.setDisplayScore(Constants.EMPTY_INDIC);
 			    }
 		    	
 			    detailsList.add(newDetail);

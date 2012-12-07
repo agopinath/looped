@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
@@ -105,8 +106,8 @@ public class GradeDetailsActivity extends BaseListActivity {
 		  		  percent.setText(detail.getDisplayPercent());
 		  		  score.setText(detail.getDisplayScore());
 	  		  } else {
-	  			  percent.setText("--");
-	  			  score.setText("");
+	  			  percent.setText(Constants.EMPTY_INDIC);
+	  			  score.setText(Constants.EMPTY_INDIC);
 	  		  }
 	  		  
 	  		  return rowView;
