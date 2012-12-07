@@ -68,11 +68,6 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 
     	return client.getCookieStore();
     }
-    
-    @Override
-    protected void onProgressUpdate(String...values) {
-        super.onProgressUpdate(values);
-    }
 
     @Override
     protected void onPostExecute(Boolean loginSuccess) {
