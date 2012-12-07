@@ -81,7 +81,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         } else {
         	System.out.println("\n\nLOG IN FAIL\n\n");
         	
-        	Toast.makeText(parent, "Incorrect username/password/login URL", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(parent, "Incorrect username/password/login URL. Please try again.", Toast.LENGTH_LONG).show();
         }
     }
 }

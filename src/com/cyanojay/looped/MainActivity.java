@@ -45,21 +45,23 @@ public class MainActivity extends BaseActivity {
     	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString().trim();
     	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString().trim();
     	
+    	String fixedLoginPrefix = loginPrefix.replace(" ", "").replace("\n", "").replace("\r", "");
+    	
     	if(username.length() == 0 || 
     		pass.length() == 0 || 
-    		loginPrefix.length() == 0)
-    		Toast.makeText(this, "One or more fields are empty Please correct and try again.", Toast.LENGTH_LONG).show();
+    		loginPrefix.length() == 0) {
+    		Toast.makeText(this, "One or more fields are empty. Please correct and try again.", Toast.LENGTH_LONG).show();
+    		return;
+    	}
     		
     	if(!isOnline()) {
     		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", 
     					   Toast.LENGTH_LONG).show();
-    	} else if(hasWhitespace(loginPrefix)) {
-    		Toast.makeText(this, "The login prefix cannot contain whitespaces. Please try again.", 
-					   Toast.LENGTH_LONG).show();
-    	} else {
-	    	LogInTask logInTask = new LogInTask(username, pass, loginPrefix, this); 
-	    	logInTask.execute();
-    	}
+    		return;
+    	} 
+    	
+	    LogInTask logInTask = new LogInTask(username, pass, fixedLoginPrefix, this); 
+	    logInTask.execute();
     }
     
     private void setUpKeys(EditText text) {
@@ -75,12 +77,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-    }
-    
-    private boolean hasWhitespace(String s) {
-    	Pattern pattern = Pattern.compile("\\s");
-    	Matcher matcher = pattern.matcher(s);
-    	return matcher.find();
     }
     
     private boolean isOnline() {
