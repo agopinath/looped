@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.net.API;
 
@@ -71,8 +72,8 @@ public class GradesActivity extends ListActivity {
     		  
     		  courseName.setText(course.getName());
     		  
-    		  if(course.getLetterGrade().equals(Course.INVALID_LETT_GRADE))
-    			  course.setLetterGrade(Course.SUBST_LETT_GRADE);
+    		  if(course.getLetterGrade().length() == 0)
+    			  course.setLetterGrade(Constants.EMPTY_INDIC);
     		  
     		  lettGrade.setText(course.getLetterGrade());
     		  
@@ -110,7 +111,11 @@ public class GradesActivity extends ListActivity {
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
     	
-    	if(selectedCourse.getLetterGrade().equals(Course.SUBST_LETT_GRADE)) return;
+    	if(selectedCourse.getDetailsUrl().length() == 0 || 
+    	   selectedCourse.getLetterGrade().equals(Constants.EMPTY_INDIC)) {
+    		Toast.makeText(this, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
+    		return;
+    	}
     	
     	Intent detailsIntent = new Intent(this, GradeDetailsActivity.class);
     	detailsIntent.putExtra("COURSE_SELECTED", selectedCourse);

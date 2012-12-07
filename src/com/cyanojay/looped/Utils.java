@@ -27,6 +27,9 @@ import org.apache.http.protocol.HTTP;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Build;
 
 import com.cyanojay.looped.net.MySSLSocketFactory;
@@ -87,5 +90,20 @@ public class Utils {
 	
 	public static int getApiVer() {
 		return Build.VERSION.SDK_INT;
+	}
+	
+	public static void lockOrientation(Activity act) {
+		// lock orientation to avoid crash during login
+		int currOrientation = act.getResources().getConfiguration().orientation;
+		
+		if(currOrientation == Configuration.ORIENTATION_LANDSCAPE)
+			act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		else
+			act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	public static void unlockOrientation(Activity act) {
+		// unlock orientation after logging in
+		act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 	}
 }

@@ -7,6 +7,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -66,17 +67,19 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 
     	return client.getCookieStore();
     }
-    
-    @Override
-    protected void onProgressUpdate(String...values) {
-        super.onProgressUpdate(values);
-    }
 
     @Override
     protected void onPostExecute(Boolean loginSuccess) {
         super.onPostExecute(loginSuccess);
         
-        progressDialog.dismiss();
+        // in case dialog does no longer exist, catch the error
+        try {
+        	progressDialog.dismiss();
+        	progressDialog = null;
+        } catch (Exception e) {}
+        
+        
+        Utils.unlockOrientation(parent);
         
         if(loginSuccess) {
         	System.out.println("\n\nLOG IN SUCCESS\n\n");
@@ -86,7 +89,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         } else {
         	System.out.println("\n\nLOG IN FAIL\n\n");
         	
-        	Toast.makeText(parent, "Incorrect username/password/login URL.", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(parent, "Incorrect username/password/login URL. Please try again.", Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -8,6 +8,7 @@ import org.apache.http.client.ClientProtocolException;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
@@ -37,6 +39,12 @@ public class GradeDetailsActivity extends BaseListActivity {
         
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration conf) {
+        super.onConfigurationChanged(conf);
+
     }
     
     private class ScrapeGradeDetailsTask extends AsyncTask<Course, Void, List<GradeDetail>> {
@@ -65,7 +73,10 @@ public class GradeDetailsActivity extends BaseListActivity {
 	    protected void onPostExecute(List<GradeDetail> result) {
 	        super.onPostExecute(result);
 	        
-	        load.dismiss();
+	        try {
+	        	load.dismiss();
+	        	load = null;
+	        } catch (Exception e) {}
 	        
 	        GradeDetail[] values = result.toArray(new GradeDetail[0]);
 	        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
@@ -105,8 +116,8 @@ public class GradeDetailsActivity extends BaseListActivity {
 		  		  percent.setText(detail.getDisplayPercent());
 		  		  score.setText(detail.getDisplayScore());
 	  		  } else {
-	  			  percent.setText("--");
-	  			  score.setText("");
+	  			  percent.setText(Constants.EMPTY_INDIC);
+	  			  score.setText(Constants.EMPTY_INDIC);
 	  		  }
 	  		  
 	  		  return rowView;

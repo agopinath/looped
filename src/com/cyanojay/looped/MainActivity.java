@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,11 +28,15 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
     	boolean fromLogout = getIntent().getBooleanExtra("FROM_LOGOUT", false);
     	
         if(!fromLogout) checkIfSavedInfo();
         else savePreferences();
+        
+        setUpKeys(((EditText) findViewById(R.id.sl_uname)));
+        setUpKeys(((EditText) findViewById(R.id.sl_pass)));
+        setUpKeys(((EditText) findViewById(R.id.sl_prefix)));
     }
 
     @Override
@@ -43,34 +49,52 @@ public class MainActivity extends BaseActivity {
     	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     	imm.hideSoftInputFromWindow(findViewById(R.id.sl_prefix).getWindowToken(), 0);
 
-    	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
-    	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString();
-    	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
+    	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString().trim();
+    	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString().trim();
+    	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString().trim();
     	
-    	logIn(username, pass, loginPrefix);
+    	String fixedLoginPrefix = loginPrefix.replace(" ", "").replace("\n", "").replace("\r", "");
+    	
+    	logIn(username, pass, fixedLoginPrefix);
     }
     
-    private void logIn(String user, String pass, String prefix) {
+    private void logIn(String username, String pass, String prefix) {
     	if(saveInfo) {
     		savePreferences();
     	}
     	
+    	if(username.length() == 0 || 
+    		pass.length() == 0 || 
+    		prefix.length() == 0) {
+    		Toast.makeText(this, "One or more fields are empty. Please correct and try again.", Toast.LENGTH_LONG).show();
+    		return;
+    	}
+    		
     	if(!isOnline()) {
     		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", 
     					   Toast.LENGTH_LONG).show();
-    	} else if(hasWhitespace(prefix)) {
-    		Toast.makeText(this, "The login prefix cannot contain whitespaces. Please try again.", 
-					   Toast.LENGTH_LONG).show();
-    	} else {
-	    	LogInTask logInTask = new LogInTask(user, pass, user, this); 
-	    	logInTask.execute();
-    	}
+    		return;
+    	} 
+    	
+    	Utils.lockOrientation(this);
+    	
+	    LogInTask logInTask = new LogInTask(username, pass, prefix, this); 
+	    logInTask.execute();
     }
     
-    private boolean hasWhitespace(String s) {
-    	Pattern pattern = Pattern.compile("\\s");
-    	Matcher matcher = pattern.matcher(s);
-    	return matcher.find();
+    private void setUpKeys(EditText text) {
+    	text.addTextChangedListener(new TextWatcher() {
+    		
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void afterTextChanged(Editable s) {
+                for(int i = s.length(); i > 0; i--){
+                    if(s.subSequence(i-1, i).toString().equals("\n"))
+                         s.replace(i-1, i, "");
+                }
+            }
+        });
     }
     
     private boolean isOnline() {
