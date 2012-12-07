@@ -66,7 +66,10 @@ public class GradeDetailsActivity extends BaseListActivity {
 	    protected void onPostExecute(List<GradeDetail> result) {
 	        super.onPostExecute(result);
 	        
-	        load.dismiss();
+	        try {
+	        	load.dismiss();
+	        	load = null;
+	        } catch (Exception e) {}
 	        
 	        GradeDetail[] values = result.toArray(new GradeDetail[0]);
 	        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
