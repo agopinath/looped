@@ -50,7 +50,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
     		return API.get().isLoggedIn();
     	} catch(Exception e) {
-    		Toast.makeText(parent, "Login unsuccessful", Toast.LENGTH_SHORT).show();
+    		Toast.makeText(parent, "Login unsuccessful, please try again", Toast.LENGTH_SHORT).show();
     	}
     	
 		return false;

@@ -135,7 +135,10 @@ public final class API {
 		// select everything in the table holding the grades
 	    Elements courseBlock = portal.body().select("tbody.hub_general_body tr");
 	    
+	    outer:
 	    for(Element courseRow: courseBlock) {
+	    	boolean isNotPublished = false;
+	    	
 	    	// create new empty course to store course information
 	    	Course newCourse = new Course();
 	    	
@@ -148,8 +151,10 @@ public final class API {
 	    	newCourse.setName(subject.text());
 	    	
 	    	// if no grades listed, grade must be listed as 'None Published', so select that
-	    	if(grades.size() == 0)
+	    	if(grades.size() == 0) {
 	    		grades = courseRow.select("td.list_text_light");
+	    		isNotPublished = true;
+	    	}
 	    	
 	    	// if grades are still empty, they are invalid, so skip
 	    	if(grades.size() == 0) continue;
@@ -157,6 +162,10 @@ public final class API {
 	    	for(int i = 0; i < grades.size(); i++) {
 	    		Element currGrade = grades.get(i);
 	    		
+	    		if(isNotPublished) {
+	    			break;
+	    		}
+	    			
 	    		try {
 		    		if(i == 0) newCourse.setLetterGrade(currGrade.text());
 		    		if(i == 1) newCourse.setPercentGrade(currGrade.text());
