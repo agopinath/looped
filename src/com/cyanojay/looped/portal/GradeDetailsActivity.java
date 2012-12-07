@@ -8,6 +8,7 @@ import org.apache.http.client.ClientProtocolException;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +39,12 @@ public class GradeDetailsActivity extends BaseListActivity {
         
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration conf) {
+        super.onConfigurationChanged(conf);
+
     }
     
     private class ScrapeGradeDetailsTask extends AsyncTask<Course, Void, List<GradeDetail>> {

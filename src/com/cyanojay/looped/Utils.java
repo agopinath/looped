@@ -94,11 +94,12 @@ public class Utils {
 	
 	public static void lockOrientation(Activity act) {
 		// lock orientation to avoid crash during login
-    	if (act.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-    	    act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-    	} else {
-    		act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-    	}
+		int currOrientation = act.getResources().getConfiguration().orientation;
+		
+		if(currOrientation == Configuration.ORIENTATION_LANDSCAPE)
+			act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		else
+			act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 	
 	public static void unlockOrientation(Activity act) {

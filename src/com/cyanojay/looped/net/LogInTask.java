@@ -79,6 +79,8 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         } catch (Exception e) {}
         
         
+        Utils.unlockOrientation(parent);
+        
         if(loginSuccess) {
         	System.out.println("\n\nLOG IN SUCCESS\n\n");
 

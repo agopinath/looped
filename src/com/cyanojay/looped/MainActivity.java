@@ -60,6 +60,8 @@ public class MainActivity extends BaseActivity {
     		return;
     	} 
     	
+    	Utils.lockOrientation(this);
+    	
 	    LogInTask logInTask = new LogInTask(username, pass, fixedLoginPrefix, this); 
 	    logInTask.execute();
     }
