@@ -41,13 +41,13 @@ public class MainActivity extends BaseActivity {
     	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     	imm.hideSoftInputFromWindow(findViewById(R.id.sl_prefix).getWindowToken(), 0);
 
-    	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString();
-    	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString();
-    	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString();
+    	String username = ((EditText) findViewById(R.id.sl_uname)).getText().toString().trim();
+    	String pass = ((EditText) findViewById(R.id.sl_pass)).getText().toString().trim();
+    	String loginPrefix = ((EditText) findViewById(R.id.sl_prefix)).getText().toString().trim();
     	
-    	if(username.trim() .length() == 0 || 
-    		pass.trim() .length() == 0 || 
-    		loginPrefix.trim() .length() == 0)
+    	if(username.length() == 0 || 
+    		pass.length() == 0 || 
+    		loginPrefix.length() == 0)
     		Toast.makeText(this, "One or more fields are empty Please correct and try again.", Toast.LENGTH_LONG).show();
     		
     	if(!isOnline()) {
