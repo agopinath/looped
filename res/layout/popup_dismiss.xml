@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.61"
         android:text="@string/exit_text" 
-        style="@style/LoopedCommon.LoopedButton" />
+        style="@style/LoopedButton" />
 
 
     <ProgressBar

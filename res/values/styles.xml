@@ -44,7 +44,7 @@
         
     </style>
     
-    <style name="LoopedCommon.LoopedButton" >
+    <style name="LoopedButton" >
         <item name="android:background">@drawable/button_background</item>
     </style>
     
