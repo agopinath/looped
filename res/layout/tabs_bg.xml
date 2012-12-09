@@ -3,8 +3,8 @@
 	android:id="@+id/tabsLayout" android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:padding="10dip" android:gravity="center" android:orientation="vertical"
-	android:background="@drawable/tabs_background">
-
+	android:background="@drawable/tabs_background" >
+
 	<TextView
 	    android:id="@+id/tabsText"
 	    android:layout_width="wrap_content"
