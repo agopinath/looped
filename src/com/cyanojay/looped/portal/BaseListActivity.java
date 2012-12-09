@@ -49,7 +49,7 @@ public class BaseListActivity extends ListActivity {
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
     	
-    	stopService(PortalActivity.KEEP_ALIVE_SERVICE);
+    	PortalActivity.KEEP_ALIVE_TASK.stopKeepAlive();
     	startActivity(intent);
     	
     	return status;

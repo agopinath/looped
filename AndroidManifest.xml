@@ -14,7 +14,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <service android:enabled="true" android:name="com.cyanojay.looped.net.SessionKeepAliveService" />
         <activity
             android:name="com.cyanojay.looped.MainActivity"
             android:label="@string/title_activity_main" >

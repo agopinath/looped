@@ -23,11 +23,11 @@ import android.widget.Toast;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.net.API;
-import com.cyanojay.looped.net.SessionKeepAliveService;
+import com.cyanojay.looped.net.SessionKeepAliveTask;
 
 public class PortalActivity extends TabActivity {
 	private TabHost tabHost;
-	public static Intent KEEP_ALIVE_SERVICE;
+	public static SessionKeepAliveTask KEEP_ALIVE_TASK;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +43,12 @@ public class PortalActivity extends TabActivity {
         setupTab("News", new Intent(this, NewsActivity.class));
         setupTab("Mail", new Intent(this, LoopMailActivity.class));
         
-        KEEP_ALIVE_SERVICE = new Intent(this, SessionKeepAliveService.class);
-        
-        startService(KEEP_ALIVE_SERVICE);
+        KEEP_ALIVE_TASK = new SessionKeepAliveTask(this);
+        KEEP_ALIVE_TASK.startKeepAlive();
 	}
-
+    
 	private void setupTab(final String tag, Intent e) {
 	    View tabview = createTabView(tabHost.getContext(), tag);
-	    
 	    TabSpec tabSpec = tabHost.newTabSpec(tag).setIndicator(tabview).setContent(e);
 
 	    tabHost.addTab(tabSpec);
@@ -98,7 +96,7 @@ public class PortalActivity extends TabActivity {
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
     	
-    	stopService(KEEP_ALIVE_SERVICE);
+    	PortalActivity.KEEP_ALIVE_TASK.stopKeepAlive();
     	startActivity(intent);
     	
     	return status;
