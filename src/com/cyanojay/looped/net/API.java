@@ -51,7 +51,7 @@ public final class API {
 	// instantiation is prevented
 	private API() {}
 	
-	public static API get() {
+	public static synchronized API get() {
 		return (instance != null) ? instance : (instance = new API());
 	}
 
