@@ -44,7 +44,18 @@ public class PortalActivity extends TabActivity {
         setupTab("Mail", new Intent(this, LoopMailActivity.class));
         
         KEEP_ALIVE_TASK = new SessionKeepAliveTask(this);
+	}
+    
+    @Override
+    public void onStart() {
+    	super.onStart();
         KEEP_ALIVE_TASK.startKeepAlive();
+	}
+    
+    @Override
+    public void onStop() {
+    	super.onStop();
+        KEEP_ALIVE_TASK.stopKeepAlive();
 	}
     
 	private void setupTab(final String tag, Intent e) {

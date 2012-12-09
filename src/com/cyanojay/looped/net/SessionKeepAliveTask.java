@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class SessionKeepAliveTask  {
 	private static final int UPDATE_INTERVAL = (int) (60 * 1000 * 10);
-	private Timer timer = new Timer();
+	private Timer timer;
 	private Activity parent;  
 	
 	public SessionKeepAliveTask(Activity parent) {
@@ -17,6 +17,7 @@ public class SessionKeepAliveTask  {
 	}
 	
 	public void startKeepAlive() {
+		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 	        @Override
 	        public void run() {
@@ -26,7 +27,10 @@ public class SessionKeepAliveTask  {
 	}
 
 	public void stopKeepAlive() {
-		if(timer != null) timer.cancel();
+		if(timer != null){
+			timer.cancel(); 
+			timer = null;
+		}
 	}
 	
 	private boolean doKeepAlive() {
