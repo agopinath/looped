@@ -26,9 +26,11 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
 public class AssignmentsActivity extends ListActivity {
@@ -96,6 +98,11 @@ public class AssignmentsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
+    	if(!Utils.isOnline(this)) {
+    		Toast.makeText(this, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+    		return;
+    	}
+    	
     	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
     	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);

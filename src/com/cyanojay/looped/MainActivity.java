@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity {
     		return;
     	}
     		
-    	if(!isOnline()) {
+    	if(!Utils.isOnline(this)) {
     		Toast.makeText(this, "This app requires Internet access. Please connect to the Internet and try again.", Toast.LENGTH_LONG).show();
     		return;
     	} 
@@ -124,13 +124,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-    
-    private boolean isOnline() {
-    	ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-    	NetworkInfo netInfo = cm.getActiveNetworkInfo();
-    	
-    	return (netInfo != null && netInfo.isConnectedOrConnecting());
-	}
     
     private boolean isLoginSaved() {
     	return settings.getBoolean(SHOULD_SAVE_LOGIN, false);

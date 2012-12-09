@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
 public class GradesActivity extends ListActivity {
@@ -110,6 +111,11 @@ public class GradesActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
+    	if(!Utils.isOnline(this)) {
+    		Toast.makeText(this, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+    		return;
+    	}
+    	
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
     	
     	if(selectedCourse.getDetailsUrl().length() == 0 || 
