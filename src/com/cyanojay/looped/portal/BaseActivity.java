@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
 public class BaseActivity extends Activity {
@@ -43,7 +44,11 @@ public class BaseActivity extends Activity {
     }
     
     private boolean logOut() {
-    	boolean status = API.get().logOut();
+    	boolean status = false;
+    	
+    	if(Utils.isOnline(this)) {
+    		status = API.get().logOut();
+    	}
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

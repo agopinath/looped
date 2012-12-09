@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.SessionKeepAliveTask;
 
@@ -99,7 +100,11 @@ public class PortalActivity extends TabActivity {
     }
     
     private boolean logOut() {
-    	boolean status = API.get().logOut();
+    	boolean status = false;
+    	
+    	if(Utils.isOnline(this)) {
+    		status = API.get().logOut();
+    	}
     	
     	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
     	

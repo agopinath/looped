@@ -36,6 +36,7 @@ public class SessionKeepAliveTask  {
 	private boolean doKeepAlive() {
 		try {
 			API.get().refreshPortal();
+			System.out.println("---------- REFRESHING PORTAL------------");
 		} catch (IOException e) {
 			Toast.makeText(parent, "Failed to refresh School Loop. Please check your " +
 									"Internet connection and re-login.", Toast.LENGTH_LONG).show();
