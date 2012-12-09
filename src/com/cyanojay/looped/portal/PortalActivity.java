@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
-import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
 public class PortalActivity extends TabActivity {
@@ -111,7 +111,7 @@ public class PortalActivity extends TabActivity {
 					        
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), LayoutParams.WRAP_CONTENT, true);
         
-    	flow.setOnClickListener(new View.OnClickListener() {
+    	((Button) flow.findViewById(R.id.about_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pw.dismiss();
