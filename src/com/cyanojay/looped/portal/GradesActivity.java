@@ -22,6 +22,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.net.API;
 
 public class GradesActivity extends ListActivity {
+	public static final String COURSE_SELECTED = "COURSE_SELECTED";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class GradesActivity extends ListActivity {
     	}
     	
     	Intent detailsIntent = new Intent(this, GradeDetailsActivity.class);
-    	detailsIntent.putExtra("COURSE_SELECTED", selectedCourse);
+    	detailsIntent.putExtra(COURSE_SELECTED, selectedCourse);
     	
     	this.startActivity(detailsIntent);
     }

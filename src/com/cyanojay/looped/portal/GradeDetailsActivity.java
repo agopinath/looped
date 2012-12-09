@@ -30,12 +30,13 @@ public class GradeDetailsActivity extends BaseListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_details);
         
-        Course currCourse = (Course) getIntent().getSerializableExtra("COURSE_SELECTED");
+        Course currCourse = (Course) getIntent().getSerializableExtra(GradesActivity.COURSE_SELECTED);
         
         setTitle(currCourse.getName());
         
         if(Utils.getApiVer() >= Build.VERSION_CODES.HONEYCOMB)
         	getActionBar().setSubtitle(currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
+        else setTitle(currCourse.getName() + ": " + currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
         
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);
@@ -44,7 +45,6 @@ public class GradeDetailsActivity extends BaseListActivity {
     @Override
     public void onConfigurationChanged(Configuration conf) {
         super.onConfigurationChanged(conf);
-
     }
     
     private class ScrapeGradeDetailsTask extends AsyncTask<Course, Void, List<GradeDetail>> {
