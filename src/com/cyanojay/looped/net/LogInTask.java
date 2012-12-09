@@ -83,7 +83,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         
         if(loginSuccess) {
         	System.out.println("\n\nLOG IN SUCCESS\n\n");
-
+        	
         	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
             parent.startActivity(showPortalIntent);
         } else {

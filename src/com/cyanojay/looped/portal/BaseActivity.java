@@ -49,6 +49,7 @@ public class BaseActivity extends Activity {
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
     	
+    	stopService(PortalActivity.KEEP_ALIVE_SERVICE);
     	startActivity(intent);
     	
     	return status;
