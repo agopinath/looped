@@ -58,10 +58,7 @@
                     android:text="Large Text"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray" />
+                <include layout="@layout/popup_spacer" />
 
                 <TextView
                     android:id="@+id/assigndet_audi"
@@ -72,10 +69,7 @@
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray" />
+                <include layout="@layout/popup_spacer" />
 
                 <TextView
                     android:id="@+id/assigndet_info"
@@ -85,10 +79,7 @@
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray" />
+                <include layout="@layout/popup_spacer" />
 
                 <WebView
                     android:id="@+id/assigndet_expl"
