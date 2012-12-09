@@ -1,11 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
-    style="@style/LoopedCommon.LoopedMain"
+    style="@style/styleName"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:layout_height="match_parent" >
+
     <EditText
         android:id="@+id/sl_uname"
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
 
         <requestFocus />
     </EditText>
-
+
     <EditText
         android:id="@+id/sl_pass"
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:maxLines="1" />
-
+
     <EditText
         android:id="@+id/sl_prefix"
         android:layout_width="match_parent"
@@ -43,16 +42,17 @@
         android:ems="10"
         android:hint="SchoolLoop Site Prefix"
         android:maxLines="1" />
-
+
     <CheckBox
         android:id="@+id/remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="Remember Me" />
-
+
     <Button
         android:id="@+id/sl_login_btn"
+        style="@style/LoopedCommon.LoopedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

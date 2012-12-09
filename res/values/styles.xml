@@ -43,4 +43,12 @@
     <style name="LoopedCommon.LoopedMail" >
         
     </style>
+    
+    <style name="LoopedCommon.LoopedButton" >
+        <item name="android:background">@drawable/button_background</item>
+    </style>
+    
+    <style name="styleName" parent="@style/LoopedCommon.LoopedMain">
+        <item name="android:orientation">vertical</item>
+    </style>
 </resources>

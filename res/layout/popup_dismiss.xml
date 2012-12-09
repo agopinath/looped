@@ -3,14 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
-
+
+
+
+
     <Button
         android:id="@+id/exit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.61"
-        android:text="@string/exit_text" />
-
+        android:text="@string/exit_text" 
+        style="@style/LoopedCommon.LoopedButton" />
+
+
     <ProgressBar
         android:id="@+id/popup_prog"
         android:layout_width="wrap_content"
