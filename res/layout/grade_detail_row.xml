@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/TableLayout1"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="right"
@@ -8,65 +8,68 @@
     android:shrinkColumns="1"
     android:stretchColumns="2" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    <RelativeLayout
+        android:id="@+id/d"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
+
         <TextView
             android:id="@+id/gradedet_pct"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_alignBaseline="@+id/gradedet_name"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
             android:gravity="left"
             android:text="Percent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:width="75dp" />
-
+
         <TextView
             android:id="@+id/gradedet_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/gradedet_pct"
             android:text="Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
 
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow2"
+    <TextView
+        android:id="@+id/gradedet_score"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/gradedet_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="5dp"
-            android:alpha="0.8"
-            android:gravity="left"
-            android:text="Score"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/gradedet_categ"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.8"
-            android:text="Category"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/gradedet_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:alpha="0.8"
-            android:gravity="right"
-            android:text="Date"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/d"
+        android:layout_marginLeft="5dp"
+        android:alpha="0.8"
+        android:gravity="left"
+        android:text="Score"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:width="75dp" />
 
-    </TableRow>
+    <TextView
+        android:id="@+id/gradedet_categ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/d"
+        android:layout_toRightOf="@+id/gradedet_score"
+        android:alpha="0.8"
+        android:text="Category"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/gradedet_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/gradedet_categ"
+        android:layout_alignBottom="@+id/gradedet_categ"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:alpha="0.8"
+        android:gravity="right"
+        android:text="Date"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-</TableLayout>
+</RelativeLayout>
