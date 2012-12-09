@@ -12,7 +12,7 @@
     <color name="important_text">#EE0000</color>
 
     <string name="title_activity_grade_details">Course Grade Details</string>
-    <string name="exit_text">(tap to exit)</string>
+    <string name="exit_text">Back</string>
     <string name="about_text">Developed by Ajay Gopinath of &lt;b&gt;CyanoJay Works&lt;/b&gt;. Copyright &#169; 2012. All Rights Reserved.&lt;br /&gt;&lt;br /&gt;School Loop&lt;sup&gt;\u00AE&lt;/sup&gt; and the School Loop logo are registered trademarks  of &lt;b&gt;School Loop, Inc&lt;/b&gt;.</string>
     <string name="logout_text">Logout</string>
     <string name="menu_settings">Settings</string>

@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -97,13 +98,11 @@ public class NewsActivity extends ListActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
         LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
-    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.newsdet_prog);
-        
-        LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.newsdet_wrapper);
+    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
         
         final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
         
-        wrapper.setOnClickListener(new View.OnClickListener() {
+        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pw.dismiss();

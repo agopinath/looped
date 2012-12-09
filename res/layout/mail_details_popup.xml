@@ -10,37 +10,11 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:id="@+id/maildet_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:id="@+id/maildet_meta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <ProgressBar
-                    android:id="@+id/maildet_prog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:minHeight="14dip"
-                    android:minWidth="14dip" />
-
-                <TextView
-                    android:id="@+id/exit_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:alpha="0.8"
-                    android:gravity="center_horizontal"
-                    android:text="@string/exit_text"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </RelativeLayout>
+            <include layout="@layout/popup_dismiss" />
 
             <LinearLayout
                 android:id="@+id/maildet_contwrap"

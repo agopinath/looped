@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -97,9 +98,8 @@ public class AssignmentsActivity extends ListActivity {
     protected void onListItemClick(ListView list, View view, int position, long id) {
     	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
-    	LinearLayout wrapper = (LinearLayout) flow.findViewById(R.id.assigndet_wrapper);
     	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
-    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.assigndet_prog);
+    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
     	
     	Display display = getWindowManager().getDefaultDisplay(); 
         int width = display.getWidth();
@@ -107,7 +107,7 @@ public class AssignmentsActivity extends ListActivity {
         
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
         
-        wrapper.setOnClickListener(new View.OnClickListener() {
+    	((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pw.dismiss();

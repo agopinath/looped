@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_wrapper"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
 
     <ScrollView
         style="@style/LoopedPopup"
@@ -11,37 +10,11 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:id="@+id/newsdet_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:id="@+id/newsdet_meta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <ProgressBar
-                    android:id="@+id/newsdet_prog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:minHeight="14dip"
-                    android:minWidth="14dip" />
-
-                <TextView
-                    android:id="@+id/exit_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:alpha="0.8"
-                    android:gravity="center_horizontal"
-                    android:text="@string/exit_text"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </RelativeLayout>
+            <include layout="@layout/popup_dismiss" />
 
             <LinearLayout
                 android:id="@+id/newsdet_contwrap"
@@ -60,7 +33,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@android:color/black" />
 
-                <include layout="@layout/popup_spacer" />>
+                <include layout="@layout/popup_spacer" />
 
                 <TextView
                     android:id="@+id/newsdet_info"
