@@ -1,8 +1,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="android:Theme.Light" />
+    <style name="AppTheme" parent="@android:style/Theme.Light" />
     
-    <style name="LoopedCommon" parent="android:Theme.Light" >
+    <style name="LoopedCommon" parent="@android:style/Theme.Light" >
         <item name="android:background">@drawable/activity_background</item>
     </style>
     

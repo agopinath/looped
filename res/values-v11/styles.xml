@@ -1,5 +1,46 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="android:Theme.Holo.Light" />
-
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light" />
+    
+    <style name="LoopedCommon" parent="@android:style/Theme.Holo.Light" >
+        <item name="android:background">@drawable/activity_background</item>
+    </style>
+    
+    <style name="LoopedCommon.LoopedMain" >
+        
+    </style>
+    
+    <style name="LoopedCommon.LoopedGrades" >
+        
+    </style>
+    
+    <style name="LoopedCommon.LoopedAssignments" >
+        
+    </style>
+    
+    <style name="LoopedCommon.LoopedNews" >
+        
+    </style>
+    
+    <style name="LoopedPopup" >
+        <item name="android:background">@drawable/popup_border</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    
+    <style name="LoopedCommon.LoopedGradeDetails" >
+        
+    </style>
+    
+    <style name="LoopedAbout" >
+        <item name="android:background">@drawable/popup_border</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    
+    <style name="LoopedListRow" >
+        <item name="android:background">@drawable/list_row</item>
+    </style>
+    
+    <style name="LoopedCommon.LoopedMail" >
+        
+    </style>
 </resources>
