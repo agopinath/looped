@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="Subject"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginRight="5dp" />
 
     <TableRow
         android:id="@+id/tableRow2"
