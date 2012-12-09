@@ -55,8 +55,7 @@ public class BaseListActivity extends ListActivity {
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
-    	
-    	PortalActivity.KEEP_ALIVE_TASK.stopKeepAlive();
+
     	startActivity(intent);
     	
     	return status;
