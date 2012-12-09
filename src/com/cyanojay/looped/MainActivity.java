@@ -18,6 +18,13 @@ import com.cyanojay.looped.net.LogInTask;
 import com.cyanojay.looped.portal.BaseActivity;
 
 public class MainActivity extends BaseActivity {
+	public static final String PREFS_NAME = "Looped";
+	public static final String IS_FROM_LOGOUT = "FROM_LOGOUT";
+	public static final String SHOULD_SAVE_LOGIN = "SAVE_LOGIN";
+	public static final String USERNAME = "USERNAME";
+	public static final String PASS = "PASS";
+	public static final String PREFIX = "PREFIX";
+	
 	private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private EditText user;
@@ -30,7 +37,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        settings = getSharedPreferences("Looped", Context.MODE_PRIVATE);
+        settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();
         
         user = ((EditText) findViewById(R.id.sl_uname));
@@ -38,7 +45,7 @@ public class MainActivity extends BaseActivity {
         prefix = ((EditText) findViewById(R.id.sl_prefix));
         rem_me = ((CheckBox) findViewById(R.id.remember_me));
         
-    	boolean fromLogout = getIntent().getBooleanExtra("FROM_LOGOUT", false);
+    	boolean fromLogout = getIntent().getBooleanExtra(IS_FROM_LOGOUT, false);
     	
         if(!fromLogout) {
         	if(isLoginSaved()) {
@@ -71,9 +78,9 @@ public class MainActivity extends BaseActivity {
     	
     	if(rem_me.isChecked()) {
     		savePreferences();
-    		editor.putBoolean("SAVE_LOGIN", true);
+    		editor.putBoolean(SHOULD_SAVE_LOGIN, true);
     	} else {
-    		editor.putBoolean("SAVE_LOGIN", false);
+    		editor.putBoolean(SHOULD_SAVE_LOGIN, false);
     		editor.clear();
     	}
     	
@@ -126,20 +133,20 @@ public class MainActivity extends BaseActivity {
 	}
     
     private boolean isLoginSaved() {
-    	return settings.getBoolean("SAVE_LOGIN", false);
+    	return settings.getBoolean(SHOULD_SAVE_LOGIN, false);
     }
     
 	private void savePreferences() {
-        editor.putString("username", user.getText().toString().trim());
-        editor.putString("pass", pass.getText().toString().trim());
-        editor.putString("loginPrefix", fixLoginPrefix(prefix.getText().toString().trim()));
+        editor.putString(USERNAME, user.getText().toString().trim());
+        editor.putString(PASS, pass.getText().toString().trim());
+        editor.putString(PREFIX, fixLoginPrefix(prefix.getText().toString().trim()));
         
         editor.commit();
     }
     
     private void loadPreferences() {
-    	user.setText(settings.getString("username", ""));
-    	pass.setText(settings.getString("pass", ""));
-    	prefix.setText(settings.getString("loginPrefix", ""));
+    	user.setText(settings.getString(USERNAME, ""));
+    	pass.setText(settings.getString(PASS, ""));
+    	prefix.setText(settings.getString(PREFIX, ""));
     }
 }

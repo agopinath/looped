@@ -20,6 +20,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.net.API;
 
 public class BaseActivity extends Activity {
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_portal, menu);
@@ -45,7 +46,7 @@ public class BaseActivity extends Activity {
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    	intent.putExtra("FROM_LOGOUT", true);
+    	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
     	
     	startActivity(intent);
     	
