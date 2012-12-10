@@ -1,5 +1,7 @@
 package com.cyanojay.looped.net;
 
+import java.util.Date;
+
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -7,11 +9,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.DebugMailer;
 import com.cyanojay.looped.portal.PortalActivity;
 
 public class LogInTask extends AsyncTask<String, String, Boolean> {
@@ -50,7 +52,9 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     		
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
     		return API.get().isLoggedIn(false);
-    	} catch(Exception e) {}
+    	} catch(Exception e) {
+    		DebugMailer.sendDebugMailAPI(e.getMessage());
+    	}
     	
 		return false;
     }
