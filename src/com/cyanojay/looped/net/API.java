@@ -23,6 +23,7 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.DebugMailer;
 import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
@@ -190,6 +191,7 @@ public final class API {
 		    			}
 		    		}
 	    		} catch(Exception e) {
+	    			DebugMailer.sendDebugToDevs(e.getMessage());
 	    			continue;
 	    		}
 	    	}
@@ -231,12 +233,14 @@ public final class API {
 			    		if(i == 1) assignment.setCourseName(currAssignment.text());
 			    		if(i == 2) assignment.setDueDate(currAssignment.text());
 		    		} catch(Exception e) {
+		    			DebugMailer.sendDebugToDevs(e.getMessage());
 		    			continue;
 		    		}
 		    	}
 		    	
 		    	assignments.add(assignment);
 	    	} catch(Exception e) {
+	    		DebugMailer.sendDebugToDevs(e.getMessage());
 	    		continue;
 	    	}
 	    }
@@ -271,7 +275,7 @@ public final class API {
 		    	try {
 		    		authorData = author.text().split(" - ");
 		    	} catch(Exception e) {
-		    		e.printStackTrace();
+		    		DebugMailer.sendDebugToDevs(e.getMessage());
 		    		authorData = null;
 		    	}
 		    	
@@ -291,6 +295,7 @@ public final class API {
 		    	
 		    	news.add(article);
 	    	} catch(Exception e) {
+	    		DebugMailer.sendDebugToDevs(e.getMessage());
 	    		continue;
 	    	}
 	    }
@@ -319,6 +324,7 @@ public final class API {
 				
 				mail.add(currEntry);
 			} catch(Exception e) {
+				DebugMailer.sendDebugToDevs(e.getMessage());
 				continue;
 			}
 		}
@@ -350,6 +356,7 @@ public final class API {
 			    		if(i == 5) newDetail.setComment(data.get(5).text());
 			    		if(i == 6) newDetail.setSubmissions(data.get(6).text());
 		    		} catch(Exception e) {
+		    			DebugMailer.sendDebugToDevs(e.getMessage());
 						continue;
 					}
 		    	}
@@ -373,6 +380,7 @@ public final class API {
 				    		newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
 				    		newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
 			    		} catch(NumberFormatException e) {
+			    			DebugMailer.sendDebugToDevs(e.getMessage());
 			    			newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
 				    		newDetail.setDisplayScore(Constants.EMPTY_INDIC);
 			    		}
@@ -390,6 +398,7 @@ public final class API {
 		    	
 			    detailsList.add(newDetail);
 	    	} catch(Exception e) {
+	    		DebugMailer.sendDebugToDevs(e.getMessage());
 				continue;
 			}
 	    }

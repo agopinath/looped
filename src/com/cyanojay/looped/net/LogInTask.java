@@ -53,7 +53,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
     		return API.get().isLoggedIn(false);
     	} catch(Exception e) {
-    		DebugMailer.sendDebugMailAPI(e.getMessage());
+    		e.printStackTrace();
     	}
     	
 		return false;
