@@ -34,7 +34,6 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.widget.Toast;
 
 import com.cyanojay.looped.net.MySSLSocketFactory;
 

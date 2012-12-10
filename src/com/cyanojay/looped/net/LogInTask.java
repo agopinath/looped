@@ -1,7 +1,5 @@
 package com.cyanojay.looped.net;
 
-import java.util.Date;
-
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -13,7 +11,6 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.debug.DebugMailer;
 import com.cyanojay.looped.portal.PortalActivity;
 
 public class LogInTask extends AsyncTask<String, String, Boolean> {

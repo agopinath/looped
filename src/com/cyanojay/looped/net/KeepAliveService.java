@@ -3,7 +3,6 @@ import java.io.IOException;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Handler;
 
 
 public class KeepAliveService extends IntentService  {
