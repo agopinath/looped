@@ -84,7 +84,7 @@ public class AssignmentsActivity extends ListActivity {
     		  CurrentAssignment assignment = values[position];
     		  
     		  name.setText(assignment.getName());
-    		  courseName.setText(assignment.getCourseName().substring(0,assignment.getCourseName().indexOf("Period")));
+    		  courseName.setText(assignment.getCourseName());
     		  dueDate.setText("Due " + assignment.getDueDate());
     		  
     		  if(assignment.getDueDate().equals(TODAY)) {
