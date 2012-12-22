@@ -301,7 +301,7 @@ public final class API {
 	public List<MailEntry> getMailInbox() throws IllegalStateException, IOException {
 		List<MailEntry> mail = new ArrayList<MailEntry>();
 		
-		// send GET request to the inbox URL and retrieve the table listing the emails
+		// retrieve the table listing the emails
 		Element mailTable = loopMail.select("table.list_padding").first();
 		
 		// select all mail listing rows after the first one because it is a header row
@@ -311,10 +311,23 @@ public final class API {
 			MailEntry currEntry = new MailEntry();
 			Elements mailInfo = currListing.select("td.list_text");
 			
-			currEntry.setTimestamp(mailInfo.get(0).text());
-			currEntry.setInvolvedParties(mailInfo.get(1).text());
-			currEntry.setSubject(mailInfo.get(2).text());
-			currEntry.setContentUrl(portalUrl + mailInfo.get(2).select("a").attr("href") + "&template=print");
+			for(int i = 0; i < mailInfo.size(); i++) {
+				Element currInfo = mailInfo.get(i);
+				String currInfoTxt = currInfo.text().trim();
+				
+				if(i == 0) currEntry.setTimestamp(currInfoTxt);
+				else if(i == 1) currEntry.setInvolvedParties(currInfoTxt);
+				else if(i == 2) {
+					Elements link = currInfo.select("a[href]");
+					
+					if(!link.isEmpty() && link.size() == 1) {
+						String mailContentUrl = portalUrl + link.first().attr("href") + "&template=print";
+						currEntry.setContentUrl(mailContentUrl);
+					}
+					
+					currEntry.setSubject(currInfoTxt);
+				}
+			}
 			
 			mail.add(currEntry);
 		}
