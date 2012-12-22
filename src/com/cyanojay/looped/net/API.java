@@ -187,10 +187,12 @@ public final class API {
 		    		}
 		    	}
 		    	else if(i == 3) {
-		    		if(currGrade.children().hasAttr("href")) {
-		    			String detailsUrl = portalUrl + currGrade.children().attr("href");
+		    		Elements link = currGrade.select("a[href]");
+		    		
+					if(!link.isEmpty() && link.size() == 1) {
+						String detailsUrl = portalUrl + link.first().attr("href");
 			    		newCourse.setDetailsUrl(detailsUrl);
-		    		}
+					}
 		    	}
 	    	}
 	    	
