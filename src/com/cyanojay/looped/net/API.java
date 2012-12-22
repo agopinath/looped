@@ -228,7 +228,7 @@ public final class API {
 					Elements link = currAssignment.select("a[href]");
 					
 					if(!link.isEmpty() && link.size() == 1) {
-						String detailsUrl = portalUrl + link.first().attr("href");
+						String detailsUrl = Utils.getPrintifiedViewUrl(portalUrl + link.first().attr("href"));
 						assignment.setDetailsUrl(detailsUrl);
 					}
 
