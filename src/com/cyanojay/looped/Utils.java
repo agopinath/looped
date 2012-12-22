@@ -138,4 +138,8 @@ public class Utils {
 			return Character.toUpperCase(first) + s.substring(1);
 		}
 	}
+	
+	public static String getPrintifiedViewUrl(String rootUrl) {
+		return rootUrl + "&template=print";
+	}
 }

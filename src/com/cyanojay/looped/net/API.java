@@ -130,7 +130,7 @@ public final class API {
 		if(!isLoggedIn(false)) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
-		coursePortal = Utils.getJsoupDocFromUrl(portalUrl + "/portal/student_home?d=x&template=print", portalUrl, authCookies);
+		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintifiedViewUrl(portalUrl + "/portal/student_home?d=x"), portalUrl, authCookies);
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
@@ -321,7 +321,7 @@ public final class API {
 					Elements link = currInfo.select("a[href]");
 					
 					if(!link.isEmpty() && link.size() == 1) {
-						String mailContentUrl = portalUrl + link.first().attr("href") + "&template=print";
+						String mailContentUrl = Utils.getPrintifiedViewUrl(portalUrl + link.first().attr("href"));
 						currEntry.setContentUrl(mailContentUrl);
 					}
 					
