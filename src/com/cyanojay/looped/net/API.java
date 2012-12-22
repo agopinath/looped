@@ -419,8 +419,8 @@ public final class API {
 		// select the div containing assignment details
 		Elements detailBlock = detailsPage.body().select("div.course");
 		
-		String assignTitle = detailBlock.select("div.title_page").text();
-		String assignAudience = detailBlock.select("div.highlight_box").text();
+		String assignTitle = detailBlock.select("div.title_page").text().trim();
+		String assignAudience = detailBlock.select("div.highlight_box").text().trim();
 		String assignExplanation = detailBlock.select("div.content").html();
 		String assignAttach = detailBlock.select("div.container").html();
 		
