@@ -144,7 +144,7 @@ public final class API {
 		// select everything in the table holding the grades
 	    Elements courseBlock = coursePortal.body().select("tbody.hub_general_body tr");
 	    
-	    for(Element courseRow: courseBlock) {
+	    for(Element courseRow : courseBlock) {
 	    	boolean isNotPublished = false;
 	    	
 	    	// create new empty course to store course information
@@ -206,32 +206,40 @@ public final class API {
 		// select everything in the table holding the assignments
 	    Elements assignmentsBlock = portal.body().select("tbody.hub_general_body tr");
 	    
-	    for(Element assignmentRow: assignmentsBlock) {
-		    	// create new empty assignment to store course information
-		    	CurrentAssignment assignment = new CurrentAssignment();
-		    	
-		    	// select the assignment details that include the title, respective course, and due date 
-		    	Elements details = assignmentRow.select("div.list_text");
-		    	
-		    	// if assignments are  empty, they are invalid, so skip
-		    	if(details.size() == 0) continue;
-		    	
-		    	for(int i = 0; i < details.size(); i++) {
-		    		Element currAssignment = details.get(i);
-			    	if(i == 0) {
-			    		if(currAssignment.children().hasAttr("href")) {
-				    	String detailsUrl = portalUrl + currAssignment.children().attr("href");
-				    		assignment.setDetailsUrl(detailsUrl);
-			    		}
-			    		assignment.setName(currAssignment.text());
-			    	}
-			    	
-			    	if(i == 1) assignment.setCourseName(currAssignment.text());
-			    	if(i == 2) assignment.setDueDate(currAssignment.text());
-		    }
-		    
-		    assignments.add(assignment);
-	    }
+		for (Element assignmentRow : assignmentsBlock) {
+			
+			// create new empty assignment to store course information
+			CurrentAssignment assignment = new CurrentAssignment();
+
+			// select the assignment details that include the title, respective
+			// course, and due date
+			Elements details = assignmentRow.select("div.list_text");
+
+			// if assignments are empty, they are invalid, so skip
+			if (details.isEmpty()) continue;
+
+			for (int i = 0; i < details.size(); i++) {
+				Element currAssignment = details.get(i);
+				String currAssignmentTxt = currAssignment.text().trim();
+
+				if (i == 0) {
+					Elements link = currAssignment.select("a[href]");
+					
+					if(!link.isEmpty() && link.size() == 1) {
+						String detailsUrl = portalUrl + link.first().attr("href");
+						assignment.setDetailsUrl(detailsUrl);
+					}
+
+					assignment.setName(currAssignmentTxt);
+				}
+
+				else if (i == 1) assignment.setCourseName(currAssignmentTxt);
+				else if (i == 2) assignment.setDueDate(currAssignmentTxt);
+			}
+
+			assignments.add(assignment);
+		}
+	    
 	    return assignments;
 	}
 	
