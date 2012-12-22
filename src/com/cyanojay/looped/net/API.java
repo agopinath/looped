@@ -153,36 +153,40 @@ public final class API {
 	    	// only single element present for subject, select the name
 	    	Elements subject = courseRow.select("td.left a");
 	    	
-	    	// select the first three grade elements (percent, letter grade, num of zeroes), exclude 'Progress Report'
+	    	// select the four grade elements (percent, letter grade, num of zeroes, progress report link)
 	    	Elements grades = courseRow.select("td.list_text");
 	    	
 	    	newCourse.setName(subject.text());
 	    	
 	    	// if no grades listed, grade must be listed as 'None Published', so select that
-	    	if(grades.size() == 0) {
+	    	if(grades.isEmpty()) {
 	    		grades = courseRow.select("td.list_text_light");
 	    		isNotPublished = true;
 	    	}
 	    	
-	    	// if grades are still empty, they are invalid, so skip
-	    	if(grades.size() == 0) continue;
+	    	// if grades is still empty, row is invalid, so skip
+	    	if(grades.isEmpty()) continue;
+	    	
+	    	// if grades aren't published, add to the list and skip to the next row
+	    	if(isNotPublished) {
+	    		courses.add(newCourse);
+	    		continue;
+	    	}
 	    	
 	    	for(int i = 0; i < grades.size(); i++) {
 	    		Element currGrade = grades.get(i);
+	    		String currGradeTxt = currGrade.text().trim();
 	    		
-	    		if(isNotPublished) {
-	    			break;
-	    		}
-		    	if(i == 0) newCourse.setLetterGrade(currGrade.text());
-		    	if(i == 1) newCourse.setPercentGrade(currGrade.text());
-		    	if(i == 2 && currGrade.text().length() > 0) {
+		    	if(i == 0) newCourse.setLetterGrade(currGradeTxt);
+		    	else if(i == 1) newCourse.setPercentGrade(currGradeTxt);
+		    	else if(i == 2) {
 		    		try {
-		    			newCourse.setNumZeros(Integer.parseInt(currGrade.text()));
+		    			newCourse.setNumZeros(Integer.parseInt(currGradeTxt));
 		    		} catch(NumberFormatException e) {
 		    			newCourse.setNumZeros(0);
 		    		}
 		    	}
-		    	if(i == 3) {
+		    	else if(i == 3) {
 		    		if(currGrade.children().hasAttr("href")) {
 		    			String detailsUrl = portalUrl + currGrade.children().attr("href");
 			    		newCourse.setDetailsUrl(detailsUrl);
