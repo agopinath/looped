@@ -139,7 +139,7 @@ public class Utils {
 		}
 	}
 	
-	public static String getPrintifiedViewUrl(String rootUrl) {
+	public static String getPrintViewifiedUrl(String rootUrl) {
 		return rootUrl + "&template=print";
 	}
 }
