@@ -248,7 +248,7 @@ public final class API {
 	public List<NewsArticle> getNews() {
 		List<NewsArticle> news = new ArrayList<NewsArticle>();
 		
-		Elements newsBlock = portal.body().select("td.home_right table.module:gt(0)");
+		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
 		
 		// select everything in the div holding the article names
 		Elements articleNames = newsBlock.select("a.module_link");
@@ -269,24 +269,28 @@ public final class API {
 		    String authorData[] = null;
 		    	
 		   	try {
-		   		authorData = author.text().split(" - ");
+		   		authorData = author.text().trim().split(" - ");
 		   	} catch(Exception e) {
 		    	authorData = null;
 		    }
 		    	
-		    article.setArticleName(title.text());
+		    article.setArticleName(title.text().trim());
 		    
 		    if(authorData != null) {
 			   	for(int j = 0; j < authorData.length; j++) {
-			   		if(j == 0) article.setAuthor(authorData[0]);
-			   		if(j == 1) article.setAuthorType(authorData[1]);
+			   		if(j == 0) article.setAuthor(authorData[0].trim());
+			   		else if(j == 1) article.setAuthorType(authorData[1].trim());
 			   	}
 		   	} else {
-		   		article.setDisplayAuthor(author.text());
+		   		article.setDisplayAuthor(author.text().trim());
 		   	}
 		   		
-		    article.setDatePosted(date.text());
-		   	article.setArticleUrl(portalUrl + title.attr("href"));
+		    article.setDatePosted(date.text().trim());
+			
+			if(title.hasAttr("href")) {
+				String detailsUrl = portalUrl + title.attr("href");
+				article.setArticleUrl(detailsUrl);
+			}
 		    
 		    news.add(article);
 	    }
