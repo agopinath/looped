@@ -73,12 +73,12 @@ public class GradesActivity extends ListActivity {
     		  
     		  courseName.setText(course.getName());
     		  
-    		  if(course.getLetterGrade().length() == 0)
-    			  course.setLetterGrade(Constants.EMPTY_INDIC);
+    		  if(!course.getLetterGrade().isEmpty())
+    			  lettGrade.setText(course.getLetterGrade());
+    		  else
+    			  lettGrade.setText(Constants.EMPTY_INDIC);
     		  
-    		  lettGrade.setText(course.getLetterGrade());
-    		  
-    		  if(course.getPercentGrade().length() > 0) {
+    		  if(!course.getPercentGrade().isEmpty()) {
 	    		  String gradeHighlight = "";
 	    		  char tensPlace = course.getPercentGrade().charAt(0);
 	    				  
@@ -96,7 +96,7 @@ public class GradesActivity extends ListActivity {
 	    		  
 	    		  pctGrade.setText(Html.fromHtml("<font color=\"" + gradeHighlight + "\">" + course.getPercentGrade() + "</font>"));
     		  } else {
-    			  pctGrade.setText(course.getPercentGrade());
+    			  pctGrade.setText("");
     		  }
     		  
     		  if(course.getNumZeros() >= 1) {
@@ -117,8 +117,7 @@ public class GradesActivity extends ListActivity {
     	
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
     	
-    	if(selectedCourse.getDetailsUrl().length() == 0 || 
-    	   selectedCourse.getLetterGrade().equals(Constants.EMPTY_INDIC)) {
+    	if(selectedCourse.getDetailsUrl().isEmpty()) {
     		Toast.makeText(this, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
     		return;
     	}
