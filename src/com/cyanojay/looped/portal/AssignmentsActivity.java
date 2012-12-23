@@ -54,8 +54,7 @@ public class AssignmentsActivity extends ListActivity {
 	        super.onPostExecute(result);
 	        
 	        CurrentAssignment[] values = result.toArray(new CurrentAssignment[result.size()]);
-	        CurrentAssignmentsAdapter adapter = 
-	        		new CurrentAssignmentsAdapter(AssignmentsActivity.this, values);
+	        CurrentAssignmentsAdapter adapter = new CurrentAssignmentsAdapter(AssignmentsActivity.this, values);
 	        
 	        AssignmentsActivity.this.setListAdapter(adapter);
 		}
@@ -93,7 +92,7 @@ public class AssignmentsActivity extends ListActivity {
     		  
     		  return rowView;
     	  }
-    	} 
+    } 
     
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
@@ -109,7 +108,6 @@ public class AssignmentsActivity extends ListActivity {
     	
     	Display display = getWindowManager().getDefaultDisplay(); 
         int width = display.getWidth();
-        int height = display.getHeight(); 
         
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
         
@@ -164,30 +162,35 @@ public class AssignmentsActivity extends ListActivity {
 	        
 	        title.setText(assignDetail.getName());
 	        audience.setText(assignDetail.getTargetAudience());
-	        explanation.loadData(assignDetail.getExplanation(), "text/html", "UTF-8");
 	        
-	        String attachSeparator = "<br />";
-	        String explCont = assignDetail.getExplanation() + attachSeparator + assignDetail.getAttachments();
+	        String separator = "<br />";
+	        String explCont = assignDetail.getExplanation() + separator + assignDetail.getAttachments();
 	        
-	        if(explCont.replace(attachSeparator, "").length() > 0)
+	        if(!explCont.replace(separator, "").isEmpty())
 	        	explanation.loadDataWithBaseURL(null, explCont, "text/html", "UTF-8", null);
-	        else ((LinearLayout) explanation.getParent()).removeView(explanation);
+	        else 
+	        	((LinearLayout) explanation.getParent()).removeView(explanation);
 	        
 	        String infoStr = "";
+	        String colonDelim = ": ";
+	        
 	        for(String detail : assignDetail.getDetails()) {
-	        	if(detail.startsWith("Assigned")) {
-	        		int idx = detail.indexOf("Due");
-	        		String assigned = detail.substring(0, idx);
-	        		String due = detail.substring(idx);
-	        		
-	        		String parts1[] = assigned.split(": ");
-	        		String parts2[] = due.split(": ");
-	        		
-	        		infoStr += "<b>" + parts1[0] + "</b>: " + parts1[1] + "<br />" +
-	        				   "<b>" + parts2[0] + "</b>: " + parts2[1] + "<br />";
+	        	if(detail.startsWith("Assigned") && detail.contains("Due") && detail.contains(colonDelim)) {
+					int idx = detail.indexOf("Due");
+					String assigned = detail.substring(0, idx);
+					String due = detail.substring(idx);
+
+					String parts1[] = assigned.split(colonDelim);
+					String parts2[] = due.split(colonDelim);
+
+					infoStr += "<b>" + parts1[0] + "</b>: " + parts1[1]
+							+ separator + "<b>" + parts2[0] + "</b>: "
+							+ parts2[1] + separator;
+	        	} else if(detail.contains(colonDelim)) {
+	        		String parts[] = detail.split(colonDelim);
+	        		infoStr += "<b>" + parts[0] + "</b>: " + parts[1] + separator;
 	        	} else {
-	        		String parts[] = detail.split(": ");
-	        		infoStr += "<b>" + parts[0] + "</b>: " + parts[1] + "<br />";
+	        		infoStr += detail + separator;
 	        	}
 	        }
 	        

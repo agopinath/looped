@@ -111,7 +111,6 @@ public class LoopMailActivity extends ListActivity {
     	
     	Display display = getWindowManager().getDefaultDisplay(); 
         int width = display.getWidth();
-        int height = display.getHeight(); 
         
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.mail_details_popup, null, false);
@@ -171,20 +170,27 @@ public class LoopMailActivity extends ListActivity {
 	        
 	        List<String> details = mailDetail.getDetails();
 	        
-	        if(details.get(0).length() == 0) {
-	        	((ViewGroup) to.getParent()).removeView(to);
+	        for(int i = 0; i < details.size(); i++) {
+	        	String detail = details.get(i);
+	        	
+	        	if(i == 0) {
+	        		if(details.get(0).isEmpty()) {
+	    	        	((ViewGroup) to.getParent()).removeView(to);
+	    	        } else {
+	    	        	to.setText(Html.fromHtml(details.get(0)));
+	        		}
+	        	} 
+	        	else if(i == 1) from.setText(Html.fromHtml(detail));
+	        	else if(i == 2) rest.setText(Html.fromHtml(detail));
 	        }
-	        
-	        to.setText(Html.fromHtml(details.get(0)));
-	        from.setText(Html.fromHtml(details.get(1)));
-	        rest.setText(Html.fromHtml(details.get(2)));
-	        
+
 	        if(mailDetail.getContent().length() != 0)
 	        	content.loadDataWithBaseURL(null, mailDetail.getContent(), "text/html", "UTF-8", null);
-	        else ((LinearLayout) content.getParent()).removeView(content);
+	        else 
+	        	((LinearLayout) content.getParent()).removeView(content);
 
 	        bar.setVisibility(View.GONE);
 	        contwrap.setVisibility(View.VISIBLE);
 		}
-    };
+    }
 }

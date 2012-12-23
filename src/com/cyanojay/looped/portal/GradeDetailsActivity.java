@@ -111,14 +111,9 @@ public class GradeDetailsActivity extends BaseListActivity {
 	  		  name.setText(detail.getDetailName());
 	  		  category.setText(detail.getCategory());
 	  		  date.setText(detail.getDueDate());	  
-	  		
-	  		  if(!((int) detail.getTotalPoints() == 0)) {
-		  		  percent.setText(detail.getDisplayPercent());
-		  		  score.setText(detail.getDisplayScore());
-	  		  } else {
-	  			  percent.setText(Constants.EMPTY_INDIC);
-	  			  score.setText(Constants.EMPTY_INDIC);
-	  		  }
+	  		  
+	  		  percent.setText(detail.getDisplayPercent());
+		  	  score.setText(detail.getDisplayScore());
 	  		  
 	  		  return rowView;
 	  	}

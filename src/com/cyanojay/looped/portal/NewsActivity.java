@@ -100,7 +100,6 @@ public class NewsActivity extends ListActivity {
     	
         Display display = getWindowManager().getDefaultDisplay(); 
         int width = display.getWidth();
-        int height = display.getHeight(); 
         
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
