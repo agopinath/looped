@@ -288,7 +288,7 @@ public final class API {
 		    article.setDatePosted(date.text().trim());
 			
 			if(title.hasAttr("href")) {
-				String detailsUrl = portalUrl + title.attr("href");
+				String detailsUrl = Utils.getPrintViewifiedUrl(portalUrl + title.attr("href"));
 				article.setArticleUrl(detailsUrl);
 			}
 		    
