@@ -450,7 +450,7 @@ public final class API {
 		// select block containing more specific details
 		Elements newsDetails = infoBlock.select("div.highlight_box td");
 		
-		String newsTitle = infoBlock.select("div.title_page").text();
+		String newsTitle = infoBlock.select("div.title_page").text().trim();
 		String newsContent = infoBlock.select("div.content").html();
 		
 		details.setTitle(newsTitle);
