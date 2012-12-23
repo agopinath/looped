@@ -23,7 +23,6 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.debug.DebugMailer;
 import com.cyanojay.looped.portal.AssignmentDetail;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.CurrentAssignment;
@@ -270,7 +269,7 @@ public final class API {
 		    	
 		   	try {
 		   		authorData = author.text().trim().split(" - ");
-		   	} catch(Exception e) {
+		   	} catch(NullPointerException e) {
 		    	authorData = null;
 		    }
 		    	
