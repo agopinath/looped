@@ -78,7 +78,7 @@ public class GradeDetailsActivity extends BaseListActivity {
 	        	load = null;
 	        } catch (Exception e) {}
 	        
-	        GradeDetail[] values = result.toArray(new GradeDetail[0]);
+	        GradeDetail[] values = result.toArray(new GradeDetail[result.size()]);
 	        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
 	        
 	        GradeDetailsActivity.this.setListAdapter(adapter);

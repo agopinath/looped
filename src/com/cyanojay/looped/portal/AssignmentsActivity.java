@@ -53,7 +53,7 @@ public class AssignmentsActivity extends ListActivity {
 	    protected void onPostExecute(List<CurrentAssignment> result) {
 	        super.onPostExecute(result);
 	        
-	        CurrentAssignment[] values = result.toArray(new CurrentAssignment[0]);
+	        CurrentAssignment[] values = result.toArray(new CurrentAssignment[result.size()]);
 	        CurrentAssignmentsAdapter adapter = 
 	        		new CurrentAssignmentsAdapter(AssignmentsActivity.this, values);
 	        

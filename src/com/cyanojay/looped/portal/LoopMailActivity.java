@@ -66,7 +66,7 @@ public class LoopMailActivity extends ListActivity {
 	    protected void onPostExecute(List<MailEntry> result) {
 	        super.onPostExecute(result);
 	        
-	        MailEntry[] values = result.toArray(new MailEntry[0]);
+	        MailEntry[] values = result.toArray(new MailEntry[result.size()]);
 	        LoopMailAdapter adapter = new LoopMailAdapter(LoopMailActivity.this, values);
 	        
 	        LoopMailActivity.this.setListAdapter(adapter);

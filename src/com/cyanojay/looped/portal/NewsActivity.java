@@ -49,7 +49,7 @@ public class NewsActivity extends ListActivity {
 	    protected void onPostExecute(List<NewsArticle> result) {
 	        super.onPostExecute(result);
 	        
-	        NewsArticle[] values = result.toArray(new NewsArticle[0]);
+	        NewsArticle[] values = result.toArray(new NewsArticle[result.size()]);
 	        NewsAdapter adapter = new NewsAdapter(NewsActivity.this, values);
 	        
 	        NewsActivity.this.setListAdapter(adapter);

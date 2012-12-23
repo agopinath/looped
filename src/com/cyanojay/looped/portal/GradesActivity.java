@@ -43,7 +43,7 @@ public class GradesActivity extends ListActivity {
 	    protected void onPostExecute(List<Course> result) {
 	        super.onPostExecute(result);
 	        
-	        Course[] values = result.toArray(new Course[0]);
+	        Course[] values = result.toArray(new Course[result.size()]);
 	        GradesAdapter adapter = new GradesAdapter(GradesActivity.this, values);
 	        
 	        GradesActivity.this.setListAdapter(adapter);
