@@ -466,24 +466,39 @@ public final class API {
 	public MailDetail getMailDetails(MailEntry entry) throws IllegalStateException, IOException {
 		MailDetail details = new MailDetail();
 
-		// construct and send a GET request to the URL where the mail conent is stored
-		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies)
-														.select("div[style^=padding] table");
+		// construct and send a GET request to the URL where the mail content is stored
+		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies).select("div:eq(0) table");
+		Element infoBlock = mailBlock.get(1);
+		Element contentBlock = mailBlock.get(2);
 		
-		String info = mailBlock.get(1).select("td:eq(0)").html();
+		String TO_STRING = "<b>To:</b>";
+		String FROM_STRING = "<b>Date:</b>";
+		
+		String info = infoBlock.select("td:eq(0)").html();
 		String from = "", to = "";
-		if(info.indexOf("<b>To:</b>") != -1) {
-			from = info.substring(0, info.indexOf("<b>To:</b>")).replaceAll("<br />", "");
+		
+		if(info.indexOf(TO_STRING) != -1 && info.indexOf(FROM_STRING) != -1) {
+			from = info
+					.substring(0, info.indexOf(TO_STRING))
+					.replaceAll("<br />", "");
 			
-			to = info.substring(info.indexOf("<b>To:</b>"), info.indexOf("<b>Date:</b>"))
-							.replaceAll("viewed", "<b>viewed</b>").replaceAll("<br />", "");
-		} else {
-			from = info.substring(0, info.indexOf("<b>Date:</b>")).replaceAll("<br />", "");
+			to = info
+					.substring(info.indexOf(TO_STRING), info.indexOf(FROM_STRING))
+					.replaceAll("viewed", "<b>viewed</b>")
+					.replaceAll("<br />", "");
+			
+		} else if(info.indexOf(FROM_STRING) != -1) {
+			from = info
+					.substring(0, info.indexOf(FROM_STRING))
+					.replaceAll("<br />", "");
 			to = "";
+		} else {
+			from = Constants.EMPTY_INDIC;
+			to = Constants.EMPTY_INDIC;
 		}
 			
-		String rest = info.substring(info.indexOf("<b>Date:</b>"));
-		String content = mailBlock.get(2).html();
+		String rest = info.substring(info.indexOf(FROM_STRING));
+		String content = contentBlock.html();
 		
 		details.addDetail(to);
 		details.addDetail(from);
