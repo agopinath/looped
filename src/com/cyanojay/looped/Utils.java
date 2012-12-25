@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.security.KeyStore;
 
 import org.apache.http.HttpResponse;
@@ -155,4 +157,12 @@ public class Utils {
 
     	return client.getCookieStore();
     }
+	
+	public static String getExceptionString(Exception e) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		e.printStackTrace(pw);
+		
+		return sw.toString();
+	}
 }
