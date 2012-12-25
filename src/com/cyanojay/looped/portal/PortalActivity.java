@@ -45,13 +45,6 @@ public class PortalActivity extends TabActivity {
         setupTab("News", new Intent(this, NewsActivity.class));
         setupTab("Mail", new Intent(this, LoopMailActivity.class));
         
-        try {
-        	throw new ArithmeticException("illegal double value");
-        } catch(ArithmeticException e) {
-        	System.out.println("login bug");
-        	DebugMailer.sendDebugToDevs(Utils.getExceptionString(e));
-        }
-        
         KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
         startService(KEEP_ALIVE_TASK);
 	}
