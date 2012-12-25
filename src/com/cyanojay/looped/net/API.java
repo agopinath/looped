@@ -259,6 +259,8 @@ public final class API {
 		
 		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
 		
+		if(newsBlock.isEmpty()) return news;
+		
 		// select everything in the div holding the article names
 		Elements articleNames = newsBlock.select("a.module_link");
 	    
@@ -312,7 +314,11 @@ public final class API {
 		List<MailEntry> mail = new ArrayList<MailEntry>();
 		
 		// retrieve the table listing the emails
-		Element mailTable = loopMail.select("table.list_padding").first();
+		Elements tables = loopMail.select("table.list_padding");
+		
+		if(tables.isEmpty()) return mail;
+		
+		Element mailTable = tables.first();
 		
 		// select all mail listing rows after the first one because it is a header row
 		Elements mailListing = mailTable.select("tr:gt(0)");
@@ -353,7 +359,9 @@ public final class API {
 		
 		// select all rows of the table containing grade details
 	    Elements details = detailsPage.body().select("tbody.general_body tr");
-
+	    
+	    if(details.isEmpty()) return detailsList;
+	    
 	    for(Element detail: details) {
 		    GradeDetail newDetail = new GradeDetail();
 		    
@@ -429,6 +437,8 @@ public final class API {
 		// select the div containing assignment details
 		Elements detailBlock = detailsPage.body().select("div.course");
 		
+		if(detailBlock.isEmpty()) return details;
+		
 		String assignTitle = detailBlock.select("div.title_page").text().trim();
 		String assignAudience = detailBlock.select("div.highlight_box").text().trim();
 		String assignExplanation = detailBlock.select("div.content").html();
@@ -457,6 +467,8 @@ public final class API {
 		// select the block containing news article info
 		Elements infoBlock = detailsPage.body().select("div.published");
 		
+		if(infoBlock.isEmpty()) return details;
+		
 		// select block containing more specific details
 		Elements newsDetails = infoBlock.select("div.highlight_box td");
 		
@@ -478,6 +490,9 @@ public final class API {
 
 		// construct and send a GET request to the URL where the mail content is stored
 		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies).select("div:eq(0) table");
+		
+		if(mailBlock.isEmpty()) return details;
+		
 		Element infoBlock = mailBlock.get(1);
 		Element contentBlock = mailBlock.get(2);
 		
