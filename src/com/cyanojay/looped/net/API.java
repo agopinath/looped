@@ -94,7 +94,8 @@ public final class API {
     	
     	try {
     		response = client.execute(httpGet, context);
-    	} catch(Exception e) { 
+    	} catch(Exception e) {
+    		e.printStackTrace();
     		return false; 
     	}
     	
@@ -116,7 +117,8 @@ public final class API {
     	
     	try {
     		response = client.execute(httpGet, context);
-    	} catch(Exception e) { 
+    	} catch(Exception e) {
+    		e.printStackTrace();
     		return false; 
     	}
         
@@ -126,11 +128,25 @@ public final class API {
 	}
 	
 	public void refreshPortal() throws IOException {
-		if(!isLoggedIn(false)) return;
+		if(!isLoggedIn(true)) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
 		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/student_home?d=x"), portalUrl, authCookies);
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
+	}
+	
+	public void preventCookieExpire() throws IOException {
+		if(!isLoggedIn(false)) return;
+		
+		HttpClient client = Utils.getNewHttpClient();
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+    	HttpGet httpGet = new HttpGet(loginTestUrl);	
+    	
+    	try {
+    		client.execute(httpGet, context);
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
 	}
 	
 	public String getPortalTitle() {
@@ -182,6 +198,7 @@ public final class API {
 		    		try {
 		    			newCourse.setNumZeros(Integer.parseInt(currGradeTxt));
 		    		} catch(NumberFormatException e) {
+		    			e.printStackTrace();
 		    			newCourse.setNumZeros(0);
 		    		}
 		    	}
@@ -270,6 +287,7 @@ public final class API {
 		   	try {
 		   		authorData = author.text().trim().split(" - ");
 		   	} catch(NullPointerException e) {
+		   		e.printStackTrace();
 		    	authorData = null;
 		    }
 		    	
