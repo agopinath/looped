@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.DebugMailer;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.KeepAliveService;
 
@@ -43,6 +44,13 @@ public class PortalActivity extends TabActivity {
         setupTab("Assignments", new Intent(this, AssignmentsActivity.class));
         setupTab("News", new Intent(this, NewsActivity.class));
         setupTab("Mail", new Intent(this, LoopMailActivity.class));
+        
+        try {
+        	throw new ArithmeticException("illegal double value");
+        } catch(ArithmeticException e) {
+        	System.out.println("login bug");
+        	DebugMailer.sendDebugToDevs(Utils.getExceptionString(e));
+        }
         
         KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
         startService(KEEP_ALIVE_TASK);
@@ -88,11 +96,9 @@ public class PortalActivity extends TabActivity {
         }
     }
     
-    private boolean logOut() {
-    	boolean status = false;
-    	
+    private void logOut() {
     	if(Utils.isOnline(this)) {
-    		status = API.get().logOut();
+    		API.get().logOut();
     	}
     	
     	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
@@ -102,8 +108,6 @@ public class PortalActivity extends TabActivity {
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
     	
     	startActivity(intent);
-    	
-    	return status;
 	}
         
     private void showAbout() {

@@ -43,21 +43,16 @@ public class BaseListActivity extends ListActivity {
         }
     }
         
-    private boolean logOut() {
-    	boolean status = false;
-    	
+    private void logOut() {
     	if(Utils.isOnline(this)) {
-    		status = API.get().logOut();
+    		API.get().logOut();
     	}
-    	
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
 
     	startActivity(intent);
-    	
-    	return status;
 	}
 
 	private void showAbout() {

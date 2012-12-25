@@ -43,11 +43,9 @@ public class BaseActivity extends Activity {
         }
     }
     
-    private boolean logOut() {
-    	boolean status = false;
-    	
+    private void logOut() {
     	if(Utils.isOnline(this)) {
-    		status = API.get().logOut();
+    		API.get().logOut();
     	}
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -55,8 +53,6 @@ public class BaseActivity extends Activity {
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
 
     	startActivity(intent);
-    	
-    	return status;
 	}
         
     private void showAbout() {
