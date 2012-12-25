@@ -69,7 +69,7 @@ public final class API {
 		this.portalUrl = portalUrl;
 	}
 	
-	public boolean logIn() throws ClientProtocolException, IOException {
+	public void logIn() throws ClientProtocolException, IOException {
 		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
@@ -82,27 +82,20 @@ public final class API {
         
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);
-        
-        return isLoggedIn(true);
 	}
 	
-	public boolean logOut() {
+	public void logOut() {
 		HttpClient client = Utils.getNewHttpClient();
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	HttpGet httpGet = new HttpGet(portalUrl + "/portal/logout?d=x");	
-    	HttpResponse response = null;
     	
     	try {
-    		response = client.execute(httpGet, context);
+    		client.execute(httpGet, context);
     	} catch(Exception e) {
     		e.printStackTrace();
-    		return false; 
     	}
     	
     	setAuthCookies(null);
-    	
-    	BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-    	return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY) ? false : true);
 	}
 	
 	public boolean isLoggedIn(boolean deep) {
