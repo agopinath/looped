@@ -38,7 +38,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... args) {
-    	CookieStore cookies = getLogInCookies(loginUrl + "/portal/login");
+    	CookieStore cookies = Utils.getCookies(loginUrl + "/portal/login");
     	
     	API.get().setCredentials(username, pass, loginUrl);
     	API.get().setAuthCookies(cookies);
@@ -54,19 +54,6 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     	}
     	
 		return false;
-    }
-    
-    private CookieStore getLogInCookies(String url) {
-    	DefaultHttpClient client = (DefaultHttpClient) Utils.getNewHttpClient();
-    	HttpGet httpGet = new HttpGet(url);
-    	
-    	try {
-    		client.execute(httpGet);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-    	return client.getCookieStore();
     }
 
     @Override

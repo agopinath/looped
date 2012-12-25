@@ -142,4 +142,17 @@ public class Utils {
 	public static String getPrintViewifiedUrl(String rootUrl) {
 		return rootUrl + "&template=print";
 	}
+	
+	public static CookieStore getCookies(String url) {
+    	DefaultHttpClient client = (DefaultHttpClient) Utils.getNewHttpClient();
+    	HttpGet httpGet = new HttpGet(url);
+    	
+    	try {
+    		client.execute(httpGet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+    	return client.getCookieStore();
+    }
 }
