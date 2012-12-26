@@ -174,7 +174,7 @@ public class LoopMailActivity extends ListActivity {
 	        	String detail = details.get(i);
 	        	
 	        	if(i == 0) {
-	        		if(details.get(0).isEmpty()) {
+	        		if(details.get(0).length() == 0) {
 	    	        	((ViewGroup) to.getParent()).removeView(to);
 	    	        } else {
 	    	        	to.setText(Html.fromHtml(details.get(0)));

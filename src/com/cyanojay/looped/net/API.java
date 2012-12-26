@@ -167,13 +167,13 @@ public final class API {
 	    	newCourse.setName(subject.text());
 	    	
 	    	// if no grades listed, grade must be listed as 'None Published', so select that
-	    	if(grades.isEmpty()) {
+	    	if(grades.size() == 0) {
 	    		grades = courseRow.select("td.list_text_light");
 	    		isNotPublished = true;
 	    	}
 	    	
 	    	// if grades is still empty, row is invalid, so skip
-	    	if(grades.isEmpty()) continue;
+	    	if(grades.size() == 0) continue;
 	    	
 	    	// if grades aren't published, add to the list and skip to the next row
 	    	if(isNotPublished) {
@@ -198,7 +198,7 @@ public final class API {
 		    	else if(i == 3) {
 		    		Elements link = currGrade.select("a[href]");
 		    		
-					if(!link.isEmpty() && link.size() == 1) {
+					if(!(link.size() == 0) && link.size() == 1) {
 						String detailsUrl = portalUrl + link.first().attr("href");
 			    		newCourse.setDetailsUrl(detailsUrl);
 					}
@@ -227,7 +227,7 @@ public final class API {
 			Elements details = assignmentRow.select("div.list_text");
 
 			// if assignments are empty, they are invalid, so skip
-			if (details.isEmpty()) continue;
+			if (details.size() == 0) continue;
 
 			for (int i = 0; i < details.size(); i++) {
 				Element currAssignment = details.get(i);
@@ -236,7 +236,7 @@ public final class API {
 				if (i == 0) {
 					Elements link = currAssignment.select("a[href]");
 					
-					if(!link.isEmpty() && link.size() == 1) {
+					if(!(link.size() == 0) && link.size() == 1) {
 						String detailsUrl = Utils.getPrintViewifiedUrl(portalUrl + link.first().attr("href"));
 						assignment.setDetailsUrl(detailsUrl);
 					}
@@ -259,7 +259,7 @@ public final class API {
 		
 		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
 		
-		if(newsBlock.isEmpty()) return news;
+		if(newsBlock.size() == 0) return news;
 		
 		// select everything in the div holding the article names
 		Elements articleNames = newsBlock.select("a.module_link");
@@ -316,7 +316,7 @@ public final class API {
 		// retrieve the table listing the emails
 		Elements tables = loopMail.select("table.list_padding");
 		
-		if(tables.isEmpty()) return mail;
+		if(tables.size() == 0) return mail;
 		
 		Element mailTable = tables.first();
 		
@@ -336,7 +336,7 @@ public final class API {
 				else if(i == 2) {
 					Elements link = currInfo.select("a[href]");
 					
-					if(!link.isEmpty() && link.size() == 1) {
+					if(!(link.size() == 0) && link.size() == 1) {
 						String mailContentUrl = Utils.getPrintViewifiedUrl(portalUrl + link.first().attr("href"));
 						currEntry.setContentUrl(mailContentUrl);
 					}
@@ -360,7 +360,7 @@ public final class API {
 		// select all rows of the table containing grade details
 	    Elements details = detailsPage.body().select("tbody.general_body tr");
 	    
-	    if(details.isEmpty()) return detailsList;
+	    if(details.size() == 0) return detailsList;
 	    
 	    for(Element detail: details) {
 		    GradeDetail newDetail = new GradeDetail();
@@ -382,7 +382,7 @@ public final class API {
 
 				// if the score is a numerical and properly formatted entry, split the grade into total
 				// points and earned points
-				if (!scoreData.isEmpty()
+				if (!(scoreData.length() == 0)
 					&& Character.isDigit(scoreData.charAt(0))
 					&& scoreData.indexOf("=") != -1
 					&& scoreData.indexOf("/") != -1) {
@@ -437,7 +437,7 @@ public final class API {
 		// select the div containing assignment details
 		Elements detailBlock = detailsPage.body().select("div.course");
 		
-		if(detailBlock.isEmpty()) return details;
+		if(detailBlock.size() == 0) return details;
 		
 		String assignTitle = detailBlock.select("div.title_page").text().trim();
 		String assignAudience = detailBlock.select("div.highlight_box").text().trim();
@@ -467,7 +467,7 @@ public final class API {
 		// select the block containing news article info
 		Elements infoBlock = detailsPage.body().select("div.published");
 		
-		if(infoBlock.isEmpty()) return details;
+		if(infoBlock.size() == 0) return details;
 		
 		// select block containing more specific details
 		Elements newsDetails = infoBlock.select("div.highlight_box td");
@@ -491,7 +491,7 @@ public final class API {
 		// construct and send a GET request to the URL where the mail content is stored
 		Elements mailBlock = Utils.getJsoupDocFromUrl(entry.getContentUrl(), portalUrl, authCookies).select("div:eq(0) table");
 		
-		if(mailBlock.isEmpty()) return details;
+		if(mailBlock.size() == 0) return details;
 		
 		Element infoBlock = mailBlock.get(1);
 		Element contentBlock = mailBlock.get(2);

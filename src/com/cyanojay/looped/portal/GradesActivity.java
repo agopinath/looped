@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,13 +73,12 @@ public class GradesActivity extends ListActivity {
     		  
     		  courseName.setText(course.getName());
     		  
-    		  if(!course.getLetterGrade().isEmpty())
+    		  if(!(course.getLetterGrade().length() == 0))
     			  lettGrade.setText(course.getLetterGrade());
-    		  else {
+    		  else
     			  lettGrade.setText(Constants.EMPTY_INDIC);
-    		  }
     		  
-    		  if(!course.getPercentGrade().isEmpty()) {
+    		  if(!(course.getPercentGrade().length() == 0)) {
     			  char tensPlace = course.getPercentGrade().charAt(0);
     			  
     			  if(Character.isDigit(tensPlace)) {
@@ -124,7 +122,7 @@ public class GradesActivity extends ListActivity {
     	
     	Course selectedCourse = (Course) getListAdapter().getItem(position);
     	
-    	if(selectedCourse.getDetailsUrl().isEmpty()) {
+    	if(selectedCourse.getDetailsUrl().length() == 0) {
     		Toast.makeText(this, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
     		return;
     	}

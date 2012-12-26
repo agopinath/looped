@@ -152,7 +152,6 @@ public class AssignmentsActivity extends ListActivity {
 			return null;
 		}
 		
-		@SuppressLint("NewApi")
 		@Override
 	    protected void onPostExecute(AssignmentDetail assignDetail) {
 	        super.onPostExecute(assignDetail);
@@ -168,7 +167,7 @@ public class AssignmentsActivity extends ListActivity {
 	        String separator = "<br />";
 	        String explCont = assignDetail.getExplanation() + separator + assignDetail.getAttachments();
 	        
-	        if(!explCont.replace(separator, "").isEmpty())
+	        if(!(explCont.replace(separator, "").length() == 0))
 	        	explanation.loadDataWithBaseURL(null, explCont, "text/html", "UTF-8", null);
 	        else 
 	        	((LinearLayout) explanation.getParent()).removeView(explanation);
