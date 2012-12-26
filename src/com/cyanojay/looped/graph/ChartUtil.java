@@ -23,11 +23,13 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import android.graphics.Color;
+
 /**
  * An abstract class for the demo charts to extend. It contains some methods for
  * building datasets and renderers.
  */
-public class AbstractDemoChart {
+public class ChartUtil {
 
   /**
    * Builds an XY multiple dataset using the provided values.
@@ -37,14 +39,14 @@ public class AbstractDemoChart {
    * @param yValues the values for the Y axis
    * @return the XY multiple dataset
    */
-  protected XYMultipleSeriesDataset buildDataset(String[] titles, List<double[]> xValues,
+  public static XYMultipleSeriesDataset buildDataset(String[] titles, List<double[]> xValues,
       List<double[]> yValues) {
     XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
     addXYSeries(dataset, titles, xValues, yValues, 0);
     return dataset;
   }
 
-  public void addXYSeries(XYMultipleSeriesDataset dataset, String[] titles, List<double[]> xValues,
+  public static void addXYSeries(XYMultipleSeriesDataset dataset, String[] titles, List<double[]> xValues,
       List<double[]> yValues, int scale) {
     int length = titles.length;
     for (int i = 0; i < length; i++) {
@@ -66,13 +68,13 @@ public class AbstractDemoChart {
    * @param styles the series point styles
    * @return the XY multiple series renderers
    */
-  protected XYMultipleSeriesRenderer buildRenderer(int[] colors, PointStyle[] styles) {
+  public static XYMultipleSeriesRenderer buildRenderer(int[] colors, PointStyle[] styles) {
     XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
     setRenderer(renderer, colors, styles);
     return renderer;
   }
 
-  protected void setRenderer(XYMultipleSeriesRenderer renderer, int[] colors, PointStyle[] styles) {
+  public static void setRenderer(XYMultipleSeriesRenderer renderer, int[] colors, PointStyle[] styles) {
     renderer.setAxisTitleTextSize(16);
     renderer.setChartTitleTextSize(20);
     renderer.setLabelsTextSize(15);
@@ -102,7 +104,7 @@ public class AbstractDemoChart {
    * @param axesColor the axes color
    * @param labelsColor the labels color
    */
-  protected void setChartSettings(XYMultipleSeriesRenderer renderer, String title, String xTitle,
+  public static void setChartSettings(XYMultipleSeriesRenderer renderer, String title, String xTitle,
       String yTitle, double xMin, double xMax, double yMin, double yMax, int axesColor,
       int labelsColor) {
     renderer.setChartTitle(title);
@@ -114,5 +116,31 @@ public class AbstractDemoChart {
     renderer.setYAxisMax(yMax);
     renderer.setAxesColor(axesColor);
     renderer.setLabelsColor(labelsColor);
+  }
+  
+  public static XYMultipleSeriesRenderer getDemoRenderer() {
+	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+	    renderer.setAxisTitleTextSize(16);
+	    renderer.setChartTitleTextSize(20);
+	    renderer.setLabelsTextSize(15);
+	    renderer.setLegendTextSize(15);
+	    renderer.setPointSize(5f);
+	    renderer.setMargins(new int[] {20, 30, 15, 0});
+	    XYSeriesRenderer r = new XYSeriesRenderer();
+	    r = new XYSeriesRenderer();
+	    r.setPointStyle(PointStyle.CIRCLE);
+	    r.setColor(Color.GREEN);
+	    r.setFillPoints(true);
+	    renderer.addSeriesRenderer(r);
+	    renderer.setAxesColor(Color.DKGRAY);
+	    renderer.setLabelsColor(Color.LTGRAY);
+	    
+	    renderer.setXTitle("Time");
+	    renderer.setYTitle("Percent (%) Grade of Assignment");
+	    
+	    renderer.setApplyBackgroundColor(true); 
+	    renderer.setBackgroundColor(Color.BLACK);
+	    
+	    return renderer;
   }
 }
