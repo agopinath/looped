@@ -182,6 +182,7 @@ public class GradesActivity extends Activity {
 					switch(which) {
 						case 0:
 							System.out.println("GRAPHING: " + selected.getName());
+							
 							CourseGraphTask task = new CourseGraphTask(parent, selected);
 							task.execute();
 					}
