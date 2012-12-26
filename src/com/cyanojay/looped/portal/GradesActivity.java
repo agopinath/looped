@@ -23,6 +23,7 @@ import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.net.CourseGraphTask;
 
 public class GradesActivity extends Activity {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
@@ -120,20 +121,6 @@ public class GradesActivity extends Activity {
     		  return rowView;
     	} 
     }
-    
-    public AlertDialog getOptionsDialog() {
-    	String[] options = new String[] { "Graph" };
-    	
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose Action");
-		builder.setItems(options, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-
-			}
-		});
-		
-        return builder.create();
-    }
 
     private class GradesItemClickAdapter implements AdapterView.OnItemClickListener {
     	GradesAdapter adapter;
@@ -177,11 +164,31 @@ public class GradesActivity extends Activity {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> list, View view, int position, long id) {
 			System.out.println("on long click received");
-
-			AlertDialog dialog = getOptionsDialog();
+			
+			Course selected = adapter.getItem(position);
+			AlertDialog dialog = getOptionsDialog(selected);
 			dialog.show();
 
 			return false;
 		}
+		
+	    private AlertDialog getOptionsDialog(final Course selected) {
+	    	String[] options = new String[] { "Graph" };
+	    	
+	        AlertDialog.Builder builder = new AlertDialog.Builder(parent);
+	        builder.setTitle("Choose Action");
+			builder.setItems(options, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					switch(which) {
+						case 0:
+							System.out.println("GRAPHING: " + selected.getName());
+							CourseGraphTask task = new CourseGraphTask(parent, selected);
+							task.execute();
+					}
+				}
+			});
+			
+	        return builder.create();
+	    }
     }
 }
