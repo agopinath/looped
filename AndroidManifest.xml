@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".portal.PortalActivity"
-            android:label="@string/title_activity_portal" />
+            android:label="@string/title_activity_portal"
+            android:theme="@style/Theme.Sherlock" />
         <activity
             android:name=".portal.GradesActivity"
             android:label="@string/title_activity_grades" />
