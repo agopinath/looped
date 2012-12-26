@@ -8,19 +8,14 @@ import java.util.List;
 import java.util.Locale;
 
 import org.achartengine.ChartFactory;
-import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 import org.achartengine.util.MathHelper;
 import org.apache.http.client.ClientProtocolException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.os.AsyncTask;
 
 import com.cyanojay.looped.net.API;

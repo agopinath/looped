@@ -1,8 +1,6 @@
 package com.cyanojay.looped.net;
 
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

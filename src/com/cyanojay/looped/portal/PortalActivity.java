@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.debug.DebugMailer;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.KeepAliveService;
 
