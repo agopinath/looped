@@ -136,7 +136,7 @@ public class ChartUtil {
 	    renderer.setLabelsColor(Color.LTGRAY);
 	    
 	    renderer.setXTitle("Time");
-	    renderer.setYTitle("Percent (%) Grade of Assignment");
+	    renderer.setYTitle("Percent (%) Grade of Assignment"); 
 	    
 	    renderer.setApplyBackgroundColor(true); 
 	    renderer.setBackgroundColor(Color.BLACK);

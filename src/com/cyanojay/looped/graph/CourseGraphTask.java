@@ -98,7 +98,7 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
         
         String[] titles = new String[] { "Grade" };
         Intent intent = ChartFactory.getTimeChartIntent(parent, graphData, ChartUtil.getDemoRenderer(),
-        												"Graph for " + course.getName(), null);
+        												null, "Graph for " + course.getName());
 
         parent.startActivity(intent);
     }

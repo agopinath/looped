@@ -199,7 +199,7 @@ public class AssignmentsActivity extends Activity {
 	        
 	    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
 	        
-	    	((Button) flow.findViewById(R.id.main_help_btn)).setOnClickListener(new View.OnClickListener() {
+	    	((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
 	                pw.dismiss();
