@@ -2,8 +2,11 @@ package com.cyanojay.looped.portal;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -109,8 +112,46 @@ public class GradesActivity extends ListActivity {
     			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
     		  }
     		  
+    		  rowView.setOnLongClickListener(new View.OnLongClickListener() {
+					@Override
+					public boolean onLongClick(View v) {
+						System.out.println("on long click received");
+						
+						AlertDialog dialog = getOptionsDialog();
+						dialog.show();
+						
+						return false;
+					}
+		      });
+    		  
+			  rowView.setOnLongClickListener(new View.OnLongClickListener() {
+					@Override
+					public boolean onLongClick(View v) {
+						System.out.println("on long click received");
+						
+						AlertDialog dialog = getOptionsDialog();
+						dialog.show();
+						
+						return false;
+					}
+		      });
+    		  
     		  return rowView;
     	} 
+    }
+    
+    public AlertDialog getOptionsDialog() {
+    	String[] options = new String[] { "Graph" };
+    	
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Action");
+		builder.setItems(options, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		
+        return builder.create();
     }
     
     @Override
