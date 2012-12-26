@@ -183,6 +183,11 @@ public class GradesActivity extends Activity {
 						case 0:
 							System.out.println("GRAPHING: " + selected.getName());
 							
+							if(selected.getDetailsUrl().length() == 0) {
+								Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_LONG).show();
+					    		break;
+							}
+								
 							CourseGraphTask task = new CourseGraphTask(parent, selected);
 							task.execute();
 					}
