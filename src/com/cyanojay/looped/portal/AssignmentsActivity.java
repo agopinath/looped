@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
+import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -111,7 +112,7 @@ public class AssignmentsActivity extends ListActivity {
         
     	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
         
-    	((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
+    	((Button) flow.findViewById(R.id.main_help_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pw.dismiss();
@@ -151,6 +152,7 @@ public class AssignmentsActivity extends ListActivity {
 			return null;
 		}
 		
+		@SuppressLint("NewApi")
 		@Override
 	    protected void onPostExecute(AssignmentDetail assignDetail) {
 	        super.onPostExecute(assignDetail);

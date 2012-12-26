@@ -5,12 +5,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.cyanojay.looped.net.LogInTask;
 import com.cyanojay.looped.portal.BaseActivity;
@@ -139,5 +147,54 @@ public class MainActivity extends BaseActivity {
     	user.setText(settings.getString(USERNAME, ""));
     	pass.setText(settings.getString(PASS, ""));
     	prefix.setText(settings.getString(PREFIX, ""));
+    }
+    
+    public void showHelpUsername(View v) {
+    	showHelp(1);
+    }
+    
+    public void showHelpPassword(View v) {
+    	showHelp(2);
+    }
+    
+    public void showHelpPrefix(View v) {
+    	showHelp(3);
+    }
+    
+    public void showHelp(int helpNum) {
+    	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.popup_main_help, null, false);
+    	
+    	TextView helpTitle = ((TextView) flow.findViewById(R.id.main_help_title));
+        TextView helpDesc = ((TextView) flow.findViewById(R.id.main_help_desc));
+        
+        switch(helpNum) {
+	        case 1:
+	        	helpTitle.setText("Username");
+	        	helpDesc.setText(getString(R.string.main_help_username));
+	        	break;
+	        case 2:
+	        	helpTitle.setText("Password");
+	        	helpDesc.setText(getString(R.string.main_help_password));
+	        	break;
+	        case 3:
+	        	helpTitle.setText("School Loop Site Prefix");
+	        	helpDesc.setText(getString(R.string.main_help_prefix));
+	        	break;
+        }
+        
+        Display display = getWindowManager().getDefaultDisplay(); 
+        int width = display.getWidth();
+        
+        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
+        
+    	((Button) flow.findViewById(R.id.main_help_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+    	
+    	pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
     }
 }

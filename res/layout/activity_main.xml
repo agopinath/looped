@@ -6,49 +6,102 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/sl_uname"
+    <LinearLayout
+        android:id="@+id/a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Username"
-        android:maxLines="1" >
+        android:orientation="horizontal" >
 
-        <requestFocus />
-    </EditText>
+        <EditText
+            android:id="@+id/sl_uname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Username"
+            android:maxLines="1" />
 
-    <EditText
-        android:id="@+id/sl_pass"
+        <ImageButton
+            android:id="@+id/ImageButton02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="showHelpUsername"
+            android:src="@drawable/main_help" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:maxLines="1" />
+        android:orientation="horizontal" >
 
-    <EditText
-        android:id="@+id/sl_prefix"
+        <EditText
+            android:id="@+id/sl_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+
+        <ImageButton
+            android:id="@+id/ImageButton01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="showHelpPassword"
+            android:src="@drawable/main_help" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:ems="10"
-        android:hint="SchoolLoop Site Prefix"
-        android:maxLines="1" />
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/sl_prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="School Loop Site Prefix"
+            android:maxLines="1" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="showHelpPrefix"
+            android:src="@drawable/main_help" />
+
+    </LinearLayout>
 
     <CheckBox
         android:id="@+id/remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:text="Remember Me" />
 
     <Button
@@ -56,11 +109,10 @@
         style="@style/LoopedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:onClick="logIn"
-        android:padding="12dp"
         android:text="Log In"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
