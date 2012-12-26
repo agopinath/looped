@@ -22,8 +22,8 @@ import android.widget.Toast;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.net.API;
-import com.cyanojay.looped.net.CourseGraphTask;
 
 public class GradesActivity extends Activity {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";

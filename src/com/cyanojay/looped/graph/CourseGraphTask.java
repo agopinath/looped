@@ -1,4 +1,4 @@
-package com.cyanojay.looped.net;
+package com.cyanojay.looped.graph;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.GradeDetail;
 
@@ -45,6 +46,6 @@ public class CourseGraphTask extends AsyncTask<Void, Void, List<GradeDetail>> {
     @Override
     protected void onPostExecute(List<GradeDetail> graphData) {
         super.onPostExecute(graphData);
-        
+        graphData.get(0).get
     }
 }
