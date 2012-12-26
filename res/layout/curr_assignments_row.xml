@@ -16,12 +16,14 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginRight="5dp" />
-
+
+
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
+
+
         <TextView
             android:id="@+id/assign_course_name"
             android:layout_width="wrap_content"
@@ -29,7 +31,8 @@
             android:layout_marginLeft="5dp"
             android:alpha="0.8"
             android:text="TextView" />
-
+
+
         <TextView
             android:id="@+id/assign_due_date"
             android:layout_width="wrap_content"

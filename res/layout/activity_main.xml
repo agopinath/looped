@@ -17,7 +17,7 @@
 
         <EditText
             android:id="@+id/sl_uname"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -46,7 +46,7 @@
 
         <EditText
             android:id="@+id/sl_pass"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
 
         <EditText
             android:id="@+id/sl_prefix"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
