@@ -2,7 +2,6 @@ package com.cyanojay.looped.portal;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,23 +18,33 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.net.API;
 
-public class GradesActivity extends Activity {
+public class GradesActivity extends SherlockListFragment {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
-
+	private GradesAdapter mainAdapter;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grades);
         
         ScrapeGradesTask task = new ScrapeGradesTask();
         task.execute();
     }
+    
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_grades, null);
+		//String text = "" + Math.random();
+		//((TextView) view.findViewById(R.id.tabby_text)).setText(text);
+
+		return view;
+	}
     
     private class ScrapeGradesTask extends AsyncTask<String, Void, List<Course>> {
     	@Override
@@ -48,27 +57,31 @@ public class GradesActivity extends Activity {
 	        super.onPostExecute(result);
 	        
 	        Course[] values = result.toArray(new Course[result.size()]);
-	        GradesAdapter adapter = new GradesAdapter(GradesActivity.this, values);
+	        mainAdapter = new GradesAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) findViewById(R.id.list_grades);
+	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        
-	        listView.setOnItemClickListener(new GradesItemClickAdapter(adapter, GradesActivity.this));
-	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(adapter, GradesActivity.this));
-	        
-	        listView.setAdapter(adapter);
+	        listView.setOnItemClickListener(new GradesItemClickAdapter(mainAdapter, getSherlockActivity()));
+	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(mainAdapter, getSherlockActivity()));
+
+	        setListAdapter(mainAdapter);
 		}
     };
     
     private class GradesAdapter extends ArrayAdapter<Course> {
-    	  private final Context context;
-    	  private final Course[] values;
+    	  private Context context;
+    	  private Course[] values;
     	  
     	  public GradesAdapter(Context context, Course[] values) {
     		  super(context, R.layout.curr_grades_row, values);
     		  this.context = context;
     		  this.values = values;
     	  }
-
+    	  
+    	  public void setValues(Course[] values) {
+    		  this.values = values;
+    	  }
+    	  
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
     		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

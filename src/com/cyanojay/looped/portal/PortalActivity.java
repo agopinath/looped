@@ -68,7 +68,7 @@ public class PortalActivity extends SherlockFragmentActivity {
 
         adapter = new TabsAdapter(this, mPager);
         
-        setupTab(bar, "Grades", TestFragment.class);
+        setupTab(bar, "Grades", GradesActivity.class);
         setupTab(bar, "Assignments", TestFragment.class);
         setupTab(bar, "News", TestFragment.class);
         setupTab(bar, "Mail", TestFragment.class);

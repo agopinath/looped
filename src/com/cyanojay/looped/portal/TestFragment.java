@@ -17,8 +17,7 @@ public class TestFragment extends SherlockFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.tab_list, null);
 		String text = "" + Math.random();
 		((TextView) view.findViewById(R.id.tabby_text)).setText(text);
