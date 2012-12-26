@@ -49,6 +49,7 @@
         <activity
             android:name=".portal.BaseListActivity"
             android:label="@string/title_activity_loop_mail" />
+        <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
 </manifest>

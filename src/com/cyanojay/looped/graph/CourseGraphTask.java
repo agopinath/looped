@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.cyanojay.looped.net.API;
@@ -14,11 +15,11 @@ import com.cyanojay.looped.portal.Course;
 import com.cyanojay.looped.portal.GradeDetail;
 
 public class CourseGraphTask extends AsyncTask<Void, Void, List<GradeDetail>> {
-	private Activity parent;
+	private Context parent;
 	private Course course;
 	private ProgressDialog progressDialog;
 	
-	public CourseGraphTask(Activity parent, Course course) {
+	public CourseGraphTask(Context parent, Course course) {
 		this.parent = parent;
 		this.course = course;
 	}
@@ -46,6 +47,10 @@ public class CourseGraphTask extends AsyncTask<Void, Void, List<GradeDetail>> {
     @Override
     protected void onPostExecute(List<GradeDetail> graphData) {
         super.onPostExecute(graphData);
-        graphData.get(0).get
+        
+        progressDialog.dismiss();
+        
+        Intent intent = new AverageTemperatureChart().execute(parent);
+        parent.startActivity(intent);
     }
 }
