@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +76,9 @@ public class GradesActivity extends ListActivity {
     		  
     		  if(!course.getLetterGrade().isEmpty())
     			  lettGrade.setText(course.getLetterGrade());
-    		  else
+    		  else {
     			  lettGrade.setText(Constants.EMPTY_INDIC);
+    		  }
     		  
     		  if(!course.getPercentGrade().isEmpty()) {
     			  char tensPlace = course.getPercentGrade().charAt(0);
@@ -101,7 +103,7 @@ public class GradesActivity extends ListActivity {
     				  pctGrade.setText(Html.fromHtml("<font color=\"#000000\">" + course.getPercentGrade() + "</font>"));
     			  }
     		  } else {
-    			  pctGrade.setText("");
+    			  pctGrade.setText("             ");
     		  }
     		  
     		  if(course.getNumZeros() >= 1) {
