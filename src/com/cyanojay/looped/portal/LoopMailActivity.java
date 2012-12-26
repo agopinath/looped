@@ -3,7 +3,7 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,7 +29,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class LoopMailActivity extends ListActivity {
+public class LoopMailActivity extends Activity {
 	
 	private enum LoopMailBoxType {
 		INBOX, SENT, ARCHIVE
@@ -69,7 +70,11 @@ public class LoopMailActivity extends ListActivity {
 	        MailEntry[] values = result.toArray(new MailEntry[result.size()]);
 	        LoopMailAdapter adapter = new LoopMailAdapter(LoopMailActivity.this, values);
 	        
-	        LoopMailActivity.this.setListAdapter(adapter);
+	        ListView listView = (ListView) findViewById(R.id.list_mail);
+	        
+	        listView.setOnItemClickListener(new MailItemClickAdapter(adapter, LoopMailActivity.this));
+	        
+	        listView.setAdapter(adapter);
 		}
     };
     
@@ -100,39 +105,6 @@ public class LoopMailActivity extends ListActivity {
     		  
     		  return rowView;
     	} 
-    }
-    
-    @Override
-    protected void onListItemClick(ListView list, View view, int position, long id) {
-    	if(!Utils.isOnline(this)) {
-    		Toast.makeText(this, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
-    		return;
-    	}
-    	
-    	Display display = getWindowManager().getDefaultDisplay(); 
-        int width = display.getWidth();
-        
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.mail_details_popup, null, false);
-        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.maildet_contwrap);
-    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
-        
-        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.05*width)), LayoutParams.WRAP_CONTENT, true);
-        
-        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pw.dismiss();
-            }
-        });
-        
-        load.setVisibility(View.VISIBLE);
-        contwrap.setVisibility(View.GONE);
-        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
-        
-        MailEntry selected = (MailEntry) getListAdapter().getItem(position);
-        ScrapeMailContentTask task = new ScrapeMailContentTask(flow, contwrap, load);
-    	task.execute(selected);
     }
     
     private class ScrapeMailContentTask extends AsyncTask<MailEntry, Void, MailDetail> {
@@ -191,6 +163,49 @@ public class LoopMailActivity extends ListActivity {
 
 	        bar.setVisibility(View.GONE);
 	        contwrap.setVisibility(View.VISIBLE);
+		}
+    }
+    
+    private class MailItemClickAdapter implements AdapterView.OnItemClickListener {
+    	LoopMailAdapter adapter;
+    	Context parent;
+    	
+    	public MailItemClickAdapter(LoopMailAdapter adapter, Context parent) {
+    		this.adapter = adapter;
+    		this.parent = parent;
+    	}
+
+		@Override
+		public void onItemClick(AdapterView<?> list, View view, int position, long id) {
+			if(!Utils.isOnline(parent)) {
+	    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+	    		return;
+	    	}
+	    	
+	    	Display display = getWindowManager().getDefaultDisplay(); 
+	        int width = display.getWidth();
+	        
+	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.mail_details_popup, null, false);
+	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.maildet_contwrap);
+	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
+	        
+	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.05*width)), LayoutParams.WRAP_CONTENT, true);
+	        
+	        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                pw.dismiss();
+	            }
+	        });
+	        
+	        load.setVisibility(View.VISIBLE);
+	        contwrap.setVisibility(View.GONE);
+	        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
+	        
+	        MailEntry selected = (MailEntry) adapter.getItem(position);
+	        ScrapeMailContentTask task = new ScrapeMailContentTask(flow, contwrap, load);
+	    	task.execute(selected);
 		}
     }
 }

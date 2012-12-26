@@ -3,7 +3,7 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,7 +29,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class NewsActivity extends ListActivity {
+public class NewsActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,11 @@ public class NewsActivity extends ListActivity {
 	        NewsArticle[] values = result.toArray(new NewsArticle[result.size()]);
 	        NewsAdapter adapter = new NewsAdapter(NewsActivity.this, values);
 	        
-	        NewsActivity.this.setListAdapter(adapter);
+	        ListView listView = (ListView) findViewById(R.id.list_news);
+	        
+	        listView.setOnItemClickListener(new NewsItemClickAdapter(adapter, NewsActivity.this));
+	        
+	        listView.setAdapter(adapter);
 		}
     };
     
@@ -89,40 +94,6 @@ public class NewsActivity extends ListActivity {
     		  
     		  return rowView;
     	} 
-    }
-    
-    @Override
-    protected void onListItemClick(ListView list, View view, int position, long id) {
-    	if(!Utils.isOnline(this)) {
-    		Toast.makeText(this, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
-    		return;
-    	}
-    	
-        Display display = getWindowManager().getDefaultDisplay(); 
-        int width = display.getWidth();
-        
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
-        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
-    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
-        
-        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
-        
-        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pw.dismiss();
-            }
-        });
-        
-        load.setVisibility(View.VISIBLE);
-        contwrap.setVisibility(View.GONE);
-        
-        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
-        
-        NewsArticle selected = (NewsArticle) getListAdapter().getItem(position);
-    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask(flow, contwrap, load);
-    	task.execute(selected);
     }
     
     private class ScrapeNewsDetailsTask extends AsyncTask<NewsArticle, Void, NewsDetail> {
@@ -175,4 +146,48 @@ public class NewsActivity extends ListActivity {
 	        contwrap.setVisibility(View.VISIBLE);
 		}
     };
+
+    private class NewsItemClickAdapter implements AdapterView.OnItemClickListener {
+    	NewsAdapter adapter;
+    	Context parent;
+    	
+    	public NewsItemClickAdapter(NewsAdapter adapter, Context parent) {
+    		this.adapter = adapter;
+    		this.parent = parent;
+    	}
+
+		@Override
+		public void onItemClick(AdapterView<?> list, View view, int position, long id) {
+			if(!Utils.isOnline(parent)) {
+	    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+	    		return;
+	    	}
+	    	
+	        Display display = getWindowManager().getDefaultDisplay(); 
+	        int width = display.getWidth();
+	        
+	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
+	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
+	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
+	        
+	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
+	        
+	        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                pw.dismiss();
+	            }
+	        });
+	        
+	        load.setVisibility(View.VISIBLE);
+	        contwrap.setVisibility(View.GONE);
+	        
+	        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
+	        
+	        NewsArticle selected = (NewsArticle) adapter.getItem(position);
+	    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask(flow, contwrap, load);
+	    	task.execute(selected);
+		}
+    }
 }

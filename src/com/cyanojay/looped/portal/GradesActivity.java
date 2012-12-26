@@ -2,9 +2,8 @@ package com.cyanojay.looped.portal;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,7 +24,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class GradesActivity extends ListActivity {
+public class GradesActivity extends Activity {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
 
     @Override
@@ -49,7 +49,12 @@ public class GradesActivity extends ListActivity {
 	        Course[] values = result.toArray(new Course[result.size()]);
 	        GradesAdapter adapter = new GradesAdapter(GradesActivity.this, values);
 	        
-	        GradesActivity.this.setListAdapter(adapter);
+	        ListView listView = (ListView) findViewById(R.id.list_grades);
+	        
+	        listView.setOnItemClickListener(new GradesItemClickAdapter(adapter, GradesActivity.this));
+	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(adapter, GradesActivity.this));
+	        
+	        listView.setAdapter(adapter);
 		}
     };
     
@@ -111,31 +116,7 @@ public class GradesActivity extends ListActivity {
     			  TextView numZeros = (TextView) rowView.findViewById(R.id.grades_num_zeros);
     			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
     		  }
-    		  
-    		  rowView.setOnLongClickListener(new View.OnLongClickListener() {
-					@Override
-					public boolean onLongClick(View v) {
-						System.out.println("on long click received");
-						
-						AlertDialog dialog = getOptionsDialog();
-						dialog.show();
-						
-						return false;
-					}
-		      });
-    		  
-			  rowView.setOnLongClickListener(new View.OnLongClickListener() {
-					@Override
-					public boolean onLongClick(View v) {
-						System.out.println("on long click received");
-						
-						AlertDialog dialog = getOptionsDialog();
-						dialog.show();
-						
-						return false;
-					}
-		      });
-    		  
+  
     		  return rowView;
     	} 
     }
@@ -153,24 +134,54 @@ public class GradesActivity extends ListActivity {
 		
         return builder.create();
     }
+
+    private class GradesItemClickAdapter implements AdapterView.OnItemClickListener {
+    	GradesAdapter adapter;
+    	Context parent;
+    	
+    	public GradesItemClickAdapter(GradesAdapter adapter, Context parent) {
+    		this.adapter = adapter;
+    		this.parent = parent;
+    	}
+
+		@Override
+		public void onItemClick(AdapterView<?> list, View view, int position, long id) {
+			if(!Utils.isOnline(parent)) {
+	    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+	    		return;
+	    	}
+	    	
+	    	Course selectedCourse = (Course) adapter.getItem(position);
+	    	
+	    	if(selectedCourse.getDetailsUrl().length() == 0) {
+	    		Toast.makeText(parent, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
+	    		return;
+	    	}
+	    	
+	    	Intent detailsIntent = new Intent(parent, GradeDetailsActivity.class);
+	    	detailsIntent.putExtra(COURSE_SELECTED, selectedCourse);
+	    	
+	    	parent.startActivity(detailsIntent);
+		}
+    }
     
-    @Override
-    protected void onListItemClick(ListView list, View view, int position, long id) {
-    	if(!Utils.isOnline(this)) {
-    		Toast.makeText(this, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
-    		return;
+    private class GradesItemLongClickAdapter implements AdapterView.OnItemLongClickListener {
+    	GradesAdapter adapter;
+    	Context parent;
+    	
+    	public GradesItemLongClickAdapter(GradesAdapter adapter, Context parent) {
+    		this.adapter = adapter;
+    		this.parent = parent;
     	}
     	
-    	Course selectedCourse = (Course) getListAdapter().getItem(position);
-    	
-    	if(selectedCourse.getDetailsUrl().length() == 0) {
-    		Toast.makeText(this, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
-    		return;
-    	}
-    	
-    	Intent detailsIntent = new Intent(this, GradeDetailsActivity.class);
-    	detailsIntent.putExtra(COURSE_SELECTED, selectedCourse);
-    	
-    	this.startActivity(detailsIntent);
+		@Override
+		public boolean onItemLongClick(AdapterView<?> list, View view, int position, long id) {
+			System.out.println("on long click received");
+
+			AlertDialog dialog = getOptionsDialog();
+			dialog.show();
+
+			return false;
+		}
     }
 }

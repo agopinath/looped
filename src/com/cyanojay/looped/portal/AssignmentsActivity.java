@@ -7,8 +7,7 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
-import android.annotation.SuppressLint;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,7 +33,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class AssignmentsActivity extends ListActivity {
+public class AssignmentsActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,11 @@ public class AssignmentsActivity extends ListActivity {
 	        CurrentAssignment[] values = result.toArray(new CurrentAssignment[result.size()]);
 	        CurrentAssignmentsAdapter adapter = new CurrentAssignmentsAdapter(AssignmentsActivity.this, values);
 	        
-	        AssignmentsActivity.this.setListAdapter(adapter);
+	        ListView listView = (ListView) findViewById(R.id.list_assignments);
+	        
+	        listView.setOnItemClickListener(new AssignmentItemClickAdapter(adapter, AssignmentsActivity.this));
+	        
+	        listView.setAdapter(adapter);
 		}
     };
     
@@ -94,39 +98,6 @@ public class AssignmentsActivity extends ListActivity {
     		  return rowView;
     	  }
     } 
-    
-    @Override
-    protected void onListItemClick(ListView list, View view, int position, long id) {
-    	if(!Utils.isOnline(this)) {
-    		Toast.makeText(this, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
-    		return;
-    	}
-    	
-    	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
-    	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
-    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
-    	
-    	Display display = getWindowManager().getDefaultDisplay(); 
-        int width = display.getWidth();
-        
-    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
-        
-    	((Button) flow.findViewById(R.id.main_help_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pw.dismiss();
-            }
-        });
-        
-        load.setVisibility(View.VISIBLE);
-        content.setVisibility(View.GONE); 
-        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
-        
-        CurrentAssignment selected = (CurrentAssignment) getListAdapter().getItem(position);
-    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, content, load);
-    	task.execute(selected);
-    }
     
     private class ScrapeAssignmentDetailsTask extends AsyncTask<CurrentAssignment, Void, AssignmentDetail> {
     	private View flow;
@@ -201,4 +172,47 @@ public class AssignmentsActivity extends ListActivity {
 	        content.setVisibility(View.VISIBLE);
 		}
     };
+    
+    private class AssignmentItemClickAdapter implements AdapterView.OnItemClickListener {
+    	CurrentAssignmentsAdapter adapter;
+    	Context parent;
+    	
+    	public AssignmentItemClickAdapter(CurrentAssignmentsAdapter adapter, Context parent) {
+    		this.adapter = adapter;
+    		this.parent = parent;
+    	}
+
+		@Override
+		public void onItemClick(AdapterView<?> list, View view, int position, long id) {
+			if(!Utils.isOnline(parent)) {
+	    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+	    		return;
+	    	}
+	    	
+	    	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
+	    	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
+	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
+	    	
+	    	Display display = getWindowManager().getDefaultDisplay(); 
+	        int width = display.getWidth();
+	        
+	    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
+	        
+	    	((Button) flow.findViewById(R.id.main_help_btn)).setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                pw.dismiss();
+	            }
+	        });
+	        
+	        load.setVisibility(View.VISIBLE);
+	        content.setVisibility(View.GONE); 
+	        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
+	        
+	        CurrentAssignment selected = (CurrentAssignment) adapter.getItem(position);
+	    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, content, load);
+	    	task.execute(selected);
+		}
+    }
 }
