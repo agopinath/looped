@@ -24,4 +24,9 @@ public class TestFragment extends SherlockFragment {
 
 		return view;
 	}
+	
+	public static Bundle createBundle(String title) {
+        Bundle bundle = new Bundle();
+        return bundle;
+    }
 }

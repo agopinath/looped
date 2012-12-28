@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,14 @@ import com.cyanojay.looped.net.API;
 
 public class GradesActivity extends SherlockListFragment {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
+	
 	private GradesAdapter mainAdapter;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        Log.i("", "ON CREATE EXECUTED");
         
         ScrapeGradesTask task = new ScrapeGradesTask();
         task.execute();
@@ -39,12 +43,40 @@ public class GradesActivity extends SherlockListFragment {
     
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_grades, null);
-		//String text = "" + Math.random();
-		//((TextView) view.findViewById(R.id.tabby_text)).setText(text);
-
+		View view = inflater.inflate(R.layout.activity_grades, container, false);
+		
+		Log.i("", "ON CREATE VIEW EXECUTED");
+		
 		return view;
 	}
+    
+   /* @Override
+	public void onPause() {
+		super.onPause();
+		
+		Log.i("", "ON PAUSE EXECUTED");
+	}
+    
+    @Override
+	public void onStop() {
+		super.onStop();
+		
+		Log.i("", "ON STOP EXECUTED");
+	}
+    
+    @Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		
+		Log.i("", "ON DESTROY VIEW EXECUTED");
+	}
+    
+    @Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+		Log.i("", "ON DESTROY EXECUTED");
+	}*/
     
     private class ScrapeGradesTask extends AsyncTask<String, Void, List<Course>> {
     	@Override
@@ -63,7 +95,7 @@ public class GradesActivity extends SherlockListFragment {
 	        
 	        listView.setOnItemClickListener(new GradesItemClickAdapter(mainAdapter, getSherlockActivity()));
 	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(mainAdapter, getSherlockActivity()));
-
+	        
 	        setListAdapter(mainAdapter);
 		}
     };

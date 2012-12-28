@@ -1,14 +1,8 @@
 package com.cyanojay.looped.portal;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -21,19 +15,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class PortalActivity extends SherlockFragmentActivity {
+public class PortalActivity extends TabSwipeActivity {
 	public static Intent KEEP_ALIVE_TASK;
-	
-	private TabsAdapter adapter;
-	private ViewPager mPager;
 	
    /* @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,118 +47,18 @@ public class PortalActivity extends SherlockFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar bar = getSupportActionBar();
         
-        mPager = new ViewPager(this);
-        mPager.setId(R.id.pager);
-        
-        setContentView(mPager);
-        
-        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
-
-        adapter = new TabsAdapter(this, mPager);
-        
-        setupTab(bar, "Grades", GradesActivity.class);
-        setupTab(bar, "Assignments", TestFragment.class);
-        setupTab(bar, "News", TestFragment.class);
-        setupTab(bar, "Mail", TestFragment.class);
+        addTab("Grades", GradesActivity.class, null);
+        addTab("Assignments", TestFragment.class, null);
+        addTab("News", TestFragment.class, null);
+        addTab("Mail", TestFragment.class, null);
     }
     
-	private void setupTab(ActionBar actionBar, String text, Class<?> fragmentClass) {
-		adapter.addTab(actionBar.newTab().setText(text), fragmentClass, null);  
-	}
-	
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_portal, menu);
-        return true;
-    }*/
-    
-   /* @Override
+    @Override
     public void onBackPressed() {
+    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
     	logOut();
-    }*/
-
-	public static class TabsAdapter extends FragmentPagerAdapter implements
-											ActionBar.TabListener, ViewPager.OnPageChangeListener {
-		private final Context mContext;
-		private final ActionBar mActionBar;
-		private final ViewPager mViewPager;
-		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
-
-		static final class TabInfo {
-			private final Class<?> clss;
-			private final Bundle args;
-
-			TabInfo(Class<?> _class, Bundle _args) {
-				clss = _class;
-				args = _args;
-			}
-		}
-
-		public TabsAdapter(SherlockFragmentActivity activity, ViewPager pager) {
-			super(activity.getSupportFragmentManager());
-			mContext = activity;
-			mActionBar = activity.getSupportActionBar();
-			mViewPager = pager;
-			mViewPager.setAdapter(this);
-			mViewPager.setOnPageChangeListener(this);
-		}
-
-		public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
-			TabInfo info = new TabInfo(clss, args);
-			tab.setTag(info);
-			tab.setTabListener(this);
-			mTabs.add(info);
-			mActionBar.addTab(tab);
-			notifyDataSetChanged();
-		}
-
-		@Override
-		public int getCount() {
-			return mTabs.size();
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			TabInfo info = mTabs.get(position);
-			return Fragment.instantiate(mContext, info.clss.getName(),
-					info.args);
-		}
-
-		@Override
-		public void onPageScrolled(int position, float positionOffset,
-				int positionOffsetPixels) {
-		}
-
-		@Override
-		public void onPageSelected(int position) {
-			mActionBar.setSelectedNavigationItem(position);
-		}
-
-		@Override
-		public void onPageScrollStateChanged(int state) {
-		}
-
-		@Override
-		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			Object tag = tab.getTag();
-			for (int i = 0; i < mTabs.size(); i++) {
-				if (mTabs.get(i) == tag) {
-					mViewPager.setCurrentItem(i);
-				}
-			}
-		}
-
-		@Override
-		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		}
-
-		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		}
-	}
+    }
 	
     private void logOut() {
     	if(Utils.isOnline(this)) {
