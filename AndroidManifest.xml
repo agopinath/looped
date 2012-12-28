@@ -30,19 +30,19 @@
             android:label="@string/title_activity_portal"
             android:theme="@style/Theme.Sherlock" />
         <activity
-            android:name="com.cyanojay.looped.portal.GradesFragment"
+            android:name=".portal.grades.GradesFragment"
             android:label="@string/title_activity_grades" />
         <activity
-            android:name="com.cyanojay.looped.portal.AssignmentsFragmnet"
+            android:name=".portal.assignments.AssignmentsFragmnet"
             android:label="@string/title_activity_assignments" />
         <activity
-            android:name="com.cyanojay.looped.portal.NewsFragment"
+            android:name=".portal.news.NewsFragment"
             android:label="@string/title_activity_news" />
         <activity
-            android:name=".portal.GradeDetailsActivity"
+            android:name=".portal.grades.GradeDetailsActivity"
             android:label="@string/title_activity_grade_details" />
         <activity
-            android:name="com.cyanojay.looped.portal.LoopMailFragment"
+            android:name=".portal.loopmail.LoopMailFragment"
             android:label="@string/title_activity_loop_mail" />
         <activity
             android:name=".portal.BaseActivity"
@@ -50,6 +50,7 @@
         <activity
             android:name=".portal.BaseListActivity"
             android:label="@string/title_activity_loop_mail" />
+        
         <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
