@@ -13,6 +13,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.cyanojay.looped.R;
  
 public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
@@ -25,6 +26,8 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
          * Create the ViewPager and our custom adapter
          */
         mViewPager = new ViewPager(this);
+        mViewPager.setId(R.id.pager);
+        
         adapter = new TabsAdapter( this, mViewPager );
         mViewPager.setAdapter( adapter );
         mViewPager.setOnPageChangeListener( adapter );
@@ -40,8 +43,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
          *
          * The ID 0x7F04FFF0 is large enough to probably never be used for anything else
          */
-        mViewPager.setId( 0x7F04FFF0 );
- 
+        
         super.onCreate(savedInstanceState);
  
         /*
@@ -87,13 +89,13 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
             this.mPager = pager;
  
             mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+            mActionBar.setDisplayOptions(1, ActionBar.DISPLAY_SHOW_TITLE);
         }
  
         private static class TabInfo {
             public final Class<?> fragmentClass;
             public final Bundle args;
-            public TabInfo(Class<?> fragmentClass,
-                    Bundle args) {
+            public TabInfo(Class<?> fragmentClass, Bundle args) {
                 this.fragmentClass = fragmentClass;
                 this.args = args;
             }

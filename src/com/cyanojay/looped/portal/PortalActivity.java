@@ -52,6 +52,9 @@ public class PortalActivity extends TabSwipeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(API.get().getPortalTitle()); 
+        
         addTab("Grades", GradesFragment.class, null);
         addTab("Assignments", AssignmentsFragmnet.class, null);
         addTab("News", NewsFragment.class, null);
@@ -62,6 +65,7 @@ public class PortalActivity extends TabSwipeActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.activity_portal, menu);
+        
         return true;
     }
     

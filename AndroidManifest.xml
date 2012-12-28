@@ -28,7 +28,7 @@
         <activity
             android:name=".portal.PortalActivity"
             android:label="@string/title_activity_portal"
-            android:theme="@style/Theme.Sherlock" />
+            android:theme="@style/LoopedPortal" />
         <activity
             android:name=".portal.grades.GradesFragment"
             android:label="@string/title_activity_grades" />

@@ -1,9 +1,18 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="@android:style/Theme.Light" />
+    <style name="AppTheme" parent="@style/Theme.Sherlock.Light.DarkActionBar" />
     
-    <style name="LoopedCommon" parent="@android:style/Theme.Light" >
+    <style name="LoopedCommon" parent="@style/Theme.Sherlock.Light.DarkActionBar" >
         <item name="android:background">@drawable/activity_background</item>
+    </style>
+    
+    <style name="LoopedPortal" parent="@style/Theme.Sherlock.Light.DarkActionBar" >
+        
+    </style>
+    
+    <style name="LoopedTabs" parent="@style/Theme.Sherlock.Light" >
+        <item name="actionBarTabStyle">@style/TabStyle</item>
+        <item name="android:actionBarTabStyle">@style/TabStyle</item>
     </style>
     
     <style name="LoopedCommon.LoopedMain" >
@@ -46,9 +55,14 @@
     
     <style name="LoopedButton" >
         <item name="android:background">@drawable/button_background</item>
+        <item name="android:padding">5dp</item>
     </style>
     
     <style name="styleName" parent="@style/LoopedCommon.LoopedMain">
         <item name="android:orientation">vertical</item>
     </style>
+    
+    <style name="TabStyle" parent="style/Widget.Sherlock.Light.ActionBar.TabView">
+	    <item name="android:background">@drawable/tabs_background</item>
+	</style>
 </resources>
