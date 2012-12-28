@@ -143,6 +143,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
             for ( int i = 0; i < mTabs.size(); i++ ) {
                 if ( mTabs.get( i ) == tabInfo ) {
                     mPager.setCurrentItem( i );
+                    mActionBar.setSelectedNavigationItem( i );
                 }
             }
         }

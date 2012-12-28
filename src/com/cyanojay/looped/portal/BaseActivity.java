@@ -1,17 +1,19 @@
 package com.cyanojay.looped.portal;
 
-import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuItem;
 
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends SherlockActivity {
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_portal, menu);
+        getSupportMenuInflater().inflate(R.menu.activity_portal, menu);
+        
         return true;
     }
     
