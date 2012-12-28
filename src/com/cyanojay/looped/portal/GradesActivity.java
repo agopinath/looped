@@ -29,8 +29,6 @@ import com.cyanojay.looped.net.API;
 public class GradesActivity extends SherlockListFragment {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
 	
-	private GradesAdapter mainAdapter;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,14 +87,14 @@ public class GradesActivity extends SherlockListFragment {
 	        super.onPostExecute(result);
 	        
 	        Course[] values = result.toArray(new Course[result.size()]);
-	        mainAdapter = new GradesAdapter(getSherlockActivity(), values);
+	        GradesAdapter adapter = new GradesAdapter(getSherlockActivity(), values);
 	        
 	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        
-	        listView.setOnItemClickListener(new GradesItemClickAdapter(mainAdapter, getSherlockActivity()));
-	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(mainAdapter, getSherlockActivity()));
+	        listView.setOnItemClickListener(new GradesItemClickAdapter(adapter, getSherlockActivity()));
+	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(adapter, getSherlockActivity()));
 	        
-	        setListAdapter(mainAdapter);
+	        setListAdapter(adapter);
 		}
     };
     
