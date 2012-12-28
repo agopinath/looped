@@ -9,6 +9,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.net.KeepAliveService;
 import com.cyanojay.looped.portal.assignments.AssignmentsFragmnet;
 import com.cyanojay.looped.portal.grades.GradesFragment;
 import com.cyanojay.looped.portal.loopmail.LoopMailFragment;
@@ -28,6 +29,9 @@ public class PortalActivity extends TabSwipeActivity {
         addTab("Assignments", AssignmentsFragmnet.class, null);
         addTab("News", NewsFragment.class, null);
         addTab("Mail", LoopMailFragment.class, null);
+        
+        KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
+        startActivity(KEEP_ALIVE_TASK);
     }
 
     @Override
