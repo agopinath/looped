@@ -31,7 +31,7 @@ public class PortalActivity extends TabSwipeActivity {
         addTab("Mail", LoopMailFragment.class, null);
         
         KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
-        startActivity(KEEP_ALIVE_TASK);
+        startService(KEEP_ALIVE_TASK);
     }
 
     @Override
