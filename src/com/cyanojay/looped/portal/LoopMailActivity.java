@@ -3,7 +3,6 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,11 +24,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class LoopMailActivity extends Activity {
+public class LoopMailActivity extends SherlockListFragment {
 	
 	private enum LoopMailBoxType {
 		INBOX, SENT, ARCHIVE
@@ -38,11 +38,17 @@ public class LoopMailActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loop_mail);
         
         ScrapeLoopMailTask task = new ScrapeLoopMailTask();
         task.execute(LoopMailBoxType.INBOX);
     }
+
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_loop_mail, container, false);
+
+		return view;
+	}
     
     private class ScrapeLoopMailTask extends AsyncTask<LoopMailBoxType, Void, List<MailEntry>> {
     	@Override
@@ -68,13 +74,13 @@ public class LoopMailActivity extends Activity {
 	        super.onPostExecute(result);
 	        
 	        MailEntry[] values = result.toArray(new MailEntry[result.size()]);
-	        LoopMailAdapter adapter = new LoopMailAdapter(LoopMailActivity.this, values);
+	        LoopMailAdapter adapter = new LoopMailAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) findViewById(R.id.list_mail);
+	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        
-	        listView.setOnItemClickListener(new MailItemClickAdapter(adapter, LoopMailActivity.this));
+	        listView.setOnItemClickListener(new MailItemClickAdapter(adapter, getSherlockActivity()));
 	        
-	        listView.setAdapter(adapter);
+	        setListAdapter(adapter);
 		}
     };
     
@@ -182,10 +188,10 @@ public class LoopMailActivity extends Activity {
 	    		return;
 	    	}
 	    	
-	    	Display display = getWindowManager().getDefaultDisplay(); 
+	    	Display display = getSherlockActivity().getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
-	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LayoutInflater inflater = (LayoutInflater) getSherlockActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.mail_details_popup, null, false);
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.maildet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
