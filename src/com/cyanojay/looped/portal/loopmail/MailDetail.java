@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.loopmail;
 
 import java.util.ArrayList;
 import java.util.List;

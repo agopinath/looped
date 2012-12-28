@@ -19,8 +19,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.cyanojay.looped.net.API;
-import com.cyanojay.looped.portal.Course;
-import com.cyanojay.looped.portal.GradeDetail;
+import com.cyanojay.looped.portal.grades.Course;
+import com.cyanojay.looped.portal.grades.GradeDetail;
 
 public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDataset> {
 	private Context parent;

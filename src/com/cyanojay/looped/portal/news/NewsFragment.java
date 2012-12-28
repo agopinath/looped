@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.news;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +30,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class NewsActivity extends SherlockListFragment {
+public class NewsFragment extends SherlockListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

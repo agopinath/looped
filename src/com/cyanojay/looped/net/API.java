@@ -23,14 +23,14 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.portal.AssignmentDetail;
-import com.cyanojay.looped.portal.Course;
-import com.cyanojay.looped.portal.CurrentAssignment;
-import com.cyanojay.looped.portal.GradeDetail;
-import com.cyanojay.looped.portal.MailDetail;
-import com.cyanojay.looped.portal.MailEntry;
-import com.cyanojay.looped.portal.NewsArticle;
-import com.cyanojay.looped.portal.NewsDetail;
+import com.cyanojay.looped.portal.assignments.AssignmentDetail;
+import com.cyanojay.looped.portal.assignments.CurrentAssignment;
+import com.cyanojay.looped.portal.grades.Course;
+import com.cyanojay.looped.portal.grades.GradeDetail;
+import com.cyanojay.looped.portal.loopmail.MailDetail;
+import com.cyanojay.looped.portal.loopmail.MailEntry;
+import com.cyanojay.looped.portal.news.NewsArticle;
+import com.cyanojay.looped.portal.news.NewsDetail;
 
 
 public final class API {

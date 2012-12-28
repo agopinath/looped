@@ -22,6 +22,10 @@ import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.portal.assignments.AssignmentsFragmnet;
+import com.cyanojay.looped.portal.grades.GradesFragment;
+import com.cyanojay.looped.portal.loopmail.LoopMailFragment;
+import com.cyanojay.looped.portal.news.NewsFragment;
 
 public class PortalActivity extends TabSwipeActivity {
 	public static Intent KEEP_ALIVE_TASK;
@@ -48,10 +52,10 @@ public class PortalActivity extends TabSwipeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        addTab("Grades", GradesActivity.class, null);
-        addTab("Assignments", AssignmentsActivity.class, null);
-        addTab("News", NewsActivity.class, null);
-        addTab("Mail", LoopMailActivity.class, null);
+        addTab("Grades", GradesFragment.class, null);
+        addTab("Assignments", AssignmentsFragmnet.class, null);
+        addTab("News", NewsFragment.class, null);
+        addTab("Mail", LoopMailFragment.class, null);
     }
 
     @Override

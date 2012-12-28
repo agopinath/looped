@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.grades;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.net.API;
 
-public class GradesActivity extends SherlockListFragment {
+public class GradesFragment extends SherlockListFragment {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
 	
     @Override

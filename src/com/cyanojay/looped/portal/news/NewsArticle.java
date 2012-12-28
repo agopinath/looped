@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.news;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.assignments;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,7 +34,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class AssignmentsActivity extends SherlockListFragment {
+public class AssignmentsFragmnet extends SherlockListFragment {
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {

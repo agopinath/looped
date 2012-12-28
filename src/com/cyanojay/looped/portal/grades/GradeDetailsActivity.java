@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.grades;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.portal.BaseListActivity;
 
 public class GradeDetailsActivity extends BaseListActivity {
     @SuppressLint("NewApi")
@@ -29,7 +30,7 @@ public class GradeDetailsActivity extends BaseListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_details);
         
-        Course currCourse = (Course) getIntent().getSerializableExtra(GradesActivity.COURSE_SELECTED);
+        Course currCourse = (Course) getIntent().getSerializableExtra(GradesFragment.COURSE_SELECTED);
         
         setTitle(currCourse.getName());
         

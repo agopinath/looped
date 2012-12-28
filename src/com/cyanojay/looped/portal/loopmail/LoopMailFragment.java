@@ -1,4 +1,4 @@
-package com.cyanojay.looped.portal;
+package com.cyanojay.looped.portal.loopmail;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +30,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class LoopMailActivity extends SherlockListFragment {
+public class LoopMailFragment extends SherlockListFragment {
 	
 	private enum LoopMailBoxType {
 		INBOX, SENT, ARCHIVE
