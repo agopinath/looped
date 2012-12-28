@@ -77,16 +77,15 @@ public class PortalActivity extends TabSwipeActivity {
     
     @Override
     public void onBackPressed() {
-    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
     	logOut();
     }
 	
     private void logOut() {
+    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
+    	
     	if(Utils.isOnline(this)) {
     		API.get().logOut();
     	}
-    	
-    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
     	
     	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

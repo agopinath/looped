@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cyanojay.looped.MainActivity;
 import com.cyanojay.looped.R;
@@ -44,6 +45,8 @@ public class BaseListActivity extends ListActivity {
     }
         
     private void logOut() {
+    	Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
+    	
     	if(Utils.isOnline(this)) {
     		API.get().logOut();
     	}
