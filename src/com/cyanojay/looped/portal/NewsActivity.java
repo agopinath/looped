@@ -3,7 +3,6 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,20 +24,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class NewsActivity extends Activity {
+public class NewsActivity extends SherlockListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
         
         ScrapeNewsTask task = new ScrapeNewsTask();
         task.execute();
     }
+    
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_news, container, false);
+
+		return view;
+	}
     
     private class ScrapeNewsTask extends AsyncTask<String, Void, List<NewsArticle>> {
     	@Override
@@ -51,11 +57,11 @@ public class NewsActivity extends Activity {
 	        super.onPostExecute(result);
 	        
 	        NewsArticle[] values = result.toArray(new NewsArticle[result.size()]);
-	        NewsAdapter adapter = new NewsAdapter(NewsActivity.this, values);
+	        NewsAdapter adapter = new NewsAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) findViewById(R.id.list_news);
+	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        
-	        listView.setOnItemClickListener(new NewsItemClickAdapter(adapter, NewsActivity.this));
+	        listView.setOnItemClickListener(new NewsItemClickAdapter(adapter, getSherlockActivity()));
 	        
 	        listView.setAdapter(adapter);
 		}
@@ -163,10 +169,10 @@ public class NewsActivity extends Activity {
 	    		return;
 	    	}
 	    	
-	        Display display = getWindowManager().getDefaultDisplay(); 
+	        Display display = getSherlockActivity().getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
-	        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LayoutInflater inflater = (LayoutInflater) getSherlockActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);

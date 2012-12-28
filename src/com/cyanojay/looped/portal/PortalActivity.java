@@ -50,7 +50,7 @@ public class PortalActivity extends TabSwipeActivity {
         
         addTab("Grades", GradesActivity.class, null);
         addTab("Assignments", AssignmentsActivity.class, null);
-        addTab("News", TestFragment.class, null);
+        addTab("News", NewsActivity.class, null);
         addTab("Mail", TestFragment.class, null);
     }
 
