@@ -3,6 +3,7 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -155,9 +156,9 @@ public class NewsActivity extends SherlockListFragment {
 
     private class NewsItemClickAdapter implements AdapterView.OnItemClickListener {
     	NewsAdapter adapter;
-    	Context parent;
+    	Activity parent;
     	
-    	public NewsItemClickAdapter(NewsAdapter adapter, Context parent) {
+    	public NewsItemClickAdapter(NewsAdapter adapter, Activity parent) {
     		this.adapter = adapter;
     		this.parent = parent;
     	}
@@ -169,10 +170,10 @@ public class NewsActivity extends SherlockListFragment {
 	    		return;
 	    	}
 	    	
-	        Display display = getSherlockActivity().getWindowManager().getDefaultDisplay(); 
+	        Display display = parent.getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
-	        LayoutInflater inflater = (LayoutInflater) getSherlockActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LayoutInflater inflater = (LayoutInflater) parent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);

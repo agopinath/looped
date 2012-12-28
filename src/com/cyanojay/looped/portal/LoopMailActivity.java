@@ -3,6 +3,7 @@ package com.cyanojay.looped.portal;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -174,9 +175,9 @@ public class LoopMailActivity extends SherlockListFragment {
     
     private class MailItemClickAdapter implements AdapterView.OnItemClickListener {
     	LoopMailAdapter adapter;
-    	Context parent;
+    	Activity parent;
     	
-    	public MailItemClickAdapter(LoopMailAdapter adapter, Context parent) {
+    	public MailItemClickAdapter(LoopMailAdapter adapter, Activity parent) {
     		this.adapter = adapter;
     		this.parent = parent;
     	}
@@ -188,10 +189,10 @@ public class LoopMailActivity extends SherlockListFragment {
 	    		return;
 	    	}
 	    	
-	    	Display display = getSherlockActivity().getWindowManager().getDefaultDisplay(); 
+	    	Display display = parent.getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
-	        LayoutInflater inflater = (LayoutInflater) getSherlockActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        LayoutInflater inflater = (LayoutInflater) parent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.mail_details_popup, null, false);
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.maildet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);

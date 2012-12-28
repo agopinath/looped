@@ -163,9 +163,9 @@ public class GradesActivity extends SherlockListFragment {
 
     private class GradesItemClickAdapter implements AdapterView.OnItemClickListener {
     	GradesAdapter adapter;
-    	Context parent;
+    	Activity parent;
     	
-    	public GradesItemClickAdapter(GradesAdapter adapter, Context parent) {
+    	public GradesItemClickAdapter(GradesAdapter adapter, Activity parent) {
     		this.adapter = adapter;
     		this.parent = parent;
     	}

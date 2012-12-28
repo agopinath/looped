@@ -182,9 +182,9 @@ public class AssignmentsActivity extends SherlockListFragment {
     
     private class AssignmentItemClickAdapter implements AdapterView.OnItemClickListener {
     	CurrentAssignmentsAdapter adapter;
-    	Context parent;
+    	Activity parent;
     	
-    	public AssignmentItemClickAdapter(CurrentAssignmentsAdapter adapter, Context parent) {
+    	public AssignmentItemClickAdapter(CurrentAssignmentsAdapter adapter, Activity parent) {
     		this.adapter = adapter;
     		this.parent = parent;
     	}
@@ -196,12 +196,12 @@ public class AssignmentsActivity extends SherlockListFragment {
 	    		return;
 	    	}
 	    	
-	    	LayoutInflater inflater = (LayoutInflater) getSherlockActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    	LayoutInflater inflater = (LayoutInflater) parent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
 	    	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
 	    	
-	    	Display display = getSherlockActivity().getWindowManager().getDefaultDisplay(); 
+	    	Display display = parent.getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
 	    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
