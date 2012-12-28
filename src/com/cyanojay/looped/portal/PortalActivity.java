@@ -53,6 +53,27 @@ public class PortalActivity extends TabSwipeActivity {
         addTab("News", TestFragment.class, null);
         addTab("Mail", TestFragment.class, null);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.activity_portal, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.menu_about:
+            showAbout();
+            return true;
+        case R.id.menu_logout:
+            logOut();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+    	}
+    }
     
     @Override
     public void onBackPressed() {
