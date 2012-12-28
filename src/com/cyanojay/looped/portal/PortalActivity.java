@@ -49,7 +49,7 @@ public class PortalActivity extends TabSwipeActivity {
         super.onCreate(savedInstanceState);
         
         addTab("Grades", GradesActivity.class, null);
-        addTab("Assignments", TestFragment.class, null);
+        addTab("Assignments", AssignmentsActivity.class, null);
         addTab("News", TestFragment.class, null);
         addTab("Mail", TestFragment.class, null);
     }

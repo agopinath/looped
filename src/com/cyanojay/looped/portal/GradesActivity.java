@@ -2,6 +2,7 @@ package com.cyanojay.looped.portal;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +10,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +35,7 @@ public class GradesActivity extends SherlockListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        Log.i("", "ON CREATE EXECUTED");
+        //Log.i("", "ON CREATE EXECUTED");
         
         ScrapeGradesTask task = new ScrapeGradesTask();
         task.execute();
@@ -45,12 +45,12 @@ public class GradesActivity extends SherlockListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.activity_grades, container, false);
 		
-		Log.i("", "ON CREATE VIEW EXECUTED");
+		//Log.i("", "ON CREATE VIEW EXECUTED");
 		
 		return view;
 	}
     
-   /* @Override
+   /*  @Override
 	public void onPause() {
 		super.onPause();
 		
@@ -107,10 +107,6 @@ public class GradesActivity extends SherlockListFragment {
     	  public GradesAdapter(Context context, Course[] values) {
     		  super(context, R.layout.curr_grades_row, values);
     		  this.context = context;
-    		  this.values = values;
-    	  }
-    	  
-    	  public void setValues(Course[] values) {
     		  this.values = values;
     	  }
     	  

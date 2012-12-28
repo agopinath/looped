@@ -29,20 +29,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 
-public class AssignmentsActivity extends Activity {
-
-    @Override
+public class AssignmentsActivity extends SherlockListFragment {
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assignments);
         
         ScrapeAssignmentsTask task = new ScrapeAssignmentsTask();
         task.execute();
     }
+    
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_assignments, container, false);
+
+		return view;
+	}
     
     private class ScrapeAssignmentsTask extends AsyncTask<String, Void, List<CurrentAssignment>> {
 		@Override
@@ -55,13 +62,13 @@ public class AssignmentsActivity extends Activity {
 	        super.onPostExecute(result);
 	        
 	        CurrentAssignment[] values = result.toArray(new CurrentAssignment[result.size()]);
-	        CurrentAssignmentsAdapter adapter = new CurrentAssignmentsAdapter(AssignmentsActivity.this, values);
+	        CurrentAssignmentsAdapter adapter = new CurrentAssignmentsAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) findViewById(R.id.list_assignments);
+	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        
-	        listView.setOnItemClickListener(new AssignmentItemClickAdapter(adapter, AssignmentsActivity.this));
+	        listView.setOnItemClickListener(new AssignmentItemClickAdapter(adapter, getSherlockActivity()));
 	        
-	        listView.setAdapter(adapter);
+	        setListAdapter(adapter);
 		}
     };
     
@@ -189,12 +196,12 @@ public class AssignmentsActivity extends Activity {
 	    		return;
 	    	}
 	    	
-	    	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    	LayoutInflater inflater = (LayoutInflater) getSherlockActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
 	    	LinearLayout content = (LinearLayout) flow.findViewById(R.id.assigndet_content);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
 	    	
-	    	Display display = getWindowManager().getDefaultDisplay(); 
+	    	Display display = getSherlockActivity().getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
 	    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
