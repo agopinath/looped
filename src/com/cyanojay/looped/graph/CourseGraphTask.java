@@ -10,8 +10,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalActivity;
+import org.achartengine.chart.ScatterChart;
+import org.achartengine.chart.TimeChart;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.util.MathHelper;
 import org.apache.http.client.ClientProtocolException;
 
@@ -108,12 +112,32 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
         
         progressDialog.dismiss();
         
-        String[] titles = new String[] { "Grade" };
-        //Intent intent = ChartFactory.getTimeChartIntent(parent, graphData, ChartUtil.getDemoRenderer(graphData.getSeriesCount()),
-        //												null, "Graph for " + course.getName());
-        Intent intent = ChartFactory.getScatterChartIntent(parent, graphData, 
-        		ChartUtil.getDemoRenderer(graphData.getSeriesCount()), "Graph for " + course.getName());
+        Intent intent = getCustomDatedScatterChart(parent, graphData, 
+        		ChartUtil.getDemoRenderer(graphData.getSeriesCount()), "MMM dd", "Graph for " + course.getName());
         
         parent.startActivity(intent);
     }
+    
+	private final Intent getCustomDatedScatterChart(Context context,
+			XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer,
+			String format, String activityTitle) {
+		
+		checkParameters(dataset, renderer);
+		
+		Intent intent = new Intent(context, GraphicalActivity.class);
+		DatedScatterChart chart = new DatedScatterChart(dataset, renderer);
+		chart.setDateFormat(format);
+		
+		intent.putExtra(ChartFactory.CHART, chart);
+		intent.putExtra(ChartFactory.TITLE, activityTitle);
+		
+		return intent;
+	}
+	
+	private void checkParameters(XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
+		if (dataset == null || renderer == null || dataset.getSeriesCount() != renderer.getSeriesRendererCount()) {
+			throw new IllegalArgumentException(
+					"Dataset and renderer should be not null and should have the same number of series");
+		}
+	}
 }
