@@ -118,24 +118,30 @@ public class ChartUtil {
     renderer.setLabelsColor(labelsColor);
   }
   
-  public static XYMultipleSeriesRenderer getDemoRenderer(int seriesCount) {
+  public static XYMultipleSeriesRenderer getMultiSeriesRenderer(int seriesCount) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(16);
 	    renderer.setChartTitleTextSize(20);
 	    renderer.setLabelsTextSize(15);
 	    renderer.setLegendTextSize(15);
-	    renderer.setPointSize(5f);
-	    renderer.setMargins(new int[] {20, 30, 15, 0});
+	    renderer.setPointSize(4f);
+	    renderer.setMargins(new int[] {30, 30, 30, 15});
 
 	    int[] colors = new int[] {
-	    		Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.CYAN
+	    		Color.RED, Color.GREEN, Color.CYAN, Color.rgb(255, 166, 0), 
+	    		Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLUE, 
 	    };
  	    
 	    for(int i = 0; i < seriesCount; i++) {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
 		    r.setPointStyle(PointStyle.CIRCLE);
-		    r.setColor(colors[i]);
+		    
+		    int pointCol = (i < colors.length) ? 
+		    				colors[i] : Color.rgb((int)(Math.random() * 256), 
+		    								  (int)(Math.random() * 256), 
+		    								  (int)(Math.random() * 256));
+		    r.setColor(pointCol);
 		    r.setFillPoints(true);
 		    
 		    renderer.addSeriesRenderer(r);
@@ -145,7 +151,7 @@ public class ChartUtil {
 	    renderer.setLabelsColor(Color.LTGRAY);
 	    
 	    renderer.setXTitle("Time");
-	    renderer.setYTitle("Percent (%) Grade of Assignment"); 
+	    renderer.setYTitle("Grade in Percent (%)");  
 	    
 	    renderer.setApplyBackgroundColor(true); 
 	    renderer.setBackgroundColor(Color.BLACK);

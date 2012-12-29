@@ -70,7 +70,6 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
     		categSeries.add(new TimeSeries(categName));
     	}
     	
-    	//TimeSeries dataSeries = new TimeSeries("Grade Percentages Over Time");
     	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
     	
     	for(TimeSeries series : categSeries) {
@@ -82,6 +81,7 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
 	    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
 				} catch (ParseException e) {
 					e.printStackTrace();
+					continue;
 				}
 	    		
 	    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
@@ -112,8 +112,12 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
         
         progressDialog.dismiss();
         
-        Intent intent = getCustomDatedScatterChart(parent, graphData, 
-        		ChartUtil.getDemoRenderer(graphData.getSeriesCount()), "MMM dd", "Graph for " + course.getName());
+        Intent intent = getCustomDatedScatterChart(
+        		parent, 
+        		graphData, 
+        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount()), 
+        		"MMM dd", 
+        		"Graph for " + course.getName());
         
         parent.startActivity(intent);
     }
