@@ -1,5 +1,7 @@
 package com.cyanojay.looped.portal;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -58,6 +60,19 @@ public class PortalActivity extends TabSwipeActivity {
     
     @Override
     public void onBackPressed() {
-    	Utils.logOut(this);
+    	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+    	    @Override
+    	    public void onClick(DialogInterface dialog, int which) {
+    	        switch (which){
+    	        case DialogInterface.BUTTON_POSITIVE:
+    	        	Utils.logOut(PortalActivity.this);
+    	            break;
+    	        }
+    	    }
+    	};
+
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+    	    	.setNegativeButton("No", dialogClickListener).show();
     }
 }

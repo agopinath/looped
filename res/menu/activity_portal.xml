@@ -3,7 +3,7 @@
         android:title="@string/refresh_text"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
     <item android:id="@+id/menu_logout"
         android:title="@string/logout_text"
         android:orderInCategory="101"
