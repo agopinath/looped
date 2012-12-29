@@ -3,9 +3,11 @@ package com.cyanojay.looped.graph;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.model.TimeSeries;
@@ -42,46 +44,60 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
     @Override
     protected XYMultipleSeriesDataset doInBackground(Void... args) {
     	List<GradeDetail> details = null;
+    	List<TimeSeries> categSeries = null;
+    	Map<String, Double> categWeights = null;
+    	
     	XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
     	
     	try {
 			details = API.get().getGradeDetails(course);
-			API.get().getCourseCategories(course);
+			categWeights = API.get().getCourseCategories(course);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
     	
-    	if(details == null) return null;
+    	if(details == null || categWeights == null) return null;
     	
+    	categSeries = new ArrayList<TimeSeries>(categWeights.size());
     	
-    	TimeSeries dataSeries = new TimeSeries("Grade Percentages Over Time");
-    	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
-    	
-    	for(GradeDetail detail : details) {
-    		Date gradeDate = null;
-    		double percent = 0.0d;
-    		
-    		try {
-    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-    		
-    		try {
-    			percent = (detail.getPointsEarned() / detail.getTotalPoints()) * 100.0d;
-    		} catch(ArithmeticException e) {
-    			percent = MathHelper.NULL_VALUE;
-    			e.printStackTrace();
-    		}
-    		
-    		System.out.println(gradeDate + " --> " + percent);
-    		
-    		dataSeries.add(gradeDate, percent);
+    	for(String categName : categWeights.keySet()) {
+    		categSeries.add(new TimeSeries(categName));
     	}
     	
-    	data.addSeries(dataSeries);
+    	//TimeSeries dataSeries = new TimeSeries("Grade Percentages Over Time");
+    	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
+    	
+    	for(TimeSeries series : categSeries) {
+    		
+	    	for(GradeDetail detail : details) {
+	    		Date gradeDate = null;
+
+	    		try {
+	    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+	    		
+	    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
+	    			double percent = 0.0d;
+		    		
+		    		try {
+		    			percent = (detail.getPointsEarned() / detail.getTotalPoints()) * 100.0d;
+		    		} catch(ArithmeticException e) {
+		    			percent = MathHelper.NULL_VALUE;
+		    			e.printStackTrace();
+		    		}
+		    		
+		    		System.out.println(detail.getCategory() + " --> " + percent);
+		    		
+		    		series.add(gradeDate, percent);
+	    		}
+	    	}
+    	
+	    	data.addSeries(series);
+    	}
     	
 		return data;
     }
@@ -93,9 +109,11 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
         progressDialog.dismiss();
         
         String[] titles = new String[] { "Grade" };
-        Intent intent = ChartFactory.getTimeChartIntent(parent, graphData, ChartUtil.getDemoRenderer(),
-        												null, "Graph for " + course.getName());
-
+        //Intent intent = ChartFactory.getTimeChartIntent(parent, graphData, ChartUtil.getDemoRenderer(graphData.getSeriesCount()),
+        //												null, "Graph for " + course.getName());
+        Intent intent = ChartFactory.getScatterChartIntent(parent, graphData, 
+        		ChartUtil.getDemoRenderer(graphData.getSeriesCount()), "Graph for " + course.getName());
+        
         parent.startActivity(intent);
     }
 }

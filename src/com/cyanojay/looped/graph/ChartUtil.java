@@ -118,7 +118,7 @@ public class ChartUtil {
     renderer.setLabelsColor(labelsColor);
   }
   
-  public static XYMultipleSeriesRenderer getDemoRenderer() {
+  public static XYMultipleSeriesRenderer getDemoRenderer(int seriesCount) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(16);
 	    renderer.setChartTitleTextSize(20);
@@ -126,12 +126,21 @@ public class ChartUtil {
 	    renderer.setLegendTextSize(15);
 	    renderer.setPointSize(5f);
 	    renderer.setMargins(new int[] {20, 30, 15, 0});
-	    XYSeriesRenderer r = new XYSeriesRenderer();
-	    r = new XYSeriesRenderer();
-	    r.setPointStyle(PointStyle.CIRCLE);
-	    r.setColor(Color.GREEN);
-	    r.setFillPoints(true);
-	    renderer.addSeriesRenderer(r);
+
+	    int[] colors = new int[] {
+	    		Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.CYAN
+	    };
+ 	    
+	    for(int i = 0; i < seriesCount; i++) {
+	    	XYSeriesRenderer r = new XYSeriesRenderer();
+		    r = new XYSeriesRenderer();
+		    r.setPointStyle(PointStyle.CIRCLE);
+		    r.setColor(colors[i]);
+		    r.setFillPoints(true);
+		    
+		    renderer.addSeriesRenderer(r);
+	    }
+	    
 	    renderer.setAxesColor(Color.DKGRAY);
 	    renderer.setLabelsColor(Color.LTGRAY);
 	    
