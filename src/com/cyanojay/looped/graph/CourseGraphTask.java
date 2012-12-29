@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -28,10 +29,14 @@ import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.grades.Course;
 import com.cyanojay.looped.portal.grades.GradeDetail;
 
-public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDataset> {
+public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Void, List> {
 	private Context parent;
 	private Course course;
 	private ProgressDialog progressDialog;
+	
+	public enum GraphTaskType {
+		ASSIGNMENTS, COURSE
+	}
 	
 	public CourseGraphTask(Context parent, Course course) {
 		this.parent = parent;
@@ -46,12 +51,13 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
     }
 
     @Override
-    protected XYMultipleSeriesDataset doInBackground(Void... args) {
+    protected List doInBackground(GraphTaskType... args) {
     	List<GradeDetail> details = null;
     	List<TimeSeries> categSeries = null;
     	Map<String, Double> categWeights = null;
     	
     	XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
+    	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
     	
     	try {
 			details = API.get().getGradeDetails(course);
@@ -70,56 +76,130 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
     		categSeries.add(new TimeSeries(categName));
     	}
     	
-    	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
+    	List results = new ArrayList();
     	
-    	for(TimeSeries series : categSeries) {
-    		
-	    	for(GradeDetail detail : details) {
-	    		Date gradeDate = null;
-
-	    		try {
-	    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
-				} catch (ParseException e) {
-					e.printStackTrace();
-					continue;
-				}
+    	if(args[0] == GraphTaskType.ASSIGNMENTS) {
+	    	for(TimeSeries series : categSeries) {
 	    		
-	    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
-	    			double percent = 0.0d;
-		    		
+		    	for(GradeDetail detail : details) {
+		    		Date gradeDate = null;
+	
 		    		try {
-		    			percent = (detail.getPointsEarned() / detail.getTotalPoints()) * 100.0d;
-		    		} catch(ArithmeticException e) {
-		    			percent = MathHelper.NULL_VALUE;
-		    			e.printStackTrace();
+		    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
+					} catch (ParseException e) {
+						e.printStackTrace();
+						continue;
+					}
+		    		
+		    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
+		    			double percent = 0.0d;
+			    		
+			    		try {
+			    			percent = (detail.getPointsEarned() / detail.getTotalPoints()) * 100.0d;
+			    		} catch(ArithmeticException e) {
+			    			percent = MathHelper.NULL_VALUE;
+			    			e.printStackTrace();
+			    		}
+			    		
+			    		if(Double.isInfinite(percent) || Double.isNaN(percent))
+			    			percent = 100.0d;
+			    		
+			    		System.out.println(detail.getCategory() + " --> " + percent);
+			    		
+			    		series.add(gradeDate, percent);
 		    		}
-		    		
-		    		System.out.println(detail.getCategory() + " --> " + percent);
-		    		
-		    		series.add(gradeDate, percent);
-	    		}
+		    	}
+	    	
+		    	data.addSeries(series);
 	    	}
-    	
-	    	data.addSeries(series);
+	    	
+	    	results.add(GraphTaskType.ASSIGNMENTS);
+	    	
+    	} else if(args[0] == GraphTaskType.COURSE) {
+    		/*TimeSeries courseGradeSeries = new TimeSeries("Overall grade");
+    		
+    		double overallGrade = 0.0d;
+    		double overallTotal = 0.0d;
+    		double overallEarned = 0.0d;*/
+    		
+    		for(TimeSeries series : categSeries) {
+	    		double grade = 0.0d;
+	    		double total = 0.0d;
+	    		double earned = 0.0d;
+	    		
+		    	for(GradeDetail detail : details) {
+		    		Date gradeDate = null;
+		    		double weight = categWeights.get(detail.getCategory()) / 100.0d;
+		    				
+		    		try {
+		    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
+					} catch (ParseException e) {
+						e.printStackTrace();
+						continue;
+					}
+		    		
+		    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
+		    			earned += detail.getPointsEarned();
+		    			total += detail.getTotalPoints();
+	
+			    		try {
+			    			grade = (earned / total) * 100.0d;
+			    		} catch(ArithmeticException e) {
+			    			grade = MathHelper.NULL_VALUE;
+			    			e.printStackTrace();
+			    		}
+			    		
+			    		if(Double.isInfinite(grade) || Double.isNaN(grade)) {
+			    			grade = 100.0d;
+			    		}
+			    		
+			    		System.out.println(detail.getDetailName() + " --> " + grade);
+			    		
+			    		series.add(gradeDate, grade);
+		    		}
+		    	}
+		    	
+		    	data.addSeries(series);
+	    	}
+    		
+    		//data.addSeries(courseGradeSeries);
+    		
+    		results.add(GraphTaskType.COURSE);
     	}
+
+    	results.add(data);
     	
-		return data;
+		return results;
     }
 
     @Override
-    protected void onPostExecute(XYMultipleSeriesDataset graphData) {
-        super.onPostExecute(graphData);
+    protected void onPostExecute(List data) {
+        super.onPostExecute(data);
         
         progressDialog.dismiss();
         
-        Intent intent = getCustomDatedScatterChart(
-        		parent, 
-        		graphData, 
-        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount()), 
-        		"MMM dd", 
-        		"Graph for " + course.getName());
+        GraphTaskType taskType = (GraphTaskType) data.get(0);
+        XYMultipleSeriesDataset graphData = (XYMultipleSeriesDataset) data.get(1);
         
-        parent.startActivity(intent);
+        Intent chartIntent = null;
+        
+        if(taskType == GraphTaskType.ASSIGNMENTS) {
+        	chartIntent = getCustomDatedScatterChart(
+	        		parent, 
+	        		graphData, 
+	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount()), 
+	        		"MMM dd", 
+	        		"Graph for " + course.getName());
+    	} else if(taskType == GraphTaskType.COURSE) {
+    		chartIntent = ChartFactory.getTimeChartIntent(
+	        		parent, 
+	        		graphData, 
+	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount()), 
+	        		"MMM dd", 
+	        		"Graph for " + course.getName());
+    	}
+        
+        parent.startActivity(chartIntent);
     }
     
 	private final Intent getCustomDatedScatterChart(Context context,

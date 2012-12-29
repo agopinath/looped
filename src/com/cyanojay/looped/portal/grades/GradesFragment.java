@@ -24,6 +24,7 @@ import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.graph.CourseGraphTask;
+import com.cyanojay.looped.graph.CourseGraphTask.GraphTaskType;
 import com.cyanojay.looped.net.API;
 
 public class GradesFragment extends SherlockListFragment {
@@ -180,23 +181,25 @@ public class GradesFragment extends SherlockListFragment {
 		}
 		
 	    private AlertDialog getOptionsDialog(final Course selected) {
-	    	String[] options = new String[] { "Graph" };
+	    	String[] options = new String[] { "Graph Assignments", "Graph Course Grade" };
 	    	
 	        AlertDialog.Builder builder = new AlertDialog.Builder(parent);
 	        builder.setTitle("Choose Action");
 			builder.setItems(options, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					switch(which) {
-						case 0:
-							System.out.println("GRAPHING: " + selected.getName());
+					if(which == 0 || which == 1) {
+						if(selected.getDetailsUrl().length() == 0) {
+							Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_LONG).show();
+						}
+						
+						CourseGraphTask task = new CourseGraphTask(parent, selected);
+						
+						if(which == 0) {
 							
-							if(selected.getDetailsUrl().length() == 0) {
-								Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_LONG).show();
-					    		break;
-							}
-								
-							CourseGraphTask task = new CourseGraphTask(parent, selected);
-							task.execute();
+							task.execute(GraphTaskType.ASSIGNMENTS);
+						} else if(which == 1) {
+							task.execute(GraphTaskType.COURSE);
+						}
 					}
 				}
 			});

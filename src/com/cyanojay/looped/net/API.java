@@ -406,8 +406,8 @@ public final class API {
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 						// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
-						newDetail.setPointsEarned(-1.0d);
-						newDetail.setTotalPoints(-1.0d);
+						newDetail.setPointsEarned(0.0d);
+						newDetail.setTotalPoints(0.0d);
 						
 						newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
 						newDetail.setDisplayScore("");
@@ -416,6 +416,14 @@ public final class API {
 					String displayScore = scoreComps[0];
 					newDetail.setDisplayScore(displayScore);
 				} else {
+					try {
+						newDetail.setPointsEarned(Double.parseDouble(data.get(3).text().trim()));
+					} catch(NumberFormatException e) {
+						// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
+						newDetail.setPointsEarned(0.0d);
+						newDetail.setTotalPoints(0.0d);
+					}
+					
 					newDetail.setDisplayPercent(data.get(4).text().trim());
 					newDetail.setDisplayScore(data.get(3).text().trim());
 				}
