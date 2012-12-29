@@ -2,7 +2,9 @@ package com.cyanojay.looped.net;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -200,7 +202,7 @@ public final class API {
 		    		
 					if(!(link.size() == 0) && link.size() == 1) {
 						String detailsUrl = portalUrl + link.first().attr("href");
-			    		newCourse.setDetailsUrl(detailsUrl);
+						newCourse.setDetailsUrl(Utils.getPrintViewifiedUrl(detailsUrl));
 					}
 		    	}
 	    	}
@@ -531,5 +533,37 @@ public final class API {
 		details.setContent(content);
 		
 		return details;
+	}
+
+	public Map<String, Double> getCourseCategories(Course course) throws IllegalStateException, IOException {
+		Map<String, Double> categs = new HashMap<String, Double>();
+		
+		// construct and send a GET request to the URL where the Course grade categories are stored	
+		Document categsPage = Utils.getJsoupDocFromUrl(course.getDetailsUrl(), portalUrl, authCookies);
+		
+		// select everything in the table holding the categories
+	    Elements rows = categsPage.body().select("div > table").last()
+	    								.select("td").first()
+	    								.select("table").last()
+	    								.select("tr:gt(0)");
+	    
+	    for(Element data : rows) {
+	    	Elements catAndWeight = data.select("td:lt(2)");
+	    	
+	    	String categName = catAndWeight.get(0).text();
+	    	String categWeightStr = catAndWeight.get(1).text();
+	    	
+	    	double categWeight = -1.0d;
+	    			
+	    	if(categWeightStr.lastIndexOf('%') != -1) {
+	    		categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%')));
+	    	}
+	    	
+	    	System.out.println(categName + " => " + categWeight);
+	    	
+	    	categs.put(categName, categWeight);
+	    }
+
+	    return categs;
 	}
 }

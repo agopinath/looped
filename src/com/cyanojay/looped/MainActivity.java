@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity {
     }
     
     private String fixLoginPrefix(String pref) {
-    	return pref.replace(" ", "").replace("\n", "").replace("\r", "");
+    	return pref.toLowerCase().replace(" ", "").replace("\n", "").replace("\r", "");
     }
     
     private void startLogIn(String username, String passwd, String prefix) {

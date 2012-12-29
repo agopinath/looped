@@ -46,6 +46,7 @@ public class CourseGraphTask extends AsyncTask<Void, Void, XYMultipleSeriesDatas
     	
     	try {
 			details = API.get().getGradeDetails(course);
+			API.get().getCourseCategories(course);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
