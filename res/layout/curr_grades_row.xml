@@ -64,4 +64,12 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/graph_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:background="@null"
+        android:src="@drawable/ic_action_graph" />
+
 </LinearLayout>
