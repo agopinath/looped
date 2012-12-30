@@ -135,7 +135,10 @@ public class ChartUtil {
 	    for(int i = 0; i < seriesCount; i++) {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
-		    r.setPointStyle(PointStyle.CIRCLE);
+		    
+		    PointStyle type = (i < seriesCount-1) ? PointStyle.CIRCLE : PointStyle.TRIANGLE;
+		    
+		    r.setPointStyle(type);
 		    
 		    int pointCol = (i < colors.length) ? 
 		    				colors[i] : Color.rgb((int)(Math.random() * 256), 
