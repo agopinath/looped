@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -214,5 +215,24 @@ public class Utils {
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
     	
     	activity.startActivity(intent);
+	}
+	
+	public static TextView getCenteredTextView(Context c, String s) {
+		TextView text = new TextView(c);
+    	
+    	text.setPadding(40, 40, 40, 40);
+    	text.setGravity(Gravity.CENTER);
+    	text.setText(s);
+    	text.setTextAppearance(c, android.R.attr.textAppearanceLarge);
+    	
+    	return text;
+	}
+	
+	public static void replaceView(View a, View b) {
+		LinearLayout temp = ((LinearLayout) a.getParent());
+		
+		temp.removeView(a);
+    	
+		temp.addView(b);
 	}
 }

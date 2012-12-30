@@ -62,13 +62,21 @@ public class AssignmentsFragmnet extends SherlockListFragment {
 	        super.onPostExecute(result);
 	        
 	        CurrentAssignment[] values = result.toArray(new CurrentAssignment[result.size()]);
-	        CurrentAssignmentsAdapter adapter = new CurrentAssignmentsAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
-	        
-	        listView.setOnItemClickListener(new AssignmentItemClickAdapter(adapter, getSherlockActivity()));
-	        
-	        setListAdapter(adapter);
+	        if(values.length > 0) {
+		        CurrentAssignmentsAdapter adapter = new CurrentAssignmentsAdapter(getSherlockActivity(), values);
+		        
+		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
+		        
+		        listView.setOnItemClickListener(new AssignmentItemClickAdapter(adapter, getSherlockActivity()));
+		        
+		        setListAdapter(adapter);
+	        } else {
+	        	ListView listView = (ListView) getView().findViewById(android.R.id.list);
+	        	TextView emptyText = Utils.getCenteredTextView(getSherlockActivity(), getString(R.string.empty_assignments));
+	        	
+	        	Utils.replaceView(listView, emptyText);
+	        }
 		}
     };
     

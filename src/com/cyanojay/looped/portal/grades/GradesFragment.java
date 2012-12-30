@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,13 +60,21 @@ public class GradesFragment extends SherlockListFragment {
 	        super.onPostExecute(result);
 	        
 	        Course[] values = result.toArray(new Course[result.size()]);
-	        GradesAdapter adapter = new GradesAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
-	        
-	        listView.setOnItemClickListener(new GradesItemClickAdapter(adapter, getSherlockActivity()));
-	        
-	        setListAdapter(adapter);
+	        if(values.length > 0) {
+		        GradesAdapter adapter = new GradesAdapter(getSherlockActivity(), values);
+		        
+		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
+		        
+		        listView.setOnItemClickListener(new GradesItemClickAdapter(adapter, getSherlockActivity()));
+		        
+		        setListAdapter(adapter);
+	        } else {
+	        	ListView listView = (ListView) getView().findViewById(android.R.id.list);
+	        	TextView emptyText = Utils.getCenteredTextView(getSherlockActivity(), getString(R.string.empty_courses));
+	        	
+	        	Utils.replaceView(listView, emptyText);
+	        }
 		}
     };
     

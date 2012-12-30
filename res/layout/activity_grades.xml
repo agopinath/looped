@@ -2,13 +2,13 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  style="@style/LoopedCommon.LoopedGrades" >
 
 	<ListView
     android:id="@+id/android:list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    style="@style/LoopedCommon.LoopedGrades" 
+    android:layout_height="match_parent"
     android:cacheColorHint="@android:color/transparent" />
 
 </LinearLayout>

@@ -75,13 +75,20 @@ public class LoopMailFragment extends SherlockListFragment {
 	        super.onPostExecute(result);
 	        
 	        MailEntry[] values = result.toArray(new MailEntry[result.size()]);
-	        LoopMailAdapter adapter = new LoopMailAdapter(getSherlockActivity(), values);
-	        
-	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
-	        
-	        listView.setOnItemClickListener(new MailItemClickAdapter(adapter, getSherlockActivity()));
-	        
-	        setListAdapter(adapter);
+	        if(values.length > 0) {
+		        LoopMailAdapter adapter = new LoopMailAdapter(getSherlockActivity(), values);
+		        
+		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
+		        
+		        listView.setOnItemClickListener(new MailItemClickAdapter(adapter, getSherlockActivity()));
+		        
+		        setListAdapter(adapter);
+	        } else {
+	        	ListView listView = (ListView) getView().findViewById(android.R.id.list);
+	        	TextView emptyText = Utils.getCenteredTextView(getSherlockActivity(), getString(R.string.empty_mail));
+	        	
+	        	Utils.replaceView(listView, emptyText);
+	        }
 		}
     };
     

@@ -58,13 +58,21 @@ public class NewsFragment extends SherlockListFragment {
 	        super.onPostExecute(result);
 	        
 	        NewsArticle[] values = result.toArray(new NewsArticle[result.size()]);
-	        NewsAdapter adapter = new NewsAdapter(getSherlockActivity(), values);
 	        
-	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
-	        
-	        listView.setOnItemClickListener(new NewsItemClickAdapter(adapter, getSherlockActivity()));
-	        
-	        listView.setAdapter(adapter);
+	        if(values.length > 0) {
+		        NewsAdapter adapter = new NewsAdapter(getSherlockActivity(), values);
+		        
+		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
+		        
+		        listView.setOnItemClickListener(new NewsItemClickAdapter(adapter, getSherlockActivity()));
+		        
+		        listView.setAdapter(adapter);
+	        } else {
+	        	ListView listView = (ListView) getView().findViewById(android.R.id.list);
+	        	TextView emptyText = Utils.getCenteredTextView(getSherlockActivity(), getString(R.string.empty_news));
+	        	
+	        	Utils.replaceView(listView, emptyText);
+	        }
 		}
     };
     

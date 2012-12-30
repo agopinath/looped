@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cyanojay.looped.R;
@@ -71,9 +72,17 @@ public class GradeDetailsActivity extends BaseListActivity {
 	        } catch (Exception e) {}
 	        
 	        GradeDetail[] values = result.toArray(new GradeDetail[result.size()]);
-	        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
 	        
-	        GradeDetailsActivity.this.setListAdapter(adapter);
+	        if(values.length > 0) {
+		        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
+		        
+		        GradeDetailsActivity.this.setListAdapter(adapter);
+	        } else {
+	        	ListView listView = (ListView) findViewById(android.R.id.list);
+	        	TextView emptyText = Utils.getCenteredTextView(GradeDetailsActivity.this, getString(R.string.empty_course_grades));
+	        	
+	        	Utils.replaceView(listView, emptyText);
+	        }
 		}
     };
     
