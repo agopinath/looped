@@ -577,35 +577,29 @@ public final class API {
 	    	if(rows.get(0).select("td").size() < 3) weightsPresent = false;
 	    }
 	    
-	    if(weightsPresent) {
-		    for(Element data : rows) {
-		    	Elements catAndWeight = data.select("td:lt(2)");
-		    	
-		    	String categName = catAndWeight.get(0).text();
-		    	String categWeightStr = catAndWeight.get(1).text();
-		    	
-		    	double categWeight = -1.0d;
-		    	
-		    	if(categWeightStr.lastIndexOf('%') != -1) {
-		    		categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
-		    	}
-		    	
-		    	System.out.println(categName + " => " + categWeight);
-		    	
-		    	categs.add(new GradeCategory(categName, categWeight));
-		    }
-	    } else {
-	    	// since no weights present, each category is thus 'weighted' evenly
-	    	double categWeight = 100.0d / rows.size();
+	    for(Element data : rows) {
+	    	Elements catAndWeight = data.select("td:lt(2)");
 	    	
-	    	for(Element data : rows) {
-	    		Elements catAndWeight = data.select("td:lt(2)");
-	    		String categName = catAndWeight.get(0).text();
+	    	String categName = catAndWeight.get(0).text();
+	    	String categWeightStr = null;
+	    	
+	    	double categWeight = -1.0d;
+	    	
+	    	if(weightsPresent) {
+	    		// if weights present, retrieve them and parse accordingly
+	    		categWeightStr = catAndWeight.get(1).text();;
 	    		
-	    		System.out.println(categName + " => " + categWeight);
-	    		
-	    		categs.add(new GradeCategory(categName, categWeight));
+	    		if(categWeightStr.lastIndexOf('%') != -1) {
+	    			categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
+	    		}
+	    	} else {
+	    		// since no weights present, each category is thus 'weighted' evenly
+	    		categWeight = (100.0d / rows.size());
 	    	}
+	    	
+	    	System.out.println(categName + " => " + categWeight);
+	    	
+	    	categs.add(new GradeCategory(categName, categWeight));
 	    }
 	    
 	    return categs;
