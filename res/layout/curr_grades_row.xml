@@ -38,7 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginRight="15dp"
         android:layout_weight="0"
         android:gravity="left"
         android:orientation="vertical" >
@@ -68,7 +67,8 @@
         android:id="@+id/graph_btn"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.1"
+        android:layout_marginRight="15dp"
+        android:layout_weight="0.05"
         android:background="@null"
         android:src="@drawable/ic_action_graph" />
 

@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +63,6 @@ public class GradesFragment extends SherlockListFragment {
 	        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        
 	        listView.setOnItemClickListener(new GradesItemClickAdapter(adapter, getSherlockActivity()));
-	        listView.setOnItemLongClickListener(new GradesItemLongClickAdapter(adapter, getSherlockActivity()));
 	        
 	        setListAdapter(adapter);
 		}
@@ -85,6 +86,7 @@ public class GradesFragment extends SherlockListFragment {
     		  TextView courseName = (TextView) rowView.findViewById(R.id.grades_course_name);
     		  TextView lettGrade = (TextView) rowView.findViewById(R.id.grades_lett_grade);
     		  TextView pctGrade = (TextView) rowView.findViewById(R.id.grades_pct_grade);
+    		  ImageButton graphBtn = (ImageButton) rowView.findViewById(R.id.graph_btn);
     		  
     		  Course course = values[position];
     		  
@@ -125,9 +127,14 @@ public class GradesFragment extends SherlockListFragment {
     			  TextView numZeros = (TextView) rowView.findViewById(R.id.grades_num_zeros);
     			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
     		  }
-  
+    		  
+    		  graphBtn.setFocusable(false);
+    		  graphBtn.setFocusableInTouchMode(false);
+    		  
+    		  graphBtn.setOnClickListener(new GraphButtonLongClickAdapter(course, getSherlockActivity()));
+    		  
     		  return rowView;
-    	} 
+    	}
     }
 
     private class GradesItemClickAdapter implements AdapterView.OnItemClickListener {
@@ -160,38 +167,35 @@ public class GradesFragment extends SherlockListFragment {
 		}
     }
     
-    private class GradesItemLongClickAdapter implements AdapterView.OnItemLongClickListener {
-    	GradesAdapter adapter;
-    	Context parent;
+    private class GraphButtonLongClickAdapter implements OnClickListener {
+    	private final Course toGraph;
+    	private Context parent;
     	
-    	public GradesItemLongClickAdapter(GradesAdapter adapter, Context parent) {
-    		this.adapter = adapter;
+    	public GraphButtonLongClickAdapter(Course toGraph, Context parent) {
+    		this.toGraph = toGraph;
     		this.parent = parent;
     	}
     	
 		@Override
-		public boolean onItemLongClick(AdapterView<?> list, View view, int position, long id) {
-			System.out.println("on long click received");
+		public void onClick(View v) {
+			//System.out.println("on long click received");
 			
-			Course selected = adapter.getItem(position);
-			AlertDialog dialog = getOptionsDialog(selected);
+			AlertDialog dialog = getGraphDialog();
 			dialog.show();
-
-			return false;
 		}
 		
-	    private AlertDialog getOptionsDialog(final Course selected) {
+	    private AlertDialog getGraphDialog() {
 	    	String[] options = new String[] { "Graph Assignments", "Graph Course Grade" };
 	    	
 	        AlertDialog.Builder builder = new AlertDialog.Builder(parent);
-	        builder.setTitle("Choose Action");
+	        builder.setTitle("Choose Graph Type");
 			builder.setItems(options, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					if(which == 0 || which == 1) {
-						if(selected.getDetailsUrl().length() == 0) {
+						if(toGraph.getDetailsUrl().length() == 0) {
 							Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_SHORT).show();
 						} else {
-							CourseGraphTask task = new CourseGraphTask(parent, selected);
+							CourseGraphTask task = new CourseGraphTask(parent, toGraph);
 						
 							if(which == 0) {
 								task.execute(GraphTaskType.ASSIGNMENTS);
