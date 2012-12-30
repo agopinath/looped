@@ -1,6 +1,8 @@
 package com.cyanojay.looped.net;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -568,23 +570,44 @@ public final class API {
 	    								.select("table").last()
 	    								.select("tr:gt(0)");
 	    
-	    for(Element data : rows) {
-	    	Elements catAndWeight = data.select("td:lt(2)");
-	    	
-	    	String categName = catAndWeight.get(0).text();
-	    	String categWeightStr = catAndWeight.get(1).text();
-	    	
-	    	double categWeight = -1.0d;
-	    			
-	    	if(categWeightStr.lastIndexOf('%') != -1) {
-	    		categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
-	    	}
-	    	
-	    	System.out.println(categName + " => " + categWeight);
-	    	
-	    	categs.add(new GradeCategory(categName, categWeight));
+	    boolean weightsPresent = true;
+	    
+	    // if 'Weight' column is not there (i.e. < 3 columns), then only 'Category' and 'Score' are present, so no weights present
+	    if(rows.size() >= 1) {
+	    	if(rows.get(0).select("td").size() < 3) weightsPresent = false;
 	    }
-
+	    
+	    if(weightsPresent) {
+		    for(Element data : rows) {
+		    	Elements catAndWeight = data.select("td:lt(2)");
+		    	
+		    	String categName = catAndWeight.get(0).text();
+		    	String categWeightStr = catAndWeight.get(1).text();
+		    	
+		    	double categWeight = -1.0d;
+		    	
+		    	if(categWeightStr.lastIndexOf('%') != -1) {
+		    		categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
+		    	}
+		    	
+		    	System.out.println(categName + " => " + categWeight);
+		    	
+		    	categs.add(new GradeCategory(categName, categWeight));
+		    }
+	    } else {
+	    	// since no weights present, each category is thus 'weighted' evenly
+	    	double categWeight = 100.0d / rows.size();
+	    	
+	    	for(Element data : rows) {
+	    		Elements catAndWeight = data.select("td:lt(2)");
+	    		String categName = catAndWeight.get(0).text();
+	    		
+	    		System.out.println(categName + " => " + categWeight);
+	    		
+	    		categs.add(new GradeCategory(categName, categWeight));
+	    	}
+	    }
+	    
 	    return categs;
 	}
 }
