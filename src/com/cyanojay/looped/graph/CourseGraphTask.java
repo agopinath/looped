@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalActivity;
@@ -27,6 +28,7 @@ import android.os.AsyncTask;
 
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.grades.Course;
+import com.cyanojay.looped.portal.grades.GradeCategory;
 import com.cyanojay.looped.portal.grades.GradeDetail;
 
 public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Void, List> {
@@ -54,7 +56,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     protected List doInBackground(GraphTaskType... args) {
     	List<GradeDetail> details = null;
     	List<TimeSeries> categSeries = null;
-    	Map<String, Double> categWeights = null;
+    	Set<GradeCategory> categWeights = null;
     	
     	XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
     	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
@@ -72,8 +74,8 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     	
     	categSeries = new ArrayList<TimeSeries>(categWeights.size());
     	
-    	for(String categName : categWeights.keySet()) {
-    		categSeries.add(new TimeSeries(categName));
+    	for(GradeCategory categName : categWeights) {
+    		categSeries.add(new TimeSeries(categName.getName()));
     	}
     	
     	List results = new ArrayList();
@@ -129,7 +131,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	    		
 		    	for(GradeDetail detail : details) {
 		    		Date gradeDate = null;
-		    		double weight = categWeights.get(detail.getCategory()) / 100.0d;
+		    		//double weight = getCategoryByName(detail.getCategory(), categWeights).getWeight() / 100.0d;
 		    				
 		    		try {
 		    			gradeDate = gradeDateFormat.parse(detail.getDueDate());
@@ -223,5 +225,13 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 			throw new IllegalArgumentException(
 					"Dataset and renderer should be not null and should have the same number of series");
 		}
+	}
+	
+	private GradeCategory getCategoryByName(String name, Set<GradeCategory> categs) {
+		for(GradeCategory categ : categs) {
+			if(categ.getName().equals(name)) return categ;
+		}
+		
+		return null;
 	}
 }

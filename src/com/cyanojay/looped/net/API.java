@@ -2,9 +2,9 @@ package com.cyanojay.looped.net;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -28,6 +28,7 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.portal.assignments.AssignmentDetail;
 import com.cyanojay.looped.portal.assignments.CurrentAssignment;
 import com.cyanojay.looped.portal.grades.Course;
+import com.cyanojay.looped.portal.grades.GradeCategory;
 import com.cyanojay.looped.portal.grades.GradeDetail;
 import com.cyanojay.looped.portal.loopmail.MailDetail;
 import com.cyanojay.looped.portal.loopmail.MailEntry;
@@ -543,8 +544,8 @@ public final class API {
 		return details;
 	}
 
-	public Map<String, Double> getCourseCategories(Course course) throws IllegalStateException, IOException {
-		Map<String, Double> categs = new HashMap<String, Double>();
+	public Set<GradeCategory> getCourseCategories(Course course) throws IllegalStateException, IOException {
+		Set<GradeCategory> categs = new LinkedHashSet<GradeCategory>();
 		
 		// construct and send a GET request to the URL where the Course grade categories are stored	
 		Document categsPage = Utils.getJsoupDocFromUrl(course.getDetailsUrl(), portalUrl, authCookies);
@@ -569,7 +570,7 @@ public final class API {
 	    	
 	    	System.out.println(categName + " => " + categWeight);
 	    	
-	    	categs.put(categName, categWeight);
+	    	categs.add(new GradeCategory(categName, categWeight));
 	    }
 
 	    return categs;
