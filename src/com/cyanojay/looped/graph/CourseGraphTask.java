@@ -5,16 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalActivity;
-import org.achartengine.chart.ScatterChart;
-import org.achartengine.chart.TimeChart;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -25,6 +22,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.grades.Course;
@@ -35,15 +33,23 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	private Context parent;
 	private Course course;
 	private ProgressDialog progressDialog;
+	
 	private GraphTaskType taskType;
+	private Set<GraphTaskWarningType> warnings;
 	
 	public enum GraphTaskType {
 		ASSIGNMENTS, COURSE
 	}
 	
+	public enum GraphTaskWarningType {
+		INSUFFICIENT_DATA, EC_CATEGORY_PRESENT
+	}
+	
 	public CourseGraphTask(Context parent, Course course) {
 		this.parent = parent;
 		this.course = course;
+		
+		this.warnings = new HashSet<CourseGraphTask.GraphTaskWarningType>();
 	}
 	
     @Override
@@ -117,8 +123,24 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	        		"Graph for " + course.getName());
     	}
         
+        handleWarnings();
+        
         parent.startActivity(chartIntent);
     }
+    
+	private void handleWarnings() {
+		for(GraphTaskWarningType warning : warnings) {
+			switch(warning) {
+			case EC_CATEGORY_PRESENT:
+				Toast.makeText(parent, "Warning: an 'Extra Credit' category may be present, and is" +
+										"not considered for the 'Overall grade'", Toast.LENGTH_LONG).show();
+				break;
+			case INSUFFICIENT_DATA:
+				Toast.makeText(parent, "Warning: insufficient (less than 3) data points when making graph", Toast.LENGTH_LONG).show();
+				break;
+			}
+		}
+	}
     
 	private final Intent getCustomDatedScatterChart(Context context,
 			XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer,
@@ -177,32 +199,32 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	private void fillCourseGradeGraph(List<TimeSeries> categSeries, List<GradeDetail> details, 
 									SimpleDateFormat format, Set<GradeCategory> categWeights,
 									XYMultipleSeriesDataset dataToFill) {
-
+		
 		for(TimeSeries series : categSeries) {
-			TimeSeries categoryGradeSeries = getCourseGradeCategorySeries(series, details, format, categWeights);
+			TimeSeries categoryGradeSeries = getCourseGradeCategorySeries(series, details, format);
 			dataToFill.addSeries(categoryGradeSeries);
 		}
 		
-		TimeSeries courseGradeSeries = getOverallCourseGradeSeries(categSeries, details, format, categWeights);
-		dataToFill.addSeries(courseGradeSeries);
+		if(categWeights.size() == 1 && categSeries.get(0).getItemCount() < 3) 
+			warnings.add(GraphTaskWarningType.INSUFFICIENT_DATA);
+		
+		if(categWeights.size() > 1) {
+			TimeSeries courseGradeSeries = getOverallCourseGradeSeries(categSeries, details, format, categWeights);
+			dataToFill.addSeries(courseGradeSeries);
+		}
 	}
 	
 	private TimeSeries getCourseGradeCategorySeries(TimeSeries series, List<GradeDetail> details, 
-										SimpleDateFormat format, Set<GradeCategory> categWeights) {
+										SimpleDateFormat format) {
 		double grade = 0.0d;
 		double total = 0.0d;
 		double earned = 0.0d;
 
 		for(GradeDetail detail : details) {
-			Date gradeDate = null;
-
-			try {
-				gradeDate = format.parse(detail.getDueDate());
-			} catch (ParseException e) {
-				e.printStackTrace();
-				continue;
-			}
-
+			Date gradeDate = parseDate(detail.getDueDate(), format);
+			
+			if(gradeDate == null) continue;
+			
 			if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
 				earned += detail.getPointsEarned();
 				total += detail.getTotalPoints();
@@ -246,6 +268,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     		
     		for(GradeCategory currCateg : movingWeights) {
     			if(currCateg.getAssignmentCount() == 0) continue;
+    			if(currCateg.getWeight() == 0.0d) warnings.add(GraphTaskWarningType.EC_CATEGORY_PRESENT);
     			
     			double categGrade = 0.0d;
 	    		double total = 0.0d;

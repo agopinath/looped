@@ -136,7 +136,7 @@ public class ChartUtil {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
 		    
-		    PointStyle type = (i < seriesCount-1) ? PointStyle.CIRCLE : PointStyle.TRIANGLE;
+		    PointStyle type = (i < seriesCount-1 || seriesCount == 1) ? PointStyle.CIRCLE : PointStyle.TRIANGLE;
 		    
 		    r.setPointStyle(type);
 		    
