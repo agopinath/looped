@@ -18,7 +18,7 @@ public class GradeDetail implements Serializable {
 		this.category = "";
 		this.dueDate = "";
 		this.pointsEarned = 0.0d;
-		this.totalPoints = 1.0d;
+		this.totalPoints = 0.0d;
 		this.comment = "";
 		this.submissions = "";
 	}

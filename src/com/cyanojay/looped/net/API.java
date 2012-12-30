@@ -408,7 +408,7 @@ public final class API {
 						e.printStackTrace();
 						// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
 						newDetail.setPointsEarned(0.0d);
-						newDetail.setTotalPoints(1.0d);
+						newDetail.setTotalPoints(0.0d);
 						
 						newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
 						newDetail.setDisplayScore("");
@@ -426,12 +426,14 @@ public final class API {
 					}
 					
 					if(isExtraCredit) {
+						if(data.get(3).text().trim().length() == 0) newDetail.setPointsEarned(0.0d);
+						
 						try {
 							newDetail.setPointsEarned(Double.parseDouble(data.get(3).text().trim()));
 						} catch(NumberFormatException e) {
 							// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
 							newDetail.setPointsEarned(0.0d);
-							newDetail.setTotalPoints(1.0d);
+							newDetail.setTotalPoints(0.0d);
 						}
 					}
 					

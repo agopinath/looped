@@ -132,12 +132,11 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		for(GraphTaskWarningType warning : warnings) {
 			switch(warning) {
 			case EC_CATEGORY_PRESENT:
-				Toast.makeText(parent, "Warning: an 'Extra Credit' category may be present, and is" +
+				Toast.makeText(parent, "Warning: an 'Extra Credit' category may be present, and is " +
 										"not considered for the 'Overall grade'", Toast.LENGTH_LONG).show();
 				break;
 			case INSUFFICIENT_DATA:
 				Toast.makeText(parent, "Warning: insufficient (less than 3) data points when making graph", Toast.LENGTH_LONG).show();
-				break;
 			}
 		}
 	}
