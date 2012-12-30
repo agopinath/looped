@@ -189,7 +189,7 @@ public class GradesFragment extends SherlockListFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					if(which == 0 || which == 1) {
 						if(selected.getDetailsUrl().length() == 0) {
-							Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_LONG).show();
+							Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_SHORT).show();
 						} else {
 							CourseGraphTask task = new CourseGraphTask(parent, selected);
 						
