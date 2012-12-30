@@ -10,6 +10,9 @@ public class GradeCategory {
 	public GradeCategory(String name, double weight) {
 		this.name = name;
 		this.weight = weight;
+		
+		this.scaledWeight = weight;
+		this.assignmentCount = 0;
 	}
 	
 	public String getName() {

@@ -408,7 +408,7 @@ public final class API {
 						e.printStackTrace();
 						// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
 						newDetail.setPointsEarned(0.0d);
-						newDetail.setTotalPoints(0.0d);
+						newDetail.setTotalPoints(1.0d);
 						
 						newDetail.setDisplayPercent(Constants.EMPTY_INDIC);
 						newDetail.setDisplayScore("");
@@ -417,12 +417,22 @@ public final class API {
 					String displayScore = scoreComps[0];
 					newDetail.setDisplayScore(displayScore);
 				} else {
+					boolean isExtraCredit = false;
+					
 					try {
-						newDetail.setPointsEarned(Double.parseDouble(data.get(3).text().trim()));
+						newDetail.setTotalPoints(Double.parseDouble(data.get(4).text().trim()));
 					} catch(NumberFormatException e) {
-						// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
-						newDetail.setPointsEarned(0.0d);
-						newDetail.setTotalPoints(0.0d);
+						isExtraCredit = true;
+					}
+					
+					if(isExtraCredit) {
+						try {
+							newDetail.setPointsEarned(Double.parseDouble(data.get(3).text().trim()));
+						} catch(NumberFormatException e) {
+							// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
+							newDetail.setPointsEarned(0.0d);
+							newDetail.setTotalPoints(1.0d);
+						}
 					}
 					
 					newDetail.setDisplayPercent(data.get(4).text().trim());
@@ -565,7 +575,7 @@ public final class API {
 	    	double categWeight = -1.0d;
 	    			
 	    	if(categWeightStr.lastIndexOf('%') != -1) {
-	    		categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%')));
+	    		categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
 	    	}
 	    	
 	    	System.out.println(categName + " => " + categWeight);
