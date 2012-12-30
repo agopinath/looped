@@ -112,14 +112,14 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	        		parent, 
 	        		graphData, 
 	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), false), 
-	        		"MMM dd", 
+	        		"MMM dd, yy", 
 	        		"Graph for " + course.getName());
     	} else if(taskType == GraphTaskType.COURSE) {
     		chartIntent = ChartFactory.getTimeChartIntent(
 	        		parent, 
 	        		graphData, 
 	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true), 
-	        		"MMM dd", 
+	        		"MMM dd, yy", 
 	        		"Graph for " + course.getName());
     	}
         
