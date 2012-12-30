@@ -31,10 +31,11 @@ import com.cyanojay.looped.portal.grades.Course;
 import com.cyanojay.looped.portal.grades.GradeCategory;
 import com.cyanojay.looped.portal.grades.GradeDetail;
 
-public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Void, List> {
+public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Void, XYMultipleSeriesDataset> {
 	private Context parent;
 	private Course course;
 	private ProgressDialog progressDialog;
+	private GraphTaskType taskType;
 	
 	public enum GraphTaskType {
 		ASSIGNMENTS, COURSE
@@ -53,7 +54,9 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     }
 
     @Override
-    protected List doInBackground(GraphTaskType... args) {
+    protected XYMultipleSeriesDataset doInBackground(GraphTaskType... args) {
+    	this.taskType = args[0];
+    	
     	List<GradeDetail> details = null;
     	List<TimeSeries> categSeries = null;
     	Set<GradeCategory> categWeights = null;
@@ -78,32 +81,23 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     		categSeries.add(new TimeSeries(categName.getName()));
     	}
     	
-    	List results = new ArrayList();
-    	
-    	if(args[0] == GraphTaskType.ASSIGNMENTS) {
-    		
-    		fillAssignmentsGraph(categSeries, details, gradeDateFormat, data);
-	    	results.add(GraphTaskType.ASSIGNMENTS);
-	    	
-    	} else if(args[0] == GraphTaskType.COURSE) {
-
-    		fillCourseGradeGraph(categSeries, details, gradeDateFormat, categWeights, data);
-    		results.add(GraphTaskType.COURSE);
+    	switch(taskType) {
+	    	case ASSIGNMENTS:
+	    		fillAssignmentsGraph(categSeries, details, gradeDateFormat, data);
+	    		break;
+	    	case COURSE:
+	    		fillCourseGradeGraph(categSeries, details, gradeDateFormat, categWeights, data);
+	    		break;
     	}
     	
-    	results.add(data);
-    	
-		return results;
+		return data;
     }
 
     @Override
-    protected void onPostExecute(List data) {
-        super.onPostExecute(data);
+    protected void onPostExecute(XYMultipleSeriesDataset graphData) {
+        super.onPostExecute(graphData);
         
         progressDialog.dismiss();
-        
-        GraphTaskType taskType = (GraphTaskType) data.get(0);
-        XYMultipleSeriesDataset graphData = (XYMultipleSeriesDataset) data.get(1);
         
         Intent chartIntent = null;
         
