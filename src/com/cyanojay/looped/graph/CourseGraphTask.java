@@ -111,14 +111,14 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
         	chartIntent = getCustomDatedScatterChart(
 	        		parent, 
 	        		graphData, 
-	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount()), 
+	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), false), 
 	        		"MMM dd", 
 	        		"Graph for " + course.getName());
     	} else if(taskType == GraphTaskType.COURSE) {
     		chartIntent = ChartFactory.getTimeChartIntent(
 	        		parent, 
 	        		graphData, 
-	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount()), 
+	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true), 
 	        		"MMM dd", 
 	        		"Graph for " + course.getName());
     	}

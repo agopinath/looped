@@ -118,7 +118,7 @@ public class ChartUtil {
     renderer.setLabelsColor(labelsColor);
   }
   
-  public static XYMultipleSeriesRenderer getMultiSeriesRenderer(int seriesCount) {
+  public static XYMultipleSeriesRenderer getMultiSeriesRenderer(int seriesCount, boolean showsCourseGrade) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(16);
 	    renderer.setChartTitleTextSize(20);
@@ -136,7 +136,8 @@ public class ChartUtil {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
 		    
-		    PointStyle type = (i < seriesCount-1 || seriesCount == 1) ? PointStyle.CIRCLE : PointStyle.TRIANGLE;
+		    PointStyle type = ((i < seriesCount-1 || seriesCount == 1) && showsCourseGrade) ? 
+		    					PointStyle.CIRCLE : PointStyle.TRIANGLE;
 		    
 		    r.setPointStyle(type);
 		    
