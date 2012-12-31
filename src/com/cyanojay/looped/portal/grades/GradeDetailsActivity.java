@@ -5,12 +5,9 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -20,13 +17,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.BaseListActivity;
 import com.cyanojay.looped.portal.Refreshable;
 
 public class GradeDetailsActivity extends BaseListActivity implements Refreshable {
+	private GradeDetailsAdapter adapter;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,17 +39,37 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
         getSupportActionBar().setSubtitle(currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
-        ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
+        ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask(false);
         task.execute(currCourse);
     }
     
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	super.onOptionsItemSelected(item);
+    	
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+            	this.refresh(null);
+            	return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+	
     private class ScrapeGradeDetailsTask extends AsyncTask<Course, Void, List<GradeDetail>> {
     	private ProgressDialog load;
+		private boolean fromRefresh;
+    	
+    	public ScrapeGradeDetailsTask(boolean fromRefresh) {
+    		this.fromRefresh = fromRefresh;
+    	}
     	
     	@Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        load = ProgressDialog.show(GradeDetailsActivity.this, "Looped", "Retrieving grades...");
+	        
+	        if(!fromRefresh)
+	        	load = ProgressDialog.show(GradeDetailsActivity.this, "Looped", "Retrieving grades...");
 		}
     	
     	@Override
@@ -70,6 +90,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 	        super.onPostExecute(result);
 	        
 	        try {
+	        	if(!fromRefresh)
 	        	load.dismiss();
 	        	load = null;
 	        } catch (Exception e) {}
@@ -77,7 +98,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 	        GradeDetail[] values = result.toArray(new GradeDetail[result.size()]);
 	        
 	        if(values.length > 0) {
-		        GradeDetailsAdapter adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
+		        adapter = new GradeDetailsAdapter(GradeDetailsActivity.this, values);
 		        
 		        GradeDetailsActivity.this.setListAdapter(adapter);
 	        } else {
@@ -129,6 +150,38 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 
 	@Override
 	public void refresh(FragmentManager manager) {
+		if(Utils.isNetworkOffline(this)) return;
+		
 		System.out.println("Refreshing Grade Details");
+		final ProgressDialog progressDialog = ProgressDialog.show(this, "Looped", "Refreshing...");
+		
+		Runnable firstJob = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					API.get().refreshCoursePortal();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
+				
+				ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask(true);
+		        task.execute((Course) getIntent().getSerializableExtra(GradesFragment.COURSE_SELECTED));
+			}
+		};
+		
+		Runnable secondJob = new Runnable() {
+			@Override
+			public void run() {
+		        adapter.notifyDataSetChanged();
+		        progressDialog.dismiss();
+		        
+		        System.out.println("Finished refreshing Grade Details");
+			}
+		};
+		
+		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
+		refreshTask.execute();
 	}
 }
