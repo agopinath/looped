@@ -577,6 +577,8 @@ public final class API {
 	    	if(rows.get(0).select("td").size() < 3) weightsPresent = false;
 	    }
 	    
+	    DecimalFormat percentFormat = new DecimalFormat("#.##%");
+	    
 	    for(Element data : rows) {
 	    	Elements catAndWeight = data.select("td:lt(2)");
 	    	
@@ -590,7 +592,13 @@ public final class API {
 	    		categWeightStr = catAndWeight.get(1).text();;
 	    		
 	    		if(categWeightStr.lastIndexOf('%') != -1) {
-	    			categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
+	    			//categWeight = Double.parseDouble(categWeightStr.substring(0, categWeightStr.indexOf('%'))) / 100.0d;
+	    			try {
+						categWeight = percentFormat.parse(categWeightStr).doubleValue();
+					} catch (ParseException e) {
+						e.printStackTrace();
+						continue;
+					}
 	    		}
 	    	} else {
 	    		// since no weights present, each category is thus 'weighted' evenly
