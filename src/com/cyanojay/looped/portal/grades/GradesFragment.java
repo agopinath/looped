@@ -111,6 +111,14 @@ public class GradesFragment extends SherlockListFragment {
     		  else
     			  lettGrade.setText(Constants.EMPTY_INDIC);
     		  
+    		  boolean isGraphingDisabled = false;
+    		  
+    		  if(course.getDetailsUrl().length() == 0) {
+    			  graphBtn.setVisibility(View.INVISIBLE);
+    			  
+    			  isGraphingDisabled = true;
+    		  }
+    		  
     		  if(!(course.getPercentGrade().length() == 0)) {
     			  char tensPlace = course.getPercentGrade().charAt(0);
     			  
@@ -142,10 +150,11 @@ public class GradesFragment extends SherlockListFragment {
     			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
     		  }
     		  
-    		  graphBtn.setFocusable(false);
-    		  graphBtn.setFocusableInTouchMode(false);
-    		  
-    		  graphBtn.setOnClickListener(new GraphButtonLongClickAdapter(course, getSherlockActivity()));
+    		  if(!isGraphingDisabled) {
+    			  graphBtn.setFocusable(false);
+    			  graphBtn.setFocusableInTouchMode(false);
+    			  graphBtn.setOnClickListener(new GraphButtonLongClickAdapter(course, getSherlockActivity()));
+    		  }
     		  
     		  return rowView;
     	}
