@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -208,18 +209,12 @@ public class LoopMailFragment extends SherlockListFragment {
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.maildet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
 	        
-	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.05*width)), LayoutParams.WRAP_CONTENT, true);
-	        
-	        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	                pw.dismiss();
-	            }
-	        });
+	        Dialog popup = Utils.createLoopedDialog(parent, flow, width);
 	        
 	        load.setVisibility(View.VISIBLE);
 	        contwrap.setVisibility(View.GONE);
-	        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
+	        
+	        popup.show();
 	        
 	        MailEntry selected = (MailEntry) adapter.getItem(position);
 	        ScrapeMailContentTask task = new ScrapeMailContentTask(flow, contwrap, load);

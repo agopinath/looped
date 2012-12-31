@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -216,18 +217,12 @@ public class AssignmentsFragmnet extends SherlockListFragment {
 	    	Display display = parent.getWindowManager().getDefaultDisplay(); 
 	        int width = display.getWidth();
 	        
-	    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
-	        
-	    	((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	                pw.dismiss();
-	            }
-	        });
+	        Dialog popup = Utils.createLoopedDialog(parent, flow, width);
 	        
 	        load.setVisibility(View.VISIBLE);
 	        content.setVisibility(View.GONE); 
-	        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
+	        
+	        popup.show();
 	        
 	        CurrentAssignment selected = (CurrentAssignment) adapter.getItem(position);
 	    	ScrapeAssignmentDetailsTask task = new ScrapeAssignmentDetailsTask(flow, content, load);
