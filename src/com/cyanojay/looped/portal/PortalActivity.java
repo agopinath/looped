@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -61,6 +62,8 @@ public class PortalActivity extends TabSwipeActivity {
         	if(curr instanceof Refreshable) {
         		Refreshable refreshable = (Refreshable) curr;
         		refreshable.refresh(manager);
+        	} else {
+        		Toast.makeText(this, "Refreshing is unavailable for this view", Toast.LENGTH_SHORT).show();
         	}
         	
             return true;
@@ -70,6 +73,8 @@ public class PortalActivity extends TabSwipeActivity {
         	if(currFrag instanceof Sortable) {
         		Sortable sortable = (Sortable) currFrag;
         		sortable.sort(SortType.DATE);
+        	} else {
+        		Toast.makeText(this, "Sorting is unavailable for this view", Toast.LENGTH_SHORT).show();
         	}
         	
             return true;
