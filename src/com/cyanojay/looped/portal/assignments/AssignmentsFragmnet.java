@@ -187,6 +187,9 @@ public class AssignmentsFragmnet extends SherlockListFragment {
 	        	}
 	        }
 	        
+	        content.setFocusable(true);
+	        content.setFocusableInTouchMode(true);
+	        
 	        info.setText(Html.fromHtml(infoStr));
 	        bar.setVisibility(View.GONE);
 	        

@@ -180,6 +180,9 @@ public class LoopMailFragment extends SherlockListFragment {
 	        else 
 	        	((LinearLayout) content.getParent()).removeView(content);
 
+	        content.setFocusable(true);
+	        content.setFocusableInTouchMode(true);
+	        
 	        bar.setVisibility(View.GONE);
 	        contwrap.setVisibility(View.VISIBLE);
 		}

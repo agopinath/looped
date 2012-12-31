@@ -163,6 +163,10 @@ public class NewsFragment extends SherlockListFragment {
 	        }
 	        
 	        info.setText(Html.fromHtml(infoStr));
+	        
+	        content.setFocusable(true);
+	        content.setFocusableInTouchMode(true);
+	        
 	        bar.setVisibility(View.GONE);
 	        
 	        contwrap.setVisibility(View.VISIBLE);
