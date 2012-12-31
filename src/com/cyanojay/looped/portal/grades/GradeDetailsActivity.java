@@ -2,6 +2,8 @@ package com.cyanojay.looped.portal.grades;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,19 +34,20 @@ import com.cyanojay.looped.portal.common.Refreshable;
 import com.cyanojay.looped.portal.common.SortType;
 import com.cyanojay.looped.portal.common.Sortable;
 import com.cyanojay.looped.portal.loopmail.MailEntry;
+import com.cyanojay.looped.portal.news.NewsArticle;
 
 public class GradeDetailsActivity extends BaseListActivity implements Refreshable, Sortable {
 	private GradeDetailsAdapter adapter;
 	
-	private static final Comparator<MailEntry> DATE_COMPARATOR = new Comparator<MailEntry>() {
+	private static final Comparator<GradeDetail> DATE_COMPARATOR = new Comparator<GradeDetail>() {
 		@Override
-		public int compare(MailEntry lhs, MailEntry rhs) {
+		public int compare(GradeDetail lhs, GradeDetail rhs) {
 			Date d1 = null;
 			Date d2 = null;
 			
 			try {
-				d1 = Constants.LOOPED_DATE_FORMAT.parse(lhs.getTimestamp());
-				d2 = Constants.LOOPED_DATE_FORMAT.parse(rhs.getTimestamp());
+				d1 = Constants.LOOPED_DATE_FORMAT.parse(lhs.getDueDate());
+				d2 = Constants.LOOPED_DATE_FORMAT.parse(rhs.getDueDate());
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -77,6 +81,9 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
         switch (item.getItemId()) {
             case R.id.menu_refresh:
             	this.refresh(null);
+            	return true;
+            case R.id.menu_sort:
+            	this.sort(SortType.DATE);
             	return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -140,13 +147,17 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
     private class GradeDetailsAdapter extends ArrayAdapter<GradeDetail> {
 	  	  private final Context context;
 	  	  private final GradeDetail[] values;
+	  	  private boolean sortDir;
 	  	  
 	  	  public GradeDetailsAdapter(Context context, GradeDetail[] values) {
 	  		  super(context, R.layout.grade_detail_row, values);
 	  		  this.context = context;
+	  		  
+	  		  Collections.sort(Arrays.asList(values), Collections.reverseOrder(DATE_COMPARATOR));
+	  		  
 	  		  this.values = values;
 	  	  }
-	
+	  	  
 	  	  @Override
 	  	  public View getView(int position, View convertView, ViewGroup parent) {
 	  		  View rowView = convertView;
@@ -172,7 +183,19 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 		  	  score.setText(detail.getDisplayScore());
 	  		  
 	  		  return rowView;
-	  	}
+	  	  }
+	  	  
+	  	  public GradeDetail[] getValues() {
+	  		  return values;
+	  	  }
+
+	  	  public boolean getSortOrder() {
+	  		  return sortDir;
+	  	  }
+
+	  	  public void toggleSortOrder() {
+	  		  sortDir = !sortDir;
+	  	  }
 	}
 
 	@Override
@@ -219,6 +242,12 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 
 	@Override
 	public void sort(SortType type) {
-		
+		if(adapter != null) {
+			adapter.toggleSortOrder();
+			
+			Collections.sort(Arrays.asList(adapter.getValues()), 
+					adapter.getSortOrder() ? DATE_COMPARATOR : Collections.reverseOrder(DATE_COMPARATOR));
+			adapter.notifyDataSetChanged();
+		}
 	}
 }
