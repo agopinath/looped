@@ -98,8 +98,12 @@ public class GradeDetailsActivity extends BaseListActivity {
 	
 	  	  @Override
 	  	  public View getView(int position, View convertView, ViewGroup parent) {
-	  		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	  		  View rowView = inflater.inflate(R.layout.grade_detail_row, parent, false);
+	  		  View rowView = convertView;
+	  		  
+	  		  if(rowView == null) {
+	  			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	  			  rowView = inflater.inflate(R.layout.grade_detail_row, parent, false);
+	  		  }
 	  		  
 	  		  TextView name = (TextView) rowView.findViewById(R.id.gradedet_name);
 	  		  TextView category = (TextView) rowView.findViewById(R.id.gradedet_categ);
