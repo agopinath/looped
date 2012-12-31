@@ -33,7 +33,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
         mViewPager.setOnPageChangeListener( adapter );
         
         // prevent ViewPager from destroying tabs
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(3);
         
         /*
          * We need to provide an ID for the ViewPager, otherwise we will get an exception like:
@@ -143,7 +143,6 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
             for ( int i = 0; i < mTabs.size(); i++ ) {
                 if ( mTabs.get( i ) == tabInfo ) {
                     mPager.setCurrentItem( i );
-                    mActionBar.setSelectedNavigationItem( i );
                 }
             }
         }
@@ -153,5 +152,10 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
         public void onTabReselected(Tab tab, FragmentTransaction ft) {
         }
+    }
+    
+    protected void setPage(int pageNum) {
+    	if(mViewPager != null)
+    		mViewPager.setCurrentItem(pageNum);
     }
 }

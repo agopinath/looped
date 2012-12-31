@@ -18,8 +18,6 @@ import com.cyanojay.looped.portal.loopmail.LoopMailFragment;
 import com.cyanojay.looped.portal.news.NewsFragment;
 
 public class PortalActivity extends TabSwipeActivity {
-	public static Intent KEEP_ALIVE_TASK;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +30,7 @@ public class PortalActivity extends TabSwipeActivity {
         addTab("News", NewsFragment.class, null);
         addTab("Mail", LoopMailFragment.class, null);
         
-        KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
+        Intent KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
         startService(KEEP_ALIVE_TASK);
     }
 
@@ -60,7 +58,9 @@ public class PortalActivity extends TabSwipeActivity {
     
     @Override
     public void onBackPressed() {
-    	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+    	setPage(0);
+    	
+    	/*DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
     	    @Override
     	    public void onClick(DialogInterface dialog, int which) {
     	        switch (which){
@@ -73,6 +73,6 @@ public class PortalActivity extends TabSwipeActivity {
 
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-    	    	.setNegativeButton("No", dialogClickListener).show();
+    	    	.setNegativeButton("No", dialogClickListener).show();*/
     }
 }
