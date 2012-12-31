@@ -192,26 +192,13 @@ public class NewsFragment extends SherlockListFragment {
 	        LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.news_details_popup, null, false);
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
-	        
-	        /*final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);*/
 	    	
-	    	final Dialog popup = new Dialog(parent);
-	    	
-	    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
-	    	popup.setContentView(flow, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
-	        
-	        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	            	popup.dismiss();
-	            }
-	        });
-	        
+	    	Dialog popup = Utils.createLoopedDialog(parent, flow, width);
+	    			
 	        load.setVisibility(View.VISIBLE);
 	        contwrap.setVisibility(View.GONE);
 	        
 	        popup.show();
-	        //pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
 	        
 	        NewsArticle selected = (NewsArticle) adapter.getItem(position);
 	    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask(flow, contwrap, load);

@@ -30,6 +30,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -43,6 +44,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -233,5 +235,21 @@ public class Utils {
 		
 	    parent.addView(b);
 	    parent.bringChildToFront(b);
+	}
+	
+	public static Dialog createLoopedDialog(Context parent, View contentView, int width) {
+		final Dialog popup = new Dialog(parent);
+    	
+    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    	popup.setContentView(contentView, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
+        
+        ((Button) contentView.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	popup.dismiss();
+            }
+        });
+        
+        return popup;
 	}
 }
