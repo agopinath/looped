@@ -253,62 +253,110 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		TimeSeries courseGradeSeries = new TimeSeries("Overall grade");
 		Set<GradeCategory> movingWeights = categWeights;
 		
+		boolean isUnweighted = true;
+		
+		for(GradeCategory currCateg : movingWeights) {
+			if(currCateg.getWeight() != GradeCategory.UNWEIGHTED) isUnweighted = false;
+		}
+		
+		System.out.println("UNWEIGHTED? " + isUnweighted);
+		
+		if(!isUnweighted) {
+			for(GradeDetail detail : details) {
+	    		Date gradeDate = parseDate(detail.getDueDate(), format);
+	    		
+	    		if(gradeDate == null) continue;
+	    		
+	    		GradeCategory categ = getCategoryByName(detail.getCategory(), movingWeights);
+	    		double overallGrade = 0.0d;
+	
+	    		categ.incrementAssignmentCount(1);
+	
+	    		scaleCourseGradeWeights(categWeights);
+	    		
+	    		for(GradeCategory currCateg : movingWeights) {
+	    			if(currCateg.getAssignmentCount() == 0) continue;
+	    			if(currCateg.getWeight() == 0.0d) warnings.add(GraphTaskWarningType.EC_CATEGORY_PRESENT);
+	    			
+	    			double categGrade = 0.0d;
+		    		double total = 0.0d;
+		    		double earned = 0.0d;
+		    		
+			    	for(GradeDetail currDetail : details) {
+			    		if(currDetail.getCategory().equalsIgnoreCase(currCateg.getName())) {
+			    			earned += currDetail.getPointsEarned();
+			    			total += currDetail.getTotalPoints();
+			    		}
+			    		
+			    		if(detail.getDetailName().equals(currDetail.getDetailName()) &&
+			    			detail.getDueDate().equals(currDetail.getDueDate())) 
+					    		break;
+			    	}
+	    			
+			    	try {
+		    			categGrade = (earned / total) * 100.0d;
+		    		} catch(ArithmeticException e) {
+		    			categGrade = MathHelper.NULL_VALUE;
+		    			e.printStackTrace();
+		    		}
+		    		
+		    		if(Double.isInfinite(categGrade) || Double.isNaN(categGrade))
+		    			categGrade = 100.0d;
+		    			
+	    			overallGrade += currCateg.getScaledWeight() * categGrade;
+	    		}
+	    		
+	    		/*System.out.println("============================");
+	    		System.out.println("Category: " + categ.getName());
+	    		System.out.println("Weight Sum: " + weightSum);
+	    		System.out.println("Scaled Weight: " + categ.getScaledWeight());
+	    		System.out.println("Assign. Count: " + categ.getAssignmentCount());
+	    		System.out.println("Overall Grade: " + overallGrade);
+	    		System.out.println("============================");*/
+	    		
+	    		courseGradeSeries.add(gradeDate, overallGrade);
+	    	}
+		} else {
+			fillOverallUnweightedCourseGradeSeries(categSeries, details, format, categWeights, courseGradeSeries);
+		}
+		
+		return courseGradeSeries;
+	}
+	
+	private void fillOverallUnweightedCourseGradeSeries(List<TimeSeries> categSeries, List<GradeDetail> details, 
+			SimpleDateFormat format, Set<GradeCategory> categWeights, TimeSeries courseGradeSeries) {
+		
+		double overallGrade = 0.0d;
+		
 		for(GradeDetail detail : details) {
     		Date gradeDate = parseDate(detail.getDueDate(), format);
     		
     		if(gradeDate == null) continue;
     		
-    		GradeCategory categ = getCategoryByName(detail.getCategory(), movingWeights);
-    		double overallGrade = 0.0d;
-
-    		categ.incrementAssignmentCount(1);
-
-    		scaleCourseGradeWeights(categWeights);
+    		double overallEarned = 0.0d;
+    		double overallTotal = 0.0d;
     		
-    		for(GradeCategory currCateg : movingWeights) {
-    			if(currCateg.getAssignmentCount() == 0) continue;
-    			if(currCateg.getWeight() == 0.0d) warnings.add(GraphTaskWarningType.EC_CATEGORY_PRESENT);
-    			
-    			double categGrade = 0.0d;
-	    		double total = 0.0d;
-	    		double earned = 0.0d;
+    		for(GradeDetail currDetail : details) {
+    			overallEarned += currDetail.getPointsEarned();
+    			overallTotal += currDetail.getTotalPoints();
 	    		
-		    	for(GradeDetail currDetail : details) {
-		    		if(currDetail.getCategory().equalsIgnoreCase(currCateg.getName())) {
-		    			earned += currDetail.getPointsEarned();
-		    			total += currDetail.getTotalPoints();
-		    		}
-		    		
-		    		if(detail.getDetailName().equals(currDetail.getDetailName()) &&
-		    			detail.getDueDate().equals(currDetail.getDueDate())) 
-				    		break;
-		    	}
-    			
-		    	try {
-	    			categGrade = (earned / total) * 100.0d;
-	    		} catch(ArithmeticException e) {
-	    			categGrade = MathHelper.NULL_VALUE;
-	    			e.printStackTrace();
-	    		}
-	    		
-	    		if(Double.isInfinite(categGrade) || Double.isNaN(categGrade))
-	    			categGrade = 100.0d;
-	    			
-    			overallGrade += currCateg.getScaledWeight() * categGrade;
+	    		if(detail.getDetailName().equals(currDetail.getDetailName()) &&
+		    		detail.getDueDate().equals(currDetail.getDueDate())) 
+				    	break;
     		}
     		
-    		/*System.out.println("============================");
-    		System.out.println("Category: " + categ.getName());
-    		System.out.println("Weight Sum: " + weightSum);
-    		System.out.println("Scaled Weight: " + categ.getScaledWeight());
-    		System.out.println("Assign. Count: " + categ.getAssignmentCount());
-    		System.out.println("Overall Grade: " + overallGrade);
-    		System.out.println("============================");*/
+	    	try {
+	    		overallGrade = (overallEarned / overallTotal) * 100.0d;
+    		} catch(ArithmeticException e) {
+    			overallGrade = MathHelper.NULL_VALUE;
+    			e.printStackTrace();
+    		}
+    		
+    		if(Double.isInfinite(overallGrade) || Double.isNaN(overallGrade))
+    			overallGrade = 100.0d;
     		
     		courseGradeSeries.add(gradeDate, overallGrade);
     	}
-		
-		return courseGradeSeries;
 	}
 	
 	private void scaleCourseGradeWeights(Set<GradeCategory> categWeights) {

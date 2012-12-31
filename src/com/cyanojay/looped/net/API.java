@@ -620,7 +620,10 @@ public final class API {
 	    		}
 	    	} else {
 	    		// since no weights present, each category is thus 'weighted' evenly
-	    		categWeight = (100.0d / rows.size());
+	    		//categWeight = (100.0d / rows.size());
+	    		
+	    		// set to UNWEIGHTED constant to mark as unweighted category
+	    		categWeight = GradeCategory.UNWEIGHTED;
 	    	}
 	    	
 	    	System.out.println(categName + " => " + categWeight);

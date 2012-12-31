@@ -1,6 +1,8 @@
 package com.cyanojay.looped.portal.grades;
 
 public class GradeCategory {
+	public static final double UNWEIGHTED = -5.0;
+	
 	private final String name;
 	private final double weight;
 	
