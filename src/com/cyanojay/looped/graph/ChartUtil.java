@@ -141,6 +141,8 @@ public class ChartUtil {
 		    if((i == seriesCount-1) && (seriesCount != 1) && showsCourseGrade) {
 		    	r.setColor(overallGradeColor);
 		    	r.setLineWidth(4.0f);
+		    	
+		    	r.setPointStyle(PointStyle.X);
 		    	r.setStroke(BasicStroke.DOTTED);
 		    } else {
 			    int pointCol = (i < colors.length) ? 
