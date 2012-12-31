@@ -171,10 +171,7 @@ public class GradesFragment extends SherlockListFragment {
 
 		@Override
 		public void onItemClick(AdapterView<?> list, View view, int position, long id) {
-			if(!Utils.isOnline(parent)) {
-	    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
-	    		return;
-	    	}
+			if(Utils.isNetworkOffline(parent)) return;
 	    	
 	    	Course selectedCourse = (Course) adapter.getItem(position);
 	    	
@@ -218,16 +215,14 @@ public class GradesFragment extends SherlockListFragment {
 						if(toGraph.getDetailsUrl().length() == 0) {
 							Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_SHORT).show();
 						} else {
-							if(Utils.isOnline(parent)) {
-								CourseGraphTask task = new CourseGraphTask(parent, toGraph);
+							if(Utils.isNetworkOffline(parent)) return;
 							
-								if(which == 0) {
-									task.execute(GraphTaskType.ASSIGNMENTS);
-								} else if(which == 1) {
-									task.execute(GraphTaskType.COURSE);
-								}
-							} else {
-								Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_SHORT).show();
+							CourseGraphTask task = new CourseGraphTask(parent, toGraph);
+
+							if(which == 0) {
+								task.execute(GraphTaskType.ASSIGNMENTS);
+							} else if(which == 1) {
+								task.execute(GraphTaskType.COURSE);
 							}
 						}
 					}

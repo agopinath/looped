@@ -263,4 +263,15 @@ public class Utils {
         
         return popup;
 	}
+	
+	public static boolean isNetworkOffline(Context parent) {
+		boolean isOffline = false;
+		
+		if(!isOnline(parent)) {
+    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
+    		isOffline = true;
+    	}
+		
+		return isOffline;
+	}
 }

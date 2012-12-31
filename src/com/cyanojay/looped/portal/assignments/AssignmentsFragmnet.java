@@ -205,10 +205,7 @@ public class AssignmentsFragmnet extends SherlockListFragment {
 
 		@Override
 		public void onItemClick(AdapterView<?> list, View view, int position, long id) {
-			if(!Utils.isOnline(parent)) {
-	    		Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_LONG).show();
-	    		return;
-	    	}
+			if(Utils.isNetworkOffline(parent)) return;
 	    	
 	    	LayoutInflater inflater = (LayoutInflater) parent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    	LinearLayout flow = (LinearLayout) inflater.inflate(R.layout.assignment_details_popup, null, false);
