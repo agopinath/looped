@@ -204,8 +204,11 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 		public void onClick(View v) {
 			//System.out.println("on long click received");
 			
-			AlertDialog dialog = getGraphDialog();
-			dialog.show();
+			CourseGraphTask task = new CourseGraphTask(parent, toGraph);
+			task.execute(GraphTaskType.COURSE);
+			
+			//AlertDialog dialog = getGraphDialog();
+			//dialog.show();
 		}
 		
 	    private AlertDialog getGraphDialog() {

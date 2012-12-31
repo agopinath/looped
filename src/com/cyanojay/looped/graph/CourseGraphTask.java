@@ -184,7 +184,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		    		if(Double.isInfinite(percent) || Double.isNaN(percent))
 		    			percent = 100.0d;
 		    		
-		    		System.out.println(detail.getCategory() + " --> " + percent);
+		    		System.out.println(detail.getDueDate() + " --> " + percent);
 		    		
 		    		series.add(gradeDate, percent);
 	    		}
