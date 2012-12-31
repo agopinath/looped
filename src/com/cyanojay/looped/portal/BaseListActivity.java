@@ -2,7 +2,6 @@ package com.cyanojay.looped.portal;
 
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;

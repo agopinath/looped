@@ -73,7 +73,7 @@ public class GradesFragment extends SherlockListFragment {
 	        	ListView listView = (ListView) getView().findViewById(android.R.id.list);
 	        	TextView emptyText = Utils.getCenteredTextView(getSherlockActivity(), getString(R.string.empty_courses));
 	        	
-	        	Utils.replaceView(listView, emptyText);
+	        	Utils.showViewOnTop(listView, emptyText);
 	        }
 		}
     };

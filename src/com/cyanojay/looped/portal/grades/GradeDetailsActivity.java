@@ -81,7 +81,7 @@ public class GradeDetailsActivity extends BaseListActivity {
 	        	ListView listView = (ListView) findViewById(android.R.id.list);
 	        	TextView emptyText = Utils.getCenteredTextView(GradeDetailsActivity.this, getString(R.string.empty_course_grades));
 	        	
-	        	Utils.replaceView(listView, emptyText);
+	        	Utils.showViewOnTop(listView, emptyText);
 	        }
 		}
     };

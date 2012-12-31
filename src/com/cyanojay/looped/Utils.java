@@ -42,10 +42,10 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -222,17 +222,16 @@ public class Utils {
     	
     	text.setPadding(40, 40, 40, 40);
     	text.setGravity(Gravity.CENTER);
-    	text.setText(s);
     	text.setTextAppearance(c, android.R.attr.textAppearanceLarge);
+    	text.setText(s);
     	
     	return text;
 	}
 	
-	public static void replaceView(View a, View b) {
-		LinearLayout temp = ((LinearLayout) a.getParent());
+	public static void showViewOnTop(View a, View b) {
+		ViewGroup parent = (ViewGroup) a.getParent();
 		
-		temp.removeView(a);
-    	
-		temp.addView(b);
+	    parent.addView(b);
+	    parent.bringChildToFront(b);
 	}
 }
