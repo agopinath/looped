@@ -20,6 +20,7 @@ import java.util.List;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.BasicStroke;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -124,42 +125,42 @@ public class ChartUtil {
 	    renderer.setChartTitleTextSize(20);
 	    renderer.setLabelsTextSize(15);
 	    renderer.setLegendTextSize(15);
-	    renderer.setPointSize(4f);
+	    renderer.setPointSize(5f);
 	    renderer.setMargins(new int[] {30, 30, 30, 15});
-
+	    
 	    int[] colors = new int[] {
-	    		Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLUE
+	    		Color.RED, Color.rgb(255, 166, 0), Color.CYAN, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLUE
 	    };
  	    
-	    int overallGradeColor = Color.rgb(255, 166, 0);
+	    int overallGradeColor = Color.GREEN;
 	    
 	    for(int i = 0; i < seriesCount; i++) {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
 		    
-		    PointStyle type = null;
-		    
-		    if((i == seriesCount - 1) && (seriesCount != 1) && showsCourseGrade) {
-		    	type = PointStyle.TRIANGLE;
+		    if((i == seriesCount-1) && (seriesCount != 1) && showsCourseGrade) {
 		    	r.setColor(overallGradeColor);
+		    	r.setLineWidth(4.0f);
+		    	r.setStroke(BasicStroke.DASHED);
 		    } else {
-		    	type = PointStyle.CIRCLE;
-		    	
 			    int pointCol = (i < colors.length) ? 
 	    				colors[i] : Color.rgb((int)(Math.random() * 256), 
 	    								  (int)(Math.random() * 256), 
 	    								  (int)(Math.random() * 256));
 		    	r.setColor(pointCol);
+		    	r.setLineWidth(2.0f);
 		    }
 		    
 		    r.setFillPoints(true);
-		    r.setPointStyle(type);
+		    r.setPointStyle(PointStyle.CIRCLE);
 		    
 		    renderer.addSeriesRenderer(r);
 	    }
 	    
 	    renderer.setAxesColor(Color.DKGRAY);
 	    renderer.setLabelsColor(Color.LTGRAY);
+	    renderer.setShowGrid(true);
+	    renderer.setZoomButtonsVisible(true);
 	    
 	    renderer.setXTitle("Time");
 	    renderer.setYTitle("Grade in Percent (%)");  
