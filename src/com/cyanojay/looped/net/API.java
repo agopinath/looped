@@ -371,12 +371,6 @@ public final class API {
 			mail.add(currEntry);
 		}
 		
-		System.out.println("Calling AMIL RETRIEVAL");
-		
-		for(MailEntry curr : mail) {
-			System.out.println(curr.getSubject() + curr.getTimestamp());
-		}
-		
 		return mail;
 	}
 	
