@@ -1,9 +1,11 @@
 package com.cyanojay.looped.portal.grades;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +31,12 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.graph.CourseGraphTask.GraphTaskType;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.Refreshable;
 
 public class GradesFragment extends SherlockListFragment implements Refreshable {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
+	private GradesAdapter adapter;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 	        Course[] values = result.toArray(new Course[result.size()]);
 	        
 	        if(values.length > 0) {
-		        GradesAdapter adapter = new GradesAdapter(getSherlockActivity(), values);
+		        adapter = new GradesAdapter(getSherlockActivity(), values);
 		        
 		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 		        
@@ -237,6 +239,36 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     
 	@Override
 	public void refresh(FragmentManager manager) {
-		System.out.println("Refreshing Grades");
+    	System.out.println("Refreshing Grades");
+		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
+		
+		Runnable firstJob = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					API.get().refreshCoursePortal();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
+				
+				ScrapeGradesTask task = new ScrapeGradesTask();
+		        task.execute();
+			}
+		};
+		
+		Runnable secondJob = new Runnable() {
+			@Override
+			public void run() {
+		        adapter.notifyDataSetChanged();
+		        progressDialog.dismiss();
+		        
+		        System.out.println("Finished refreshing Grades");
+			}
+		};
+		
+		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
+		refreshTask.execute();
 	}
 }

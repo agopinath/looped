@@ -4,39 +4,35 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.Refreshable;
 
 public class NewsFragment extends SherlockListFragment implements Refreshable {
-
+	private NewsAdapter adapter;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +61,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
 	        NewsArticle[] values = result.toArray(new NewsArticle[result.size()]);
 	        
 	        if(values.length > 0) {
-		        NewsAdapter adapter = new NewsAdapter(getSherlockActivity(), values);
+		        adapter = new NewsAdapter(getSherlockActivity(), values);
 		        
 		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 		        
@@ -212,5 +208,35 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
 	@Override
 	public void refresh(FragmentManager manager) {
 		System.out.println("Refreshing News");
+		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
+		
+		Runnable firstJob = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					API.get().refreshMainPortal();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
+				
+				ScrapeNewsTask task = new ScrapeNewsTask();
+		        task.execute();
+			}
+		};
+		
+		Runnable secondJob = new Runnable() {
+			@Override
+			public void run() {
+		        adapter.notifyDataSetChanged();
+		        progressDialog.dismiss();
+		        
+		        System.out.println("Finished refreshing News");
+			}
+		};
+		
+		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
+		refreshTask.execute();
 	}
 }

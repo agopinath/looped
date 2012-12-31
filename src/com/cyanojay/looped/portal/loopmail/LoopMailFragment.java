@@ -229,13 +229,12 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 
 	@Override
 	public void refresh(FragmentManager manager) {
-		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing");
+		System.out.println("Refreshing LoopMail");
+		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
 		Runnable firstJob = new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Refreshing LoopMail");
-				
 				try {
 					API.get().refreshLoopMail();
 				} catch (IOException e) {
@@ -252,10 +251,10 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 		Runnable secondJob = new Runnable() {
 			@Override
 			public void run() {
-		        progressDialog.dismiss();
-		        System.out.println("Finished refreshing LoopMail");
-		        
 		        adapter.notifyDataSetChanged();
+		        progressDialog.dismiss();
+		        
+		        System.out.println("Finished refreshing LoopMail");
 			}
 		};
 		
