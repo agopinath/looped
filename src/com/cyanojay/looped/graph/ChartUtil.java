@@ -128,25 +128,32 @@ public class ChartUtil {
 	    renderer.setMargins(new int[] {30, 30, 30, 15});
 
 	    int[] colors = new int[] {
-	    		Color.RED, Color.GREEN, Color.CYAN, Color.rgb(255, 166, 0), 
-	    		Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLUE, 
+	    		Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLUE
 	    };
  	    
+	    int overallGradeColor = Color.rgb(255, 166, 0);
+	    
 	    for(int i = 0; i < seriesCount; i++) {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
 		    
-		    PointStyle type = ((i == seriesCount - 1) && (seriesCount != 1) && showsCourseGrade) ? 
-		    					PointStyle.TRIANGLE : PointStyle.CIRCLE;
+		    PointStyle type = null;
 		    
-		    r.setPointStyle(type);
+		    if((i == seriesCount - 1) && (seriesCount != 1) && showsCourseGrade) {
+		    	type = PointStyle.TRIANGLE;
+		    	r.setColor(overallGradeColor);
+		    } else {
+		    	type = PointStyle.CIRCLE;
+		    	
+			    int pointCol = (i < colors.length) ? 
+	    				colors[i] : Color.rgb((int)(Math.random() * 256), 
+	    								  (int)(Math.random() * 256), 
+	    								  (int)(Math.random() * 256));
+		    	r.setColor(pointCol);
+		    }
 		    
-		    int pointCol = (i < colors.length) ? 
-		    				colors[i] : Color.rgb((int)(Math.random() * 256), 
-		    								  (int)(Math.random() * 256), 
-		    								  (int)(Math.random() * 256));
-		    r.setColor(pointCol);
 		    r.setFillPoints(true);
+		    r.setPointStyle(type);
 		    
 		    renderer.addSeriesRenderer(r);
 	    }
