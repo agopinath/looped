@@ -33,6 +33,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	private Context parent;
 	private Course course;
 	private ProgressDialog progressDialog;
+	private static final SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
 	
 	private GraphTaskType taskType;
 	private Set<GraphTaskWarningType> warnings;
@@ -68,7 +69,6 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     	Set<GradeCategory> categWeights = null;
     	
     	XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
-    	SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
     	
     	try {
 			details = API.get().getGradeDetails(course);
@@ -89,10 +89,10 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     	
     	switch(taskType) {
 	    	case ASSIGNMENTS:
-	    		fillAssignmentsGraph(categSeries, details, gradeDateFormat, data);
+	    		fillAssignmentsGraph(categSeries, details, data);
 	    		break;
 	    	case COURSE:
-	    		fillCourseGradeGraph(categSeries, details, gradeDateFormat, categWeights, data);
+	    		fillCourseGradeGraph(categSeries, details, categWeights, data);
 	    		break;
     	}
     	
@@ -164,12 +164,11 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		}
 	}
 	
-	private void fillAssignmentsGraph(List<TimeSeries> categSeries, List<GradeDetail> details, 
-										SimpleDateFormat format, XYMultipleSeriesDataset dataToFill) {
+	private void fillAssignmentsGraph(List<TimeSeries> categSeries, List<GradeDetail> details, XYMultipleSeriesDataset dataToFill) {
 		for(TimeSeries series : categSeries) {
     		
 	    	for(GradeDetail detail : details) {
-	    		Date gradeDate = parseDate(detail.getDueDate(), format);
+	    		Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
 	    		if(gradeDate == null) continue;
 	    				
 	    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
@@ -196,31 +195,29 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	}
 	
 	private void fillCourseGradeGraph(List<TimeSeries> categSeries, List<GradeDetail> details, 
-									SimpleDateFormat format, Set<GradeCategory> categWeights,
-									XYMultipleSeriesDataset dataToFill) {
+									Set<GradeCategory> categWeights, XYMultipleSeriesDataset dataToFill) {
 		
 		if(categWeights.size() == 1 && categSeries.get(0).getItemCount() < 3) 
 			warnings.add(GraphTaskWarningType.INSUFFICIENT_DATA);
 		
 		for(TimeSeries series : categSeries) {
-			TimeSeries categoryGradeSeries = getCourseGradeCategorySeries(series, details, format);
+			TimeSeries categoryGradeSeries = getCourseGradeCategorySeries(series, details);
 			dataToFill.addSeries(categoryGradeSeries);
 		}
 		
 		if(categWeights.size() > 1) {
-			TimeSeries courseGradeSeries = getOverallCourseGradeSeries(categSeries, details, format, categWeights);
+			TimeSeries courseGradeSeries = getOverallCourseGradeSeries(categSeries, details, categWeights);
 			dataToFill.addSeries(courseGradeSeries);
 		}
 	}
 	
-	private TimeSeries getCourseGradeCategorySeries(TimeSeries series, List<GradeDetail> details, 
-										SimpleDateFormat format) {
+	private TimeSeries getCourseGradeCategorySeries(TimeSeries series, List<GradeDetail> details) {
 		double grade = 0.0d;
 		double total = 0.0d;
 		double earned = 0.0d;
 
 		for(GradeDetail detail : details) {
-			Date gradeDate = parseDate(detail.getDueDate(), format);
+			Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
 			
 			if(gradeDate == null) continue;
 			
@@ -247,8 +244,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		return series;
 	}
 	
-	private TimeSeries getOverallCourseGradeSeries(List<TimeSeries> categSeries, List<GradeDetail> details, 
-													SimpleDateFormat format, Set<GradeCategory> categWeights) {
+	private TimeSeries getOverallCourseGradeSeries(List<TimeSeries> categSeries, List<GradeDetail> details, Set<GradeCategory> categWeights) {
 		
 		TimeSeries courseGradeSeries = new TimeSeries("Overall grade");
 		Set<GradeCategory> movingWeights = categWeights;
@@ -263,7 +259,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		
 		if(!isUnweighted) {
 			for(GradeDetail detail : details) {
-	    		Date gradeDate = parseDate(detail.getDueDate(), format);
+	    		Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
 	    		
 	    		if(gradeDate == null) continue;
 	    		
@@ -317,19 +313,19 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	    		courseGradeSeries.add(gradeDate, overallGrade);
 	    	}
 		} else {
-			fillOverallUnweightedCourseGradeSeries(categSeries, details, format, categWeights, courseGradeSeries);
+			fillOverallUnweightedCourseGradeSeries(categSeries, details, categWeights, courseGradeSeries);
 		}
 		
 		return courseGradeSeries;
 	}
 	
 	private void fillOverallUnweightedCourseGradeSeries(List<TimeSeries> categSeries, List<GradeDetail> details, 
-			SimpleDateFormat format, Set<GradeCategory> categWeights, TimeSeries courseGradeSeries) {
+													Set<GradeCategory> categWeights, TimeSeries courseGradeSeries) {
 		
 		double overallGrade = 0.0d;
 		
 		for(GradeDetail detail : details) {
-    		Date gradeDate = parseDate(detail.getDueDate(), format);
+    		Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
     		
     		if(gradeDate == null) continue;
     		
