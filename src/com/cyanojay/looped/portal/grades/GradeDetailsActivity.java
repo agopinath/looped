@@ -35,7 +35,8 @@ public class GradeDetailsActivity extends BaseListActivity {
         
         getSupportActionBar().setTitle(currCourse.getName());
         getSupportActionBar().setSubtitle(currCourse.getPercentGrade() + " " + currCourse.getLetterGrade());
-        	
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
         ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask();
         task.execute(currCourse);
     }

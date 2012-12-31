@@ -24,6 +24,9 @@ public class BaseListActivity extends SherlockListActivity {
             case R.id.menu_logout:
                 Utils.logOut(this);
                 return true;
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
