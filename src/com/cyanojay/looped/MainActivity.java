@@ -72,11 +72,11 @@ public class MainActivity extends BaseActivity {
         
         myLayout.requestFocus();
         
-        for(int i = 0; i < myLayout.getChildCount(); i++) {
+        /*for(int i = 0; i < myLayout.getChildCount(); i++) {
         	myLayout.clearChildFocus(myLayout.getChildAt(i));
         }
         
-        myLayout.clearFocus();
+        myLayout.clearFocus();*/
     }
 
     @Override
