@@ -199,13 +199,13 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 									SimpleDateFormat format, Set<GradeCategory> categWeights,
 									XYMultipleSeriesDataset dataToFill) {
 		
+		if(categWeights.size() == 1 && categSeries.get(0).getItemCount() < 3) 
+			warnings.add(GraphTaskWarningType.INSUFFICIENT_DATA);
+		
 		for(TimeSeries series : categSeries) {
 			TimeSeries categoryGradeSeries = getCourseGradeCategorySeries(series, details, format);
 			dataToFill.addSeries(categoryGradeSeries);
 		}
-		
-		if(categWeights.size() == 1 && categSeries.get(0).getItemCount() < 3) 
-			warnings.add(GraphTaskWarningType.INSUFFICIENT_DATA);
 		
 		if(categWeights.size() > 1) {
 			TimeSeries courseGradeSeries = getOverallCourseGradeSeries(categSeries, details, format, categWeights);

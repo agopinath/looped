@@ -20,7 +20,7 @@
     <string name="title_activity_loop_mail">LoopMailActivity</string>
     <string name="main_help_username">The username used to log in to the student\'s school\'s School Loop web portal.</string>
     <string name="main_help_password">The password used to log in to the student\'s school\'s School Loop web portal.</string>
-    <string name="main_help_prefix">The \'School Loop Site Prefix\' is the first part of the student\'s School Loop website URL. For example, for Monta Vista High School, the URL is \&quot;montavista.schoolloop.com\&quot;, so the prefix should be \'montavista\'. In general, the prefix should be the * part of \&quot;*.schoolloop.com\&quot;.</string>
+    <string name="main_help_prefix">The School Loop site prefix is the first part of the student\'s School Loop website URL. For example, for Monta Vista High School, the URL is \&quot;montavista.schoolloop.com\&quot;, so the prefix should be \'montavista\'. In general, the prefix should be the * part of \&quot;*.schoolloop.com\&quot;.</string>
     <string name="empty_courses">No courses are listed</string>
     <string name="empty_news">No news are listed</string>
     <string name="empty_mail">No mail is listed</string>

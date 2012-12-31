@@ -6,7 +6,7 @@ public class DebugMailer {
 	public static final String DEBUG_FROM_NAME = "Looped Debugger";
 	public static final String DEBUG_TO_NAME = "CyanoJay Works";
 	private static final GmailMailer MAILER = new GmailMailer("hidden1123@gmail.com", "Ajay1123");
-	private static final String META_INFO = "CRASH -" + " M: " + Utils.getDeviceName() + " V: 0.50";
+	private static final String META_INFO = "CRASH -" + " M: " + Utils.getDeviceName() + " V: 0.81";
 	
 	public static void sendDebugToDevs(String content) {
 		try {

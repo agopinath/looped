@@ -141,7 +141,7 @@ public class ChartUtil {
 		    if((i == seriesCount-1) && (seriesCount != 1) && showsCourseGrade) {
 		    	r.setColor(overallGradeColor);
 		    	r.setLineWidth(4.0f);
-		    	r.setStroke(BasicStroke.DASHED);
+		    	r.setStroke(BasicStroke.DOTTED);
 		    } else {
 			    int pointCol = (i < colors.length) ? 
 	    				colors[i] : Color.rgb((int)(Math.random() * 256), 
