@@ -58,16 +58,20 @@ public class PortalActivity extends TabSwipeActivity {
         	Fragment curr = getCurrentFragment();
         	FragmentManager manager = curr.getFragmentManager();
         	
-        	Refreshable refreshable = (Refreshable) curr;
+        	if(curr instanceof Refreshable) {
+        		Refreshable refreshable = (Refreshable) curr;
+        		refreshable.refresh(manager);
+        	}
         	
-        	refreshable.refresh(manager);
             return true;
         case R.id.menu_sort:
         	Fragment currFrag = getCurrentFragment();
         	
-        	Sortable sortable = (Sortable) currFrag;
+        	if(currFrag instanceof Sortable) {
+        		Sortable sortable = (Sortable) currFrag;
+        		sortable.sort(SortType.DATE);
+        	}
         	
-        	sortable.sort(SortType.DATE);
             return true;
         default:
             return super.onOptionsItemSelected(item);
