@@ -196,13 +196,13 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	private void fillCourseGradeGraph(List<TimeSeries> categSeries, List<GradeDetail> details, 
 									Set<GradeCategory> categWeights, XYMultipleSeriesDataset dataToFill) {
 		
-		if(categWeights.size() == 1 && categSeries.get(0).getItemCount() < 3) 
-			warnings.add(GraphTaskWarningType.INSUFFICIENT_DATA);
-		
 		for(TimeSeries series : categSeries) {
 			TimeSeries categoryGradeSeries = getCourseGradeCategorySeries(series, details);
 			dataToFill.addSeries(categoryGradeSeries);
 		}
+		
+		if(categWeights.size() == 1 && categSeries.get(0).getItemCount() < 3) 
+			warnings.add(GraphTaskWarningType.INSUFFICIENT_DATA);
 		
 		if(categWeights.size() > 1) {
 			TimeSeries courseGradeSeries = getOverallCourseGradeSeries(categSeries, details, categWeights);
