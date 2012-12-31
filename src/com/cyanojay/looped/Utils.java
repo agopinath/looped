@@ -200,13 +200,20 @@ public class Utils {
         popup.show();
 	}
 	
-	public static void logOut(Activity activity) {
+	public static void logOut(final Activity activity) {
 		Toast.makeText(activity, "Logged out successfully.", Toast.LENGTH_SHORT).show();
     	
-    	if(Utils.isOnline(activity)) {
-    		API.get().logOut();
-    	}
-    	
+		Thread logOutThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+		    	if(Utils.isOnline(activity)) {
+		    		API.get().logOut();
+		    	}
+			}
+		});
+		
+		logOutThread.start();
+		
     	Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
