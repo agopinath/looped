@@ -193,17 +193,7 @@ public class Utils {
         
         about.setText(Html.fromHtml(activity.getString(R.string.about_text)));
         
-		final Dialog popup = new Dialog(activity);
-    	
-    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    	popup.setContentView(flow, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
-        
-        ((Button) flow.findViewById(R.id.about_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	popup.dismiss();
-            }
-        });
+		final Dialog popup = createLoopedDialog(activity, flow, width, R.id.about_btn);
         
         popup.show();
 	}
@@ -247,6 +237,22 @@ public class Utils {
     	popup.setContentView(contentView, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
         
         ((Button) contentView.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	popup.dismiss();
+            }
+        });
+        
+        return popup;
+	}
+	
+	public static Dialog createLoopedDialog(Context parent, View contentView, int width, int exitBtnResId) {
+		final Dialog popup = new Dialog(parent);
+    	
+    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    	popup.setContentView(contentView, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
+        
+        ((Button) contentView.findViewById(exitBtnResId)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	popup.dismiss();
