@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -190,19 +193,25 @@ public class NewsFragment extends SherlockListFragment {
 	        LinearLayout contwrap = (LinearLayout) flow.findViewById(R.id.newsdet_contwrap);
 	    	ProgressBar load = (ProgressBar) flow.findViewById(R.id.popup_prog);
 	        
-	        final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);
+	        /*final PopupWindow pw = new PopupWindow(flow, width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT, true);*/
+	    	
+	    	final Dialog popup = new Dialog(parent);
+	    	
+	    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	    	popup.setContentView(flow, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
 	        
 	        ((Button) flow.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	                pw.dismiss();
+	            	popup.dismiss();
 	            }
 	        });
 	        
 	        load.setVisibility(View.VISIBLE);
 	        contwrap.setVisibility(View.GONE);
 	        
-	        pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
+	        popup.show();
+	        //pw.showAtLocation(flow, Gravity.CENTER, 0, 0);
 	        
 	        NewsArticle selected = (NewsArticle) adapter.getItem(position);
 	    	ScrapeNewsDetailsTask task = new ScrapeNewsDetailsTask(flow, contwrap, load);

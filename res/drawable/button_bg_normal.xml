@@ -9,5 +9,4 @@
             android:type="linear" />   
     <stroke android:width="2dp" android:color="#595959" />
     <!-- <solid android:color="#E5B39A"/> -->
-    <corners android:radius="6dp" />
 </shape>
