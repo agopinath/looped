@@ -5,9 +5,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -30,9 +32,11 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.Refreshable;
 
 public class LoopMailFragment extends SherlockListFragment implements Refreshable {
+	private LoopMailAdapter adapter;
 	
 	private enum LoopMailBoxType {
 		INBOX, SENT, ARCHIVE
@@ -78,7 +82,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 	        
 	        MailEntry[] values = result.toArray(new MailEntry[result.size()]);
 	        if(values.length > 0) {
-		        LoopMailAdapter adapter = new LoopMailAdapter(getSherlockActivity(), values);
+		        adapter = new LoopMailAdapter(getSherlockActivity(), values);
 		        
 		        ListView listView = (ListView) getView().findViewById(android.R.id.list);
 		        
@@ -224,7 +228,38 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
     }
 
 	@Override
-	public void refresh() {
-		System.out.println("Refreshing LoopMail");
+	public void refresh(FragmentManager manager) {
+		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing");
+		
+		Runnable firstJob = new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Refreshing LoopMail");
+				
+				try {
+					API.get().refreshLoopMail();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
+				
+				ScrapeLoopMailTask task = new ScrapeLoopMailTask();
+		        task.execute(LoopMailBoxType.INBOX);
+			}
+		};
+		
+		Runnable secondJob = new Runnable() {
+			@Override
+			public void run() {
+		        progressDialog.dismiss();
+		        System.out.println("Finished refreshing LoopMail");
+		        
+		        adapter.notifyDataSetChanged();
+			}
+		};
+		
+		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
+		refreshTask.execute();
 	}
 }

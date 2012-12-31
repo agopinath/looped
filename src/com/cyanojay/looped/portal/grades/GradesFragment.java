@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -235,7 +236,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     }
     
 	@Override
-	public void refresh() {
+	public void refresh(FragmentManager manager) {
 		System.out.println("Refreshing Grades");
 	}
 }

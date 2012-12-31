@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,7 +128,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 	}
 
 	@Override
-	public void refresh() {
+	public void refresh(FragmentManager manager) {
 		System.out.println("Refreshing Grade Details");
 	}
 }

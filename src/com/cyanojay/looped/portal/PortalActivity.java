@@ -3,6 +3,7 @@ package com.cyanojay.looped.portal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -51,9 +52,12 @@ public class PortalActivity extends TabSwipeActivity {
             Utils.logOut(this);
             return true;
         case R.id.menu_refresh:
-        	Refreshable curr = (Refreshable) getCurrentFragment();
-        	//System.out.println("CLASS NAME!!!!!!! " + curr.getClass().getName());
-        	curr.refresh();
+        	Fragment curr = getCurrentFragment();
+        	FragmentManager manager = curr.getFragmentManager();
+        	
+        	Refreshable refreshable = (Refreshable) curr;
+        	
+        	refreshable.refresh(manager);
             return true;
         default:
             return super.onOptionsItemSelected(item);

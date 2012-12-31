@@ -133,6 +133,24 @@ public final class API {
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
+	public void refreshMainPortal() throws IOException {
+		if(!isLoggedIn(true)) return;
+		
+		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
+	}
+	
+	public void refreshCoursePortal() throws IOException {
+		if(!isLoggedIn(true)) return;
+		
+		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/student_home?d=x"), portalUrl, authCookies);
+	}
+	
+	public void refreshLoopMail() throws IOException {
+		if(!isLoggedIn(true)) return;
+		
+		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
+	}
+	
 	public void preventCookieExpire() throws IOException {
 		if(!isLoggedIn(false)) return;
 		
@@ -351,6 +369,12 @@ public final class API {
 			}
 			
 			mail.add(currEntry);
+		}
+		
+		System.out.println("Calling AMIL RETRIEVAL");
+		
+		for(MailEntry curr : mail) {
+			System.out.println(curr.getSubject() + curr.getTimestamp());
 		}
 		
 		return mail;

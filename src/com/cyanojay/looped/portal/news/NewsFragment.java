@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -209,7 +210,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
     }
 
 	@Override
-	public void refresh() {
+	public void refresh(FragmentManager manager) {
 		System.out.println("Refreshing News");
 	}
 }
