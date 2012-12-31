@@ -192,17 +192,20 @@ public class Utils {
         TextView about = (TextView) flow.findViewById(R.id.about_text);
         
         about.setText(Html.fromHtml(activity.getString(R.string.about_text)));
-					        
-    	final PopupWindow pw = new PopupWindow(flow, width-((int)(0.25*width)), LayoutParams.WRAP_CONTENT, true);
         
-    	((Button) flow.findViewById(R.id.about_btn)).setOnClickListener(new View.OnClickListener() {
+		final Dialog popup = new Dialog(activity);
+    	
+    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    	popup.setContentView(flow, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
+        
+        ((Button) flow.findViewById(R.id.about_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pw.dismiss();
+            	popup.dismiss();
             }
         });
         
-        pw.showAtLocation(flow, Gravity.CENTER, 10, 10);
+        popup.show();
 	}
 	
 	public static void logOut(Activity activity) {
