@@ -136,8 +136,8 @@ public class ChartUtil {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
 		    r = new XYSeriesRenderer();
 		    
-		    PointStyle type = ((i < seriesCount-1 || seriesCount == 1) && !showsCourseGrade) ? 
-		    					PointStyle.CIRCLE : PointStyle.TRIANGLE;
+		    PointStyle type = ((i == seriesCount - 1) && (seriesCount != 1) && showsCourseGrade) ? 
+		    					PointStyle.TRIANGLE : PointStyle.CIRCLE;
 		    
 		    r.setPointStyle(type);
 		    
