@@ -174,8 +174,13 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 		Runnable secondJob = new Runnable() {
 			@Override
 			public void run() {
-		        adapter.notifyDataSetChanged();
-		        progressDialog.dismiss();
+				try {
+					adapter.notifyDataSetChanged();
+				} catch(Exception e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
 		        
 		        System.out.println("Finished refreshing Grade Details");
 			}

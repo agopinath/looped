@@ -231,7 +231,9 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
 		Runnable secondJob = new Runnable() {
 			@Override
 			public void run() {
-		        adapter.notifyDataSetChanged();
+				if(adapter != null)
+					adapter.notifyDataSetChanged();
+				
 		        progressDialog.dismiss();
 		        
 		        System.out.println("Finished refreshing News");

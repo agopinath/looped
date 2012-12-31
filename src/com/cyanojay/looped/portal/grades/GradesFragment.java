@@ -263,8 +263,13 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 		Runnable secondJob = new Runnable() {
 			@Override
 			public void run() {
-		        adapter.notifyDataSetChanged();
-		        progressDialog.dismiss();
+				try {
+					adapter.notifyDataSetChanged();
+				} catch(Exception e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
 		        
 		        System.out.println("Finished refreshing Grades");
 			}

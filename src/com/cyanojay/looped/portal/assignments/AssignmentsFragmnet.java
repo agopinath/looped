@@ -257,9 +257,14 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
 		Runnable secondJob = new Runnable() {
 			@Override
 			public void run() {
-		        adapter.notifyDataSetChanged();
-		        progressDialog.dismiss();
-		        
+				try {
+					adapter.notifyDataSetChanged();
+				} catch(Exception e) {
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
+				
 		        System.out.println("Finished refreshing Assignments");
 			}
 		};
