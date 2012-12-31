@@ -93,9 +93,13 @@ public class AssignmentsFragmnet extends SherlockListFragment {
 
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		  View rowView = inflater.inflate(R.layout.curr_assignments_row, parent, false);
-    		  
+    		  View rowView = convertView;
+	  		  
+	  		  if(rowView == null) {
+	  			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	  			  rowView = inflater.inflate(R.layout.curr_assignments_row, parent, false);
+	  		  }
+	  		  
     		  TextView name = (TextView) rowView.findViewById(R.id.assign_name);
     		  TextView courseName = (TextView) rowView.findViewById(R.id.assign_course_name);
     		  TextView dueDate = (TextView) rowView.findViewById(R.id.assign_due_date);

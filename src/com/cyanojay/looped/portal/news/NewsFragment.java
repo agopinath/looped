@@ -88,9 +88,13 @@ public class NewsFragment extends SherlockListFragment {
 
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		  View rowView = inflater.inflate(R.layout.curr_news_row, parent, false);
-    		  
+    		  View rowView = convertView;
+	  		  
+	  		  if(rowView == null) {
+	  			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	  			  rowView = inflater.inflate(R.layout.curr_news_row, parent, false);
+	  		  }
+	  		  
     		  TextView articleName = (TextView) rowView.findViewById(R.id.news_post_title);
     		  TextView articleAuthor = (TextView) rowView.findViewById(R.id.news_post_author);
     		  TextView articleDate = (TextView) rowView.findViewById(R.id.news_post_date);

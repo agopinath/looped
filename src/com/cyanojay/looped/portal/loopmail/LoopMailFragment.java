@@ -104,9 +104,13 @@ public class LoopMailFragment extends SherlockListFragment {
 
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		  View rowView = inflater.inflate(R.layout.curr_mail_row, parent, false);
-    		  
+    		  View rowView = convertView;
+	  		  
+	  		  if(rowView == null) {
+	  			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	  			  rowView = inflater.inflate(R.layout.curr_mail_row, parent, false);
+	  		  }
+	  		  
     		  TextView timestamp = (TextView) rowView.findViewById(R.id.mail_date);
     		  TextView parties = (TextView) rowView.findViewById(R.id.mail_sender);
     		  TextView subject = (TextView) rowView.findViewById(R.id.mail_subject);

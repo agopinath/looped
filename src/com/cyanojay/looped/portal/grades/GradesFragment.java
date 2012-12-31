@@ -90,9 +90,13 @@ public class GradesFragment extends SherlockListFragment {
     	  
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    		  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		  View rowView = inflater.inflate(R.layout.curr_grades_row, parent, false);
-    		  
+    		  View rowView = convertView;
+	  		  
+	  		  if(rowView == null) {
+	  			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	  			  rowView = inflater.inflate(R.layout.curr_grades_row, parent, false);
+	  		  }
+	  		  
     		  TextView courseName = (TextView) rowView.findViewById(R.id.grades_course_name);
     		  TextView lettGrade = (TextView) rowView.findViewById(R.id.grades_lett_grade);
     		  TextView pctGrade = (TextView) rowView.findViewById(R.id.grades_pct_grade);
