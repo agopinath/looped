@@ -190,6 +190,8 @@ public class MainActivity extends BaseActivity {
         
         final Dialog popup = Utils.createLoopedDialog(this, flow, width, R.id.main_help_btn);
         
+        popup.setCancelable(true);
+        
         popup.show();
     }
 }

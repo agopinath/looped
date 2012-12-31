@@ -195,6 +195,8 @@ public class Utils {
         
 		final Dialog popup = createLoopedDialog(activity, flow, width, R.id.about_btn);
         
+		popup.setCancelable(true);
+		
         popup.show();
 	}
 	
