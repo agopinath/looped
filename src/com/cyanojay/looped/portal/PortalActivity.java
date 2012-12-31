@@ -13,6 +13,7 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.KeepAliveService;
 import com.cyanojay.looped.portal.assignments.AssignmentsFragmnet;
+import com.cyanojay.looped.portal.common.Refreshable;
 import com.cyanojay.looped.portal.grades.GradesFragment;
 import com.cyanojay.looped.portal.loopmail.LoopMailFragment;
 import com.cyanojay.looped.portal.news.NewsFragment;

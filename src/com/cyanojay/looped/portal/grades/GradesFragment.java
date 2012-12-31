@@ -32,7 +32,7 @@ import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.graph.CourseGraphTask.GraphTaskType;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
-import com.cyanojay.looped.portal.Refreshable;
+import com.cyanojay.looped.portal.common.Refreshable;
 
 public class GradesFragment extends SherlockListFragment implements Refreshable {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";

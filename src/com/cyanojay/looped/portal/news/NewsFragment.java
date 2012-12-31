@@ -28,7 +28,7 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
-import com.cyanojay.looped.portal.Refreshable;
+import com.cyanojay.looped.portal.common.Refreshable;
 
 public class NewsFragment extends SherlockListFragment implements Refreshable {
 	private NewsAdapter adapter;
