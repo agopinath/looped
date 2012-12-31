@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -84,7 +85,7 @@ public class AssignmentsFragmnet extends SherlockListFragment {
     private class CurrentAssignmentsAdapter extends ArrayAdapter<CurrentAssignment> {
     	  private final Context context;
     	  private final CurrentAssignment[] values;
-    	  private final String TODAY = new SimpleDateFormat("MM/dd/yy").format(Calendar.getInstance().getTime());
+    	  private final String TODAY = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH).format(Calendar.getInstance().getTime());
     	  
     	  public CurrentAssignmentsAdapter(Context context, CurrentAssignment[] values) {
     		  super(context, R.layout.curr_assignments_row, values);
