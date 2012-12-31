@@ -218,12 +218,16 @@ public class GradesFragment extends SherlockListFragment {
 						if(toGraph.getDetailsUrl().length() == 0) {
 							Toast.makeText(parent, "Progress graph for course is unavailable.", Toast.LENGTH_SHORT).show();
 						} else {
-							CourseGraphTask task = new CourseGraphTask(parent, toGraph);
-						
-							if(which == 0) {
-								task.execute(GraphTaskType.ASSIGNMENTS);
-							} else if(which == 1) {
-								task.execute(GraphTaskType.COURSE);
+							if(Utils.isOnline(parent)) {
+								CourseGraphTask task = new CourseGraphTask(parent, toGraph);
+							
+								if(which == 0) {
+									task.execute(GraphTaskType.ASSIGNMENTS);
+								} else if(which == 1) {
+									task.execute(GraphTaskType.COURSE);
+								}
+							} else {
+								Toast.makeText(parent, "Internet connectivity is lost. Please re-connect and try again.", Toast.LENGTH_SHORT).show();
 							}
 						}
 					}
