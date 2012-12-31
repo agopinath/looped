@@ -26,5 +26,6 @@
     <string name="empty_mail">No mail is listed</string>
     <string name="empty_course_grades">No grades have been entered for this course</string>
     <string name="empty_assignments">No assignments!</string>
+    <string name="sort_text">Sort</string>
 
 </resources>

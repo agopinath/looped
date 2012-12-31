@@ -34,8 +34,10 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.common.Refreshable;
+import com.cyanojay.looped.portal.common.SortType;
+import com.cyanojay.looped.portal.common.Sortable;
 
-public class AssignmentsFragmnet extends SherlockListFragment implements Refreshable {
+public class AssignmentsFragmnet extends SherlockListFragment implements Refreshable, Sortable {
 	private CurrentAssignmentsAdapter adapter;
 	
 	@Override
@@ -272,4 +274,9 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
 		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
 		refreshTask.execute();
     }
+    
+	@Override
+	public void sort(SortType type) {
+		
+	}
 }

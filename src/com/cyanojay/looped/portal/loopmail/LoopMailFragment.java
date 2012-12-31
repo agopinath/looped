@@ -12,21 +12,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
@@ -34,8 +29,10 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.common.Refreshable;
+import com.cyanojay.looped.portal.common.SortType;
+import com.cyanojay.looped.portal.common.Sortable;
 
-public class LoopMailFragment extends SherlockListFragment implements Refreshable {
+public class LoopMailFragment extends SherlockListFragment implements Refreshable, Sortable {
 	private LoopMailAdapter adapter;
 	
 	private enum LoopMailBoxType {
@@ -267,5 +264,10 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 		
 		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
 		refreshTask.execute();
+	}
+	
+	@Override
+	public void sort(SortType type) {
+		
 	}
 }

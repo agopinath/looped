@@ -14,6 +14,7 @@ import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.KeepAliveService;
 import com.cyanojay.looped.portal.assignments.AssignmentsFragmnet;
 import com.cyanojay.looped.portal.common.Refreshable;
+import com.cyanojay.looped.portal.common.Sortable;
 import com.cyanojay.looped.portal.grades.GradesFragment;
 import com.cyanojay.looped.portal.loopmail.LoopMailFragment;
 import com.cyanojay.looped.portal.news.NewsFragment;
@@ -59,6 +60,13 @@ public class PortalActivity extends TabSwipeActivity {
         	Refreshable refreshable = (Refreshable) curr;
         	
         	refreshable.refresh(manager);
+            return true;
+        case R.id.menu_sort:
+        	Fragment currFrag = getCurrentFragment();
+        	
+        	Sortable sortable = (Sortable) curr;
+        	
+        	sortable.sort(null);
             return true;
         default:
             return super.onOptionsItemSelected(item);

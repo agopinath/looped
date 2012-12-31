@@ -29,8 +29,10 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.common.Refreshable;
+import com.cyanojay.looped.portal.common.SortType;
+import com.cyanojay.looped.portal.common.Sortable;
 
-public class NewsFragment extends SherlockListFragment implements Refreshable {
+public class NewsFragment extends SherlockListFragment implements Refreshable, Sortable {
 	private NewsAdapter adapter;
 	
     @Override
@@ -245,5 +247,10 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
 		
 		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
 		refreshTask.execute();
+	}
+	
+	@Override
+	public void sort(SortType type) {
+		
 	}
 }
