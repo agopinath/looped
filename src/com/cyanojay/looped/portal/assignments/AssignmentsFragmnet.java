@@ -233,6 +233,8 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     
     @Override
     public void refresh(FragmentManager manager) {
+    	if(Utils.isNetworkOffline(getSherlockActivity())) return;
+    	
     	System.out.println("Refreshing Assignments");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		

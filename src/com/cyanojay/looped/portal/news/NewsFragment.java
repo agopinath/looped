@@ -207,6 +207,8 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
 
 	@Override
 	public void refresh(FragmentManager manager) {
+		if(Utils.isNetworkOffline(getSherlockActivity())) return;
+		
 		System.out.println("Refreshing News");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		

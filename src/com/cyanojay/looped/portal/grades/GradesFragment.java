@@ -239,6 +239,8 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     
 	@Override
 	public void refresh(FragmentManager manager) {
+		if(Utils.isNetworkOffline(getSherlockActivity())) return;
+		
     	System.out.println("Refreshing Grades");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		

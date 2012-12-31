@@ -229,6 +229,8 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 
 	@Override
 	public void refresh(FragmentManager manager) {
+		if(Utils.isNetworkOffline(getSherlockActivity())) return;
+		
 		System.out.println("Refreshing LoopMail");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
