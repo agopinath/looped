@@ -1,6 +1,11 @@
 package com.cyanojay.looped.portal.loopmail;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -24,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
@@ -38,6 +44,26 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 	private enum LoopMailBoxType {
 		INBOX, SENT, ARCHIVE
 	}
+	
+	private static final Comparator<MailEntry> DATE_COMPARATOR = new Comparator<MailEntry>() {
+		@Override
+		public int compare(MailEntry lhs, MailEntry rhs) {
+			Date d1 = null;
+			Date d2 = null;
+			
+			try {
+				d1 = Constants.LOOPED_DATE_FORMAT.parse(lhs.getTimestamp());
+				d2 = Constants.LOOPED_DATE_FORMAT.parse(rhs.getTimestamp());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			if(d1 != null && d2 != null)
+				return d1.compareTo(d2);
+			
+			return 0;
+		}
+	};
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +124,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
     private class LoopMailAdapter extends ArrayAdapter<MailEntry> {
     	  private final Context context;
     	  private final MailEntry[] values;
+    	  private boolean sortDir;
     	  
     	  public LoopMailAdapter(Context context, MailEntry[] values) {
     		  super(context, R.layout.curr_mail_row, values);
@@ -125,7 +152,19 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
     		  subject.setText(entry.getSubject());
     		  
     		  return rowView;
-    	} 
+    	}
+
+		public MailEntry[] getValues() {
+			return values;
+		}
+		
+		public boolean getSortOrder() {
+			return sortDir;
+		}
+		
+		public void toggleSortOrder() {
+			sortDir = !sortDir;
+		}
     }
     
     private class ScrapeMailContentTask extends AsyncTask<MailEntry, Void, MailDetail> {
@@ -268,6 +307,12 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 	
 	@Override
 	public void sort(SortType type) {
-		
+		if(adapter != null) {
+			adapter.toggleSortOrder();
+			
+			Collections.sort(Arrays.asList(adapter.getValues()), 
+					adapter.getSortOrder() ? DATE_COMPARATOR : Collections.reverseOrder(DATE_COMPARATOR));
+			adapter.notifyDataSetChanged();
+		}
 	}
 }

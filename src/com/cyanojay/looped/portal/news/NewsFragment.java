@@ -1,6 +1,11 @@
 package com.cyanojay.looped.portal.news;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -24,16 +29,38 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
+import com.cyanojay.looped.portal.assignments.CurrentAssignment;
 import com.cyanojay.looped.portal.common.Refreshable;
 import com.cyanojay.looped.portal.common.SortType;
 import com.cyanojay.looped.portal.common.Sortable;
 
 public class NewsFragment extends SherlockListFragment implements Refreshable, Sortable {
 	private NewsAdapter adapter;
+	
+	private static final Comparator<NewsArticle> DATE_COMPARATOR = new Comparator<NewsArticle>() {
+		@Override
+		public int compare(NewsArticle lhs, NewsArticle rhs) {
+			Date d1 = null;
+			Date d2 = null;
+			
+			try {
+				d1 = Constants.LOOPED_DATE_FORMAT.parse(lhs.getDatePosted());
+				d2 = Constants.LOOPED_DATE_FORMAT.parse(rhs.getDatePosted());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			if(d1 != null && d2 != null)
+				return d1.compareTo(d2);
+			
+			return 0;
+		}
+	};
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +109,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
     private class NewsAdapter extends ArrayAdapter<NewsArticle> {
     	  private final Context context;
     	  private final NewsArticle[] values;
+    	  private boolean sortDir;
     	  
     	  public NewsAdapter(Context context, NewsArticle[] values) {
     		  super(context, R.layout.curr_news_row, values);
@@ -115,7 +143,19 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
     		  articleDate.setText(article.getDatePosted());
     		  
     		  return rowView;
-    	} 
+    	}
+
+		public NewsArticle[] getValues() {
+			return values;
+		}
+		
+		public boolean getSortOrder() {
+			return sortDir;
+		}
+		
+		public void toggleSortOrder() {
+			sortDir = !sortDir;
+		}
     }
     
     private class ScrapeNewsDetailsTask extends AsyncTask<NewsArticle, Void, NewsDetail> {
@@ -251,6 +291,14 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 	
 	@Override
 	public void sort(SortType type) {
-		
+		if(type == SortType.DATE) {
+			if(adapter != null) {
+				adapter.toggleSortOrder();
+				
+				Collections.sort(Arrays.asList(adapter.getValues()), 
+						adapter.getSortOrder() ? DATE_COMPARATOR : Collections.reverseOrder(DATE_COMPARATOR));
+				adapter.notifyDataSetChanged();
+			}
+		}
 	}
 }

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.achartengine.ChartFactory;
@@ -24,6 +23,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.grades.Course;
 import com.cyanojay.looped.portal.grades.GradeCategory;
@@ -33,7 +33,6 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	private Context parent;
 	private Course course;
 	private ProgressDialog progressDialog;
-	private static final SimpleDateFormat gradeDateFormat = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
 	
 	private GraphTaskType taskType;
 	private Set<GraphTaskWarningType> warnings;
@@ -168,7 +167,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		for(TimeSeries series : categSeries) {
     		
 	    	for(GradeDetail detail : details) {
-	    		Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
+	    		Date gradeDate = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
 	    		if(gradeDate == null) continue;
 	    				
 	    		if(detail.getCategory().equalsIgnoreCase(series.getTitle())) {
@@ -217,7 +216,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		double earned = 0.0d;
 
 		for(GradeDetail detail : details) {
-			Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
+			Date gradeDate = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
 			
 			if(gradeDate == null) continue;
 			
@@ -259,7 +258,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		
 		if(!isUnweighted) {
 			for(GradeDetail detail : details) {
-	    		Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
+	    		Date gradeDate = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
 	    		
 	    		if(gradeDate == null) continue;
 	    		
@@ -325,7 +324,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		double overallGrade = 0.0d;
 		
 		for(GradeDetail detail : details) {
-    		Date gradeDate = parseDate(detail.getDueDate(), gradeDateFormat);
+    		Date gradeDate = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
     		
     		if(gradeDate == null) continue;
     		

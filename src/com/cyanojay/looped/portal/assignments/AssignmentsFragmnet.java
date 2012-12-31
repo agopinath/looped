@@ -1,10 +1,13 @@
 package com.cyanojay.looped.portal.assignments;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -29,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
@@ -39,6 +43,26 @@ import com.cyanojay.looped.portal.common.Sortable;
 
 public class AssignmentsFragmnet extends SherlockListFragment implements Refreshable, Sortable {
 	private CurrentAssignmentsAdapter adapter;
+	
+	private static final Comparator<CurrentAssignment> DATE_COMPARATOR = new Comparator<CurrentAssignment>() {
+		@Override
+		public int compare(CurrentAssignment lhs, CurrentAssignment rhs) {
+			Date d1 = null;
+			Date d2 = null;
+			
+			try {
+				d1 = Constants.LOOPED_DATE_FORMAT.parse(lhs.getDueDate());
+				d2 = Constants.LOOPED_DATE_FORMAT.parse(rhs.getDueDate());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			if(d1 != null && d2 != null)
+				return d1.compareTo(d2);
+			
+			return 0;
+		}
+	};
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +111,8 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     private class CurrentAssignmentsAdapter extends ArrayAdapter<CurrentAssignment> {
     	  private final Context context;
     	  private final CurrentAssignment[] values;
-    	  private final String TODAY = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH).format(Calendar.getInstance().getTime());
+    	  private final String TODAY = Constants.LOOPED_DATE_FORMAT.format(Calendar.getInstance().getTime());
+    	  private boolean sortDir;
     	  
     	  public CurrentAssignmentsAdapter(Context context, CurrentAssignment[] values) {
     		  super(context, R.layout.curr_assignments_row, values);
@@ -117,8 +142,20 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     		  if(assignment.getDueDate().equals(TODAY)) {
     			  dueDate.setText(Html.fromHtml(dueDate.getText() + "<font color=\"#FF0000\"> (today)</font>"));
     		  }
-    		  
+
     		  return rowView;
+    	  }
+
+    	  public CurrentAssignment[] getValues() {
+    		  return values;
+    	  }
+
+    	  public boolean getSortOrder() {
+    		  return sortDir;
+    	  }
+
+    	  public void toggleSortOrder() {
+    		  sortDir = !sortDir;
     	  }
     } 
     
@@ -277,6 +314,14 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     
 	@Override
 	public void sort(SortType type) {
-		
+		if(type == SortType.DATE) {
+			if(adapter != null) {
+				adapter.toggleSortOrder();
+				
+				Collections.sort(Arrays.asList(adapter.getValues()), 
+						adapter.getSortOrder() ? DATE_COMPARATOR : Collections.reverseOrder(DATE_COMPARATOR));
+				adapter.notifyDataSetChanged();
+			}
+		}
 	}
 }

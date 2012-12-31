@@ -1,6 +1,9 @@
 package com.cyanojay.looped.portal.grades;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
@@ -18,15 +21,39 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.BaseListActivity;
 import com.cyanojay.looped.portal.common.Refreshable;
+import com.cyanojay.looped.portal.common.SortType;
+import com.cyanojay.looped.portal.common.Sortable;
+import com.cyanojay.looped.portal.loopmail.MailEntry;
 
-public class GradeDetailsActivity extends BaseListActivity implements Refreshable {
+public class GradeDetailsActivity extends BaseListActivity implements Refreshable, Sortable {
 	private GradeDetailsAdapter adapter;
+	
+	private static final Comparator<MailEntry> DATE_COMPARATOR = new Comparator<MailEntry>() {
+		@Override
+		public int compare(MailEntry lhs, MailEntry rhs) {
+			Date d1 = null;
+			Date d2 = null;
+			
+			try {
+				d1 = Constants.LOOPED_DATE_FORMAT.parse(lhs.getTimestamp());
+				d2 = Constants.LOOPED_DATE_FORMAT.parse(rhs.getTimestamp());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			if(d1 != null && d2 != null)
+				return d1.compareTo(d2);
+			
+			return 0;
+		}
+	};
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -188,5 +215,10 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 		
 		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
 		refreshTask.execute();
+	}
+
+	@Override
+	public void sort(SortType type) {
+		
 	}
 }
