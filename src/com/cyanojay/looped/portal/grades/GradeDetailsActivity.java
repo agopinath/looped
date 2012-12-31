@@ -23,8 +23,9 @@ import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.BaseListActivity;
+import com.cyanojay.looped.portal.Refreshable;
 
-public class GradeDetailsActivity extends BaseListActivity {
+public class GradeDetailsActivity extends BaseListActivity implements Refreshable {
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,5 +124,10 @@ public class GradeDetailsActivity extends BaseListActivity {
 	  		  
 	  		  return rowView;
 	  	}
+	}
+
+	@Override
+	public void refresh() {
+		System.out.println("Refreshing Grade Details");
 	}
 }

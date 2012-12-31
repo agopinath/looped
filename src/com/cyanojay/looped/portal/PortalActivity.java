@@ -51,8 +51,9 @@ public class PortalActivity extends TabSwipeActivity {
             Utils.logOut(this);
             return true;
         case R.id.menu_refresh:
-        	Fragment curr = getCurrentFragment();
-        	System.out.println("CLASS NAME!!!!!!! " + curr.getClass().getName());
+        	Refreshable curr = (Refreshable) getCurrentFragment();
+        	//System.out.println("CLASS NAME!!!!!!! " + curr.getClass().getName());
+        	curr.refresh();
             return true;
         default:
             return super.onOptionsItemSelected(item);

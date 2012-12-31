@@ -30,8 +30,9 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.graph.CourseGraphTask.GraphTaskType;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.portal.Refreshable;
 
-public class GradesFragment extends SherlockListFragment {
+public class GradesFragment extends SherlockListFragment implements Refreshable {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
 	
     @Override
@@ -232,4 +233,9 @@ public class GradesFragment extends SherlockListFragment {
 	        return builder.create();
 	    }
     }
+    
+	@Override
+	public void refresh() {
+		System.out.println("Refreshing Grades");
+	}
 }

@@ -35,8 +35,9 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.portal.Refreshable;
 
-public class AssignmentsFragmnet extends SherlockListFragment {
+public class AssignmentsFragmnet extends SherlockListFragment implements Refreshable {
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -230,4 +231,9 @@ public class AssignmentsFragmnet extends SherlockListFragment {
 	    	task.execute(selected);
 		}
     }
+    
+	@Override
+	public void refresh() {
+		System.out.println("Refreshing Assignments");
+	}
 }

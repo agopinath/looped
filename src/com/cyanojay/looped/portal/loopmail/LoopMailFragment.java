@@ -30,8 +30,9 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
+import com.cyanojay.looped.portal.Refreshable;
 
-public class LoopMailFragment extends SherlockListFragment {
+public class LoopMailFragment extends SherlockListFragment implements Refreshable {
 	
 	private enum LoopMailBoxType {
 		INBOX, SENT, ARCHIVE
@@ -221,4 +222,9 @@ public class LoopMailFragment extends SherlockListFragment {
 	    	task.execute(selected);
 		}
     }
+
+	@Override
+	public void refresh() {
+		System.out.println("Refreshing LoopMail");
+	}
 }
