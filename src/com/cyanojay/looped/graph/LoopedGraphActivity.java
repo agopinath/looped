@@ -58,7 +58,8 @@ public class LoopedGraphActivity extends Activity {
 			LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
 			
 			mChartView = new GraphicalView(this, courseGradesChart);
-			final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
+			
+			/*final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
 			
 			renderer.setClickEnabled(true);
 			renderer.setSelectableBuffer(30);
@@ -84,10 +85,10 @@ public class LoopedGraphActivity extends Activity {
 						
 						GradeDetail selectedDetail = gradeDetails.get(pointIdx);
 						
-						/*Toast.makeText(LoopedGraphActivity.this, 
+						Toast.makeText(LoopedGraphActivity.this, 
 								selectedDetail.getDetailName() + ": " + 
 								selectedDetail.getDisplayPercent() + " ~ " +
-								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();*/
+								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();
 						
 						Toast.makeText(
 								LoopedGraphActivity.this,
@@ -97,7 +98,7 @@ public class LoopedGraphActivity extends Activity {
 								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();
 					}
 				}
-			});
+			});*/
 			
 			layout.addView(mChartView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		} else {
