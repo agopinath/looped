@@ -5,6 +5,7 @@ import java.util.List;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.TimeChart;
 import org.achartengine.model.SeriesSelection;
+import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.app.Activity;
@@ -66,16 +67,34 @@ public class LoopedGraphActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
+					
+					XYMultipleSeriesDataset data = courseGradesChart.getDataset();
+					
 					double[] xy = mChartView.toRealPoint(0);
+					
 					if (seriesSelection == null) {
 						Toast.makeText(LoopedGraphActivity.this, "No chart element was clicked", Toast.LENGTH_SHORT).show();
 					} else {
-						Toast.makeText(
+						int selIdx = seriesSelection.getSeriesIndex();
+						int pointIdx = seriesSelection.getPointIndex();
+						
+						if(pointIdx < 0 || pointIdx >= gradeDetails.size()) return;
+						
+						if(selIdx != data.getSeriesCount() - 1) return;
+						
+						GradeDetail selectedDetail = gradeDetails.get(pointIdx);
+						
+						Toast.makeText(LoopedGraphActivity.this, 
+								selectedDetail.getDetailName() + ": " + 
+								selectedDetail.getDisplayPercent() + " ~ " +
+								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();
+						
+						/*Toast.makeText(
 								LoopedGraphActivity.this,
 								"Chart element in series index " + seriesSelection.getSeriesIndex()
 								+ " data point index " + seriesSelection.getPointIndex() + " was clicked"
 								+ " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue()
-								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();
+								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();*/
 					}
 				}
 			});
