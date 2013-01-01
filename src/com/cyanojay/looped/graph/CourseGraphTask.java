@@ -106,6 +106,11 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
         
         Intent chartIntent = null;
         
+        if(graphData == null) {
+        	Toast.makeText(parent, "Failed to create graph", Toast.LENGTH_SHORT).show();
+        	return;
+        }
+        
         if(taskType == GraphTaskType.ASSIGNMENTS) {
         	chartIntent = getCustomDatedScatterChart(
 	        		parent, 
