@@ -15,6 +15,7 @@
  */
 package com.cyanojay.looped.graph;
 
+import java.util.Date;
 import java.util.List;
 
 import org.achartengine.chart.PointStyle;
@@ -119,7 +120,7 @@ public class ChartUtil {
     renderer.setLabelsColor(labelsColor);
   }
   
-  public static XYMultipleSeriesRenderer getMultiSeriesRenderer(int seriesCount, boolean showsCourseGrade) {
+  public static XYMultipleSeriesRenderer getMultiSeriesRenderer(int seriesCount, boolean showsCourseGrade, Date min, Date max) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(16);
 	    renderer.setChartTitleTextSize(20);
@@ -159,8 +160,8 @@ public class ChartUtil {
 		    renderer.addSeriesRenderer(r);
 	    }
 	    
-	    renderer.setAxesColor(Color.DKGRAY);
-	    renderer.setLabelsColor(Color.LTGRAY);
+	    renderer.setAxesColor(Color.BLACK);
+	    renderer.setLabelsColor(Color.BLACK);
 	    renderer.setShowGrid(true);
 	    renderer.setZoomButtonsVisible(true);
 	    
@@ -168,7 +169,15 @@ public class ChartUtil {
 	    renderer.setYTitle("Grade in Percent (%)");  
 	    
 	    renderer.setApplyBackgroundColor(true); 
-	    renderer.setBackgroundColor(Color.BLACK);
+	    //renderer.setBackgroundColor(Color.BLACK);
+	    renderer.setBackgroundColor(Color.TRANSPARENT);
+	    renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+	    
+	    double TWOMONTHS = 81300000 * 60;
+	    double minX = min.getTime() - TWOMONTHS;
+	    double maxX = max.getTime() + TWOMONTHS;
+	    
+	    renderer.setPanLimits(new double[] { minX, maxX, -10, 1000});
 	    
 	    return renderer;
   }

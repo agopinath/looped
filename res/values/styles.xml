@@ -31,6 +31,10 @@
         
     </style>
     
+    <style name="LoopedCommon.LoopedGraph" >
+        
+    </style>
+    
     <style name="LoopedPopup" >
         <item name="android:background">@drawable/popup_border</item>
         <item name="android:textColor">@android:color/black</item>

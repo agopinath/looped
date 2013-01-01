@@ -58,7 +58,7 @@ public class LoopedGraphActivity extends Activity {
 			LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
 			
 			mChartView = new GraphicalView(this, courseGradesChart);
-			XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
+			final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
 			
 			renderer.setClickEnabled(true);
 			renderer.setSelectableBuffer(30);
@@ -70,11 +70,11 @@ public class LoopedGraphActivity extends Activity {
 					
 					XYMultipleSeriesDataset data = courseGradesChart.getDataset();
 					
-					double[] xy = mChartView.toRealPoint(0);
+					double[] xy = mChartView.toRealPoint(data.getSeriesAt(data.getSeriesCount() - 1).getScaleNumber());
+					System.out.println(xy[0] + " " + xy[1]);
 					
-					if (seriesSelection == null) {
-						Toast.makeText(LoopedGraphActivity.this, "No chart element was clicked", Toast.LENGTH_SHORT).show();
-					} else {
+					if (seriesSelection != null) {
+						
 						int selIdx = seriesSelection.getSeriesIndex();
 						int pointIdx = seriesSelection.getPointIndex();
 						
@@ -84,17 +84,17 @@ public class LoopedGraphActivity extends Activity {
 						
 						GradeDetail selectedDetail = gradeDetails.get(pointIdx);
 						
-						Toast.makeText(LoopedGraphActivity.this, 
+						/*Toast.makeText(LoopedGraphActivity.this, 
 								selectedDetail.getDetailName() + ": " + 
 								selectedDetail.getDisplayPercent() + " ~ " +
-								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();
+								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();*/
 						
-						/*Toast.makeText(
+						Toast.makeText(
 								LoopedGraphActivity.this,
 								"Chart element in series index " + seriesSelection.getSeriesIndex()
 								+ " data point index " + seriesSelection.getPointIndex() + " was clicked"
 								+ " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue()
-								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();*/
+								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();
 					}
 				}
 			});

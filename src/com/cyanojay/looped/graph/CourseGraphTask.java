@@ -118,11 +118,24 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
         	chartIntent = getCustomDatedScatterChart(
 	        		parent, 
 	        		graphData, 
-	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), false), 
+	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), false, null, null), 
 	        		"MMM dd, yy", 
 	        		"Graph for " + course.getName());
     	} else if(taskType == GraphTaskType.COURSE) {
-    		XYMultipleSeriesRenderer renderer = ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true);
+    		Date min = null;
+    		Date max = null;
+    		
+    		for(GradeDetail detail : details) {
+    			Date curr = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
+    			
+    			if(min == null || curr.before(min)) 
+    				min = curr;
+    			
+    			if(max == null || curr.after(max))
+    				max = curr;
+    		}
+    		
+    		XYMultipleSeriesRenderer renderer = ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true, min, max);
     		
     		chartIntent = new Intent(parent, LoopedGraphActivity.class);
     		
