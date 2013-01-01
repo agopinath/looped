@@ -1,6 +1,7 @@
 package com.cyanojay.looped.graph;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalActivity;
+import org.achartengine.chart.TimeChart;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -21,6 +23,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.cyanojay.looped.Constants;
@@ -36,6 +39,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	
 	private GraphTaskType taskType;
 	private Set<GraphTaskWarningType> warnings;
+	private List<GradeDetail> details;
 	
 	public enum GraphTaskType {
 		ASSIGNMENTS, COURSE
@@ -63,7 +67,6 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     protected XYMultipleSeriesDataset doInBackground(GraphTaskType... args) {
     	this.taskType = args[0];
     	
-    	List<GradeDetail> details = null;
     	List<TimeSeries> categSeries = null;
     	Set<GradeCategory> categWeights = null;
     	
@@ -119,12 +122,21 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	        		"MMM dd, yy", 
 	        		"Graph for " + course.getName());
     	} else if(taskType == GraphTaskType.COURSE) {
-    		chartIntent = ChartFactory.getTimeChartIntent(
-	        		parent, 
-	        		graphData, 
-	        		ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true), 
-	        		"MMM dd, yy", 
-	        		"Graph for " + course.getName());
+    		XYMultipleSeriesRenderer renderer = ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true);
+    		
+    		chartIntent = new Intent(parent, LoopedGraphActivity.class);
+    		
+    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName());
+    		
+    		Bundle extras = new Bundle();
+    		
+    		TimeChart chart = new TimeChart(graphData, renderer);
+    		chart.setDateFormat("MMM dd, yy");
+    		
+    		extras.putSerializable(LoopedGraphActivity.GRAPH_CHART, chart);
+    		extras.putSerializable(LoopedGraphActivity.GRADE_DETAILS, (Serializable) details);
+    		
+    		chartIntent.putExtras(extras);
     	}
         
         handleWarnings();
