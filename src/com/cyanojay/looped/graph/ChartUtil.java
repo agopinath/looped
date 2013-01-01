@@ -125,7 +125,7 @@ public class ChartUtil {
 	    renderer.setChartTitleTextSize(20);
 	    renderer.setLabelsTextSize(15);
 	    renderer.setLegendTextSize(15);
-	    renderer.setPointSize(5f);
+	    renderer.setPointSize(4f);
 	    renderer.setMargins(new int[] {30, 30, 30, 15});
 	    
 	    int[] colors = new int[] {
@@ -140,7 +140,6 @@ public class ChartUtil {
 		    
 		    if((i == seriesCount-1) && (seriesCount != 1) && showsCourseGrade) {
 		    	r.setColor(overallGradeColor);
-		    	r.setLineWidth(4.0f);
 		    	
 		    	r.setPointStyle(PointStyle.X);
 		    	r.setStroke(BasicStroke.DOTTED);
@@ -150,9 +149,10 @@ public class ChartUtil {
 	    								  (int)(Math.random() * 256), 
 	    								  (int)(Math.random() * 256));
 		    	r.setColor(pointCol);
-		    	r.setLineWidth(2.0f);
+		    	
 		    }
 		    
+		    r.setLineWidth(2.0f);
 		    r.setFillPoints(true);
 		    r.setPointStyle(PointStyle.CIRCLE);
 		    
