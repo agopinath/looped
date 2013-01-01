@@ -130,10 +130,11 @@ public class ChartUtil {
 	    renderer.setMargins(new int[] {30, 30, 30, 15});
 	    
 	    int[] colors = new int[] {
-	    		Color.RED, Color.rgb(255, 166, 0), Color.CYAN, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLUE
+	    		Color.rgb(0, 102, 0), Color.BLUE, Color.rgb(230, 115, 0), Color.MAGENTA, 
+	    		Color.BLACK, Color.rgb(0, 153, 153), Color.rgb(179, 0, 89), Color.YELLOW
 	    };
  	    
-	    int overallGradeColor = Color.GREEN;
+	    int overallGradeColor = Color.RED;
 	    
 	    for(int i = 0; i < seriesCount; i++) {
 	    	XYSeriesRenderer r = new XYSeriesRenderer();
@@ -167,6 +168,11 @@ public class ChartUtil {
 	    
 	    renderer.setXTitle("Time");
 	    renderer.setYTitle("Grade in Percent (%)");  
+	    
+	    renderer.setXLabelsColor(Color.BLACK);
+	    renderer.setYLabelsColor(0, Color.BLACK);
+	    
+	    renderer.setGridColor(Color.rgb(115, 115, 115));
 	    
 	    renderer.setApplyBackgroundColor(true); 
 	    //renderer.setBackgroundColor(Color.BLACK);
