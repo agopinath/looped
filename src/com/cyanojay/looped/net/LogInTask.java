@@ -101,12 +101,12 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 	        case SERVER_ERROR:
 	        	System.out.println("\n\nSERVER ERROR...LOG IN FAIL\n\n");
 	        	
-	        	Toast.makeText(parent, "School Loop is having a bit of trouble right now, please try again later.", Toast.LENGTH_LONG).show();
+	        	Toast.makeText(parent, "Problems connecting to server, please try again later.", Toast.LENGTH_LONG).show();
 	        	break;
 	        case CONNECTION_ABORTED:
 	        	System.out.println("\n\nCONNECTION ABORTED...LOG IN FAIL\n\n");
 	        	
-	        	Toast.makeText(parent, "Network connection lost, please re-connect and try again.", Toast.LENGTH_LONG).show();
+	        	Toast.makeText(parent, "Network connection lost while logging in, please re-connect and try again.", Toast.LENGTH_LONG).show();
 	        	break;
         }
     }
