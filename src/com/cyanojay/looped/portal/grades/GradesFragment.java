@@ -255,7 +255,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 				
 				ScrapeGradesTask task = new ScrapeGradesTask();
@@ -271,7 +271,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
 		        System.out.println("Finished refreshing Grades");

@@ -123,11 +123,8 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 	    protected void onPostExecute(List<GradeDetail> result) {
 	        super.onPostExecute(result);
 	        
-	        try {
-	        	if(!fromRefresh)
-	        	load.dismiss();
-	        	load = null;
-	        } catch (Exception e) {}
+	        if(!fromRefresh)
+	        	Utils.safelyDismissDialog(load);
 	        
 	        GradeDetail[] values = result.toArray(new GradeDetail[result.size()]);
 	        
@@ -213,7 +210,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 				
 				ScrapeGradeDetailsTask task = new ScrapeGradeDetailsTask(true);
@@ -229,7 +226,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
 		        System.out.println("Finished refreshing Grade Details");

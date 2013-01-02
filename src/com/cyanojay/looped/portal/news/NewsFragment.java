@@ -262,7 +262,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 				
 				ScrapeNewsTask task = new ScrapeNewsTask();
@@ -278,7 +278,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
 		        System.out.println("Finished refreshing News");

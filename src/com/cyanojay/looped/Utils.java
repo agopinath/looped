@@ -31,6 +31,7 @@ import org.jsoup.nodes.Document;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -44,11 +45,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -240,17 +240,7 @@ public class Utils {
 	}
 	
 	public static Dialog createLoopedDialog(Context parent, View contentView, int width) {
-		final Dialog popup = new Dialog(parent);
-    	
-    	popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    	popup.setContentView(contentView, new LayoutParams(width-((int)(0.1*width)), LayoutParams.WRAP_CONTENT));
-        
-        ((Button) contentView.findViewById(R.id.exit_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	popup.dismiss();
-            }
-        });
+		final Dialog popup = createLoopedDialog(parent, contentView, width, R.id.exit_btn);
         
         return popup;
 	}
@@ -264,7 +254,7 @@ public class Utils {
         ((Button) contentView.findViewById(exitBtnResId)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            	popup.dismiss();
+            	Utils.safelyDismissDialog(popup);
             }
         });
         
@@ -280,5 +270,13 @@ public class Utils {
     	}
 		
 		return isOffline;
+	}
+	
+	public static void safelyDismissDialog(Dialog dialog) {
+        try {
+        	if(dialog != null)
+        		dialog.dismiss();
+        	dialog = null;
+        } catch (Exception e) {}
 	}
 }

@@ -278,7 +278,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 				
 				ScrapeLoopMailTask task = new ScrapeLoopMailTask();
@@ -294,7 +294,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
 		        System.out.println("Finished refreshing LoopMail");

@@ -71,10 +71,7 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 				@Override
 				public void run() {
 			        // in case dialog does no longer exist, catch the error
-			        try {
-			        	progressDialog.dismiss();
-			        	progressDialog = null;
-			        } catch (Exception e) {}
+					Utils.safelyDismissDialog(progressDialog);
 			        
 			        Utils.unlockOrientation(parent);
 				}

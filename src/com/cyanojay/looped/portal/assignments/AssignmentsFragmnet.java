@@ -285,7 +285,7 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 				
 				ScrapeAssignmentsTask task = new ScrapeAssignmentsTask();
@@ -301,7 +301,7 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
-					progressDialog.dismiss();
+					Utils.safelyDismissDialog(progressDialog);
 				}
 				
 		        System.out.println("Finished refreshing Assignments");

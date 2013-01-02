@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.cyanojay.looped.Constants;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.grades.Course;
 import com.cyanojay.looped.portal.grades.GradeCategory;
@@ -105,10 +106,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     protected void onPostExecute(XYMultipleSeriesDataset graphData) {
         super.onPostExecute(graphData);
         
-        try {
-        	progressDialog.dismiss();
-        	progressDialog = null;
-        } catch (Exception e) {}
+        Utils.safelyDismissDialog(progressDialog);
         
         Intent chartIntent = null;
         
