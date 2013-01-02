@@ -1,8 +1,8 @@
 package com.cyanojay.looped.net;
 
 import java.io.IOException;
+import java.net.ConnectException;
 
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 
 import android.app.Activity;
@@ -17,7 +17,7 @@ import com.cyanojay.looped.portal.PortalActivity;
 public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> {
 	
 	public enum LoginStatus {
-		LOGIN_SUCCESS, LOGIN_FAIL, SERVER_ERROR
+		LOGIN_SUCCESS, LOGIN_FAIL, SERVER_ERROR, CONNECTION_ABORTED
 	}
 	
 	private ProgressDialog progressDialog;
@@ -58,10 +58,14 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
     		else 
     			return LoginStatus.LOGIN_FAIL;
     		
-    	} catch(IOException e) {
+    	} catch(ConnectException e) {
     		e.printStackTrace();
     		
     		return LoginStatus.SERVER_ERROR;
+    	} catch(IOException e) {
+    		e.printStackTrace();
+    		
+    		return LoginStatus.CONNECTION_ABORTED;
     	} finally {
     		parent.runOnUiThread(new Runnable() {
 				@Override
@@ -98,6 +102,11 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 	        	System.out.println("\n\nSERVER ERROR...LOG IN FAIL\n\n");
 	        	
 	        	Toast.makeText(parent, "School Loop is having a bit of trouble right now, please try again later.", Toast.LENGTH_LONG).show();
+	        	break;
+	        case CONNECTION_ABORTED:
+	        	System.out.println("\n\nCONNECTION ABORTED...LOG IN FAIL\n\n");
+	        	
+	        	Toast.makeText(parent, "Network connection lost, please re-connect and try again.", Toast.LENGTH_LONG).show();
 	        	break;
         }
     }
