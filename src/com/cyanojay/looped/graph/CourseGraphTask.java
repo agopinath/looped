@@ -105,7 +105,10 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     protected void onPostExecute(XYMultipleSeriesDataset graphData) {
         super.onPostExecute(graphData);
         
-        progressDialog.dismiss();
+        try {
+        	progressDialog.dismiss();
+        	progressDialog = null;
+        } catch (Exception e) {}
         
         Intent chartIntent = null;
         
