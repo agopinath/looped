@@ -60,7 +60,7 @@ public class LoopedGraphActivity extends Activity {
 			
 			mChartView = new GraphicalView(this, courseGradesChart);
 			
-			final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
+			/*final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
 			
 			renderer.setClickEnabled(true);
 			mChartView.setClickable(true);
@@ -77,7 +77,7 @@ public class LoopedGraphActivity extends Activity {
 					
 					XYMultipleSeriesDataset data = courseGradesChart.getDataset();
 					
-					double[] xy = mChartView.toRealPoint(data.getSeriesAt(data.getSeriesCount() - 1).getScaleNumber());
+					double[] xy = mChartView.toRealPoint(0);//data.getSeriesAt(data.getSeriesCount() - 1).getScaleNumber());
 					System.out.println(xy[0] + " " + xy[1]);
 					
 					if (seriesSelection != null) {
@@ -96,17 +96,17 @@ public class LoopedGraphActivity extends Activity {
 								selectedDetail.getDisplayPercent() + " ~ " +
 								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();
 						
-						/*Toast.makeText(
+						Toast.makeText(
 								LoopedGraphActivity.this,
 								"Chart element in series index " + seriesSelection.getSeriesIndex()
 								+ " data point index " + seriesSelection.getPointIndex() + " was clicked"
 								+ " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue()
-								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();*/  
+								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show(); 
 					}
 					
 					return false;
 				}
-			});
+			});*/
 			
 			layout.addView(mChartView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		} else {
