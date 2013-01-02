@@ -11,6 +11,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -59,14 +60,19 @@ public class LoopedGraphActivity extends Activity {
 			
 			mChartView = new GraphicalView(this, courseGradesChart);
 			
-			/*final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
+			final XYMultipleSeriesRenderer renderer = courseGradesChart.getRenderer();
 			
 			renderer.setClickEnabled(true);
+			mChartView.setClickable(true);
 			renderer.setSelectableBuffer(30);
 			
-			mChartView.setOnClickListener(new View.OnClickListener() {
+			mChartView.setOnTouchListener(new View.OnTouchListener() {
 				@Override
-				public void onClick(View v) {
+				public boolean onTouch(View v, MotionEvent event) {
+					if(event.getAction() != MotionEvent.ACTION_UP) return false;
+					
+					System.out.println(event.getX() + " " + event.getY());
+					
 					SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
 					
 					XYMultipleSeriesDataset data = courseGradesChart.getDataset();
@@ -79,9 +85,9 @@ public class LoopedGraphActivity extends Activity {
 						int selIdx = seriesSelection.getSeriesIndex();
 						int pointIdx = seriesSelection.getPointIndex();
 						
-						if(pointIdx < 0 || pointIdx >= gradeDetails.size()) return;
+						if(pointIdx < 0 || pointIdx >= gradeDetails.size()) return false;
 						
-						if(selIdx != data.getSeriesCount() - 1) return;
+						if(selIdx != data.getSeriesCount() - 1) return false;
 						
 						GradeDetail selectedDetail = gradeDetails.get(pointIdx);
 						
@@ -90,15 +96,17 @@ public class LoopedGraphActivity extends Activity {
 								selectedDetail.getDisplayPercent() + " ~ " +
 								selectedDetail.getDueDate(), Toast.LENGTH_LONG).show();
 						
-						Toast.makeText(
+						/*Toast.makeText(
 								LoopedGraphActivity.this,
 								"Chart element in series index " + seriesSelection.getSeriesIndex()
 								+ " data point index " + seriesSelection.getPointIndex() + " was clicked"
 								+ " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue()
-								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();
+								+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1], Toast.LENGTH_SHORT).show();*/  
 					}
+					
+					return false;
 				}
-			});*/
+			});
 			
 			layout.addView(mChartView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		} else {
