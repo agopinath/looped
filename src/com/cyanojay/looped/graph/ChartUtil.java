@@ -172,12 +172,13 @@ public class ChartUtil {
 	    renderer.setXLabelsColor(Color.BLACK);
 	    renderer.setYLabelsColor(0, Color.BLACK);
 	    
-	    renderer.setGridColor(Color.rgb(115, 115, 115));
+	    renderer.setGridColor(Color.rgb(140, 140, 140));
 	    
 	    renderer.setApplyBackgroundColor(true); 
 	    //renderer.setBackgroundColor(Color.BLACK);
 	    renderer.setBackgroundColor(Color.TRANSPARENT);
-	    renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+	    //renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+	    renderer.setMarginsColor(Color.rgb(219, 230, 188));
 	    
 	    double TWOMONTHS = 81300000 * 60;
 	    double minX = min.getTime() - TWOMONTHS;
