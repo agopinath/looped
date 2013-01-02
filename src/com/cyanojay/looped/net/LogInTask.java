@@ -1,5 +1,8 @@
 package com.cyanojay.looped.net;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 
 import android.app.Activity;
@@ -11,8 +14,12 @@ import android.widget.Toast;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.portal.PortalActivity;
 
-public class LogInTask extends AsyncTask<String, String, Boolean> {
-
+public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> {
+	
+	public enum LoginStatus {
+		LOGIN_SUCCESS, LOGIN_FAIL, SERVER_ERROR
+	}
+	
 	private ProgressDialog progressDialog;
 	private String username;
 	private String pass;
@@ -35,7 +42,7 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(String... args) {
+    protected LoginStatus doInBackground(String... args) {
     	CookieStore cookies = Utils.getCookies(loginUrl + "/portal/login");
     	
     	API.get().setCredentials(username, pass, loginUrl);
@@ -46,17 +53,21 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
     		API.get().refreshPortal();
     		
     		// check if this page, which is only accessible by logged-in sessions, returns a valid response
-    		return API.get().isLoggedIn(false);
-    	} catch(Exception e) {
+    		if(API.get().isLoggedIn(false))
+    			return LoginStatus.LOGIN_SUCCESS;
+    		else 
+    			return LoginStatus.LOGIN_FAIL;
+    		
+    	} catch(IOException e) {
     		e.printStackTrace();
+    		
+    		return LoginStatus.SERVER_ERROR;
     	}
-    	
-		return false;
     }
 
     @Override
-    protected void onPostExecute(Boolean loginSuccess) {
-        super.onPostExecute(loginSuccess);
+    protected void onPostExecute(LoginStatus loginStatus) {
+        super.onPostExecute(loginStatus);
         
         // in case dialog does no longer exist, catch the error
         try {
@@ -67,15 +78,23 @@ public class LogInTask extends AsyncTask<String, String, Boolean> {
         
         Utils.unlockOrientation(parent);
         
-        if(loginSuccess) {
-        	System.out.println("\n\nLOG IN SUCCESS\n\n");
-        	
-        	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
-            parent.startActivity(showPortalIntent);
-        } else {
-        	System.out.println("\n\nLOG IN FAIL\n\n");
-        	
-        	Toast.makeText(parent, "Incorrect username/password/login URL. Please try again.", Toast.LENGTH_LONG).show();
+        switch(loginStatus) {
+	        case LOGIN_SUCCESS:
+	        	System.out.println("\n\nLOG IN SUCCESS\n\n");
+	
+	        	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
+	        	parent.startActivity(showPortalIntent);
+	        	break;
+	        case LOGIN_FAIL:
+	        	System.out.println("\n\nLOG IN FAIL\n\n");
+	
+	        	Toast.makeText(parent, "Incorrect username/password/login URL prefix, please try again.", Toast.LENGTH_LONG).show();
+	        	break;
+	        case SERVER_ERROR:
+	        	System.out.println("\n\nSERVER ERROR...LOG IN FAIL\n\n");
+	        	
+	        	Toast.makeText(parent, "School Loop is having a bit of trouble right now, please try again later.", Toast.LENGTH_LONG).show();
+	        	break;
         }
     }
 }
