@@ -62,21 +62,25 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
     		e.printStackTrace();
     		
     		return LoginStatus.SERVER_ERROR;
+    	} finally {
+    		parent.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+			        // in case dialog does no longer exist, catch the error
+			        try {
+			        	progressDialog.dismiss();
+			        	progressDialog = null;
+			        } catch (Exception e) {}
+			        
+			        Utils.unlockOrientation(parent);
+				}
+    		});
     	}
     }
 
     @Override
     protected void onPostExecute(LoginStatus loginStatus) {
         super.onPostExecute(loginStatus);
-        
-        // in case dialog does no longer exist, catch the error
-        try {
-        	progressDialog.dismiss();
-        	progressDialog = null;
-        } catch (Exception e) {}
-        
-        
-        Utils.unlockOrientation(parent);
         
         switch(loginStatus) {
 	        case LOGIN_SUCCESS:
