@@ -4,23 +4,21 @@ import java.util.List;
 
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.TimeChart;
-import org.achartengine.model.SeriesSelection;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.portal.grades.GradeDetail;
 
-public class LoopedGraphActivity extends Activity {
+
+
+public class LoopedGraphActivity extends SherlockActivity {
 	public static final String GRAPH_CHART = "GRAPH_CHART";
 	public static final String GRADE_DETAILS = "GRADE_DETAILS";
 	public static final String GRAPH_TITLE = "GRAPH_TITLE";
@@ -39,16 +37,37 @@ public class LoopedGraphActivity extends Activity {
 		
 		String title = (String) getIntent().getStringExtra(GRAPH_TITLE);
 		
-		//mChartView = new GraphicalView(this, courseGradesChart);
-		
-		setTitle(title);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setTitle(title);
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_looped_graph, menu);
+		getSupportMenuInflater().inflate(R.menu.activity_portal, menu);
 		
 		return true;
+	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	super.onOptionsItemSelected(item);
+    	
+        switch (item.getItemId()) {
+	        case R.id.menu_logout:
+	            Utils.logOut(this);
+	            return true;
+	        case android.R.id.home:
+	            this.onBackPressed();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    menu.removeItem(R.id.menu_sort);
+	    
+	    return true;
 	}
 	
 	@Override

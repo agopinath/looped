@@ -111,7 +111,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
         Intent chartIntent = null;
         
         if(graphData == null) {
-        	Toast.makeText(parent, "Failed to create graph", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(parent, "Failed to create graph. Check your network connection and try again", Toast.LENGTH_LONG).show();
         	return;
         }
         
@@ -140,7 +140,8 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     		
     		chartIntent = new Intent(parent, LoopedGraphActivity.class);
     		
-    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName());
+    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName() + 
+    							": " + course.getPercentGrade() + " " + course.getLetterGrade());
     		
     		Bundle extras = new Bundle();
     		
