@@ -85,23 +85,23 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
         
         switch(loginStatus) {
 	        case LOGIN_SUCCESS:
-	        	System.out.println("\n\nLOG IN SUCCESS\n\n");
+	        	//System.out.println("\n\nLOG IN SUCCESS\n\n");
 	
 	        	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
 	        	parent.startActivity(showPortalIntent);
 	        	break;
 	        case LOGIN_FAIL:
-	        	System.out.println("\n\nLOG IN FAIL\n\n");
+	        	//System.out.println("\n\nLOG IN FAIL\n\n");
 	
 	        	Toast.makeText(parent, "Incorrect username/password/login URL prefix, please try again.", Toast.LENGTH_LONG).show();
 	        	break;
 	        case SERVER_ERROR:
-	        	System.out.println("\n\nSERVER ERROR...LOG IN FAIL\n\n");
+	        	//System.out.println("\n\nSERVER ERROR...LOG IN FAIL\n\n");
 	        	
 	        	Toast.makeText(parent, "Problems connecting to server, please try again later.", Toast.LENGTH_LONG).show();
 	        	break;
 	        case CONNECTION_ABORTED:
-	        	System.out.println("\n\nCONNECTION ABORTED...LOG IN FAIL\n\n");
+	        	//System.out.println("\n\nCONNECTION ABORTED...LOG IN FAIL\n\n");
 	        	
 	        	Toast.makeText(parent, "Network connection lost while logging in, please re-connect and try again.", Toast.LENGTH_LONG).show();
 	        	break;

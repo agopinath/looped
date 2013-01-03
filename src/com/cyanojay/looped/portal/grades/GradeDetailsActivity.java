@@ -199,7 +199,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(this)) return;
 		
-		System.out.println("Refreshing Grade Details");
+		//System.out.println("Refreshing Grade Details");
 		final ProgressDialog progressDialog = ProgressDialog.show(this, "Looped", "Refreshing...");
 		
 		Runnable firstJob = new Runnable() {
@@ -229,7 +229,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
-		        System.out.println("Finished refreshing Grade Details");
+		        //System.out.println("Finished refreshing Grade Details");
 			}
 		};
 		

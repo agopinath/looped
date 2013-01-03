@@ -94,14 +94,14 @@ public class LoopedGraphActivity extends SherlockActivity {
 				public boolean onTouch(View v, MotionEvent event) {
 					if(event.getAction() != MotionEvent.ACTION_UP) return false;
 					
-					System.out.println(event.getX() + " " + event.getY());
+					//System.out.println(event.getX() + " " + event.getY());
 					
 					SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
 					
 					XYMultipleSeriesDataset data = courseGradesChart.getDataset();
 					
 					double[] xy = mChartView.toRealPoint(0);//data.getSeriesAt(data.getSeriesCount() - 1).getScaleNumber());
-					System.out.println(xy[0] + " " + xy[1]);
+					//System.out.println(xy[0] + " " + xy[1]);
 					
 					if (seriesSelection != null) {
 						

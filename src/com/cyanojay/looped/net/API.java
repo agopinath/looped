@@ -121,7 +121,7 @@ public final class API {
     	}
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-        System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
+        //System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
         return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_OK));
 	}
 	
@@ -626,7 +626,7 @@ public final class API {
 	    		categWeight = GradeCategory.UNWEIGHTED;
 	    	}
 	    	
-	    	System.out.println(categName + " => " + categWeight);
+	    	//System.out.println(categName + " => " + categWeight);
 	    	
 	    	categs.add(new GradeCategory(categName, categWeight));
 	    }

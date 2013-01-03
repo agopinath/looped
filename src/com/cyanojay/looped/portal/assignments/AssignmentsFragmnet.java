@@ -274,7 +274,7 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     public void refresh(FragmentManager manager) {
     	if(Utils.isNetworkOffline(getSherlockActivity())) return;
     	
-    	System.out.println("Refreshing Assignments");
+    	//System.out.println("Refreshing Assignments");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
 		Runnable firstJob = new Runnable() {
@@ -304,7 +304,7 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
 					Utils.safelyDismissDialog(progressDialog);
 				}
 				
-		        System.out.println("Finished refreshing Assignments");
+		        //System.out.println("Finished refreshing Assignments");
 			}
 		};
 		

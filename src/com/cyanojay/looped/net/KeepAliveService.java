@@ -15,13 +15,13 @@ public class KeepAliveService extends IntentService  {
 	}
 
 	public void stopKeepAlive() {
-		System.out.println("---------- STOPPING KEEP ALIVE ------------");
+		//System.out.println("---------- STOPPING KEEP ALIVE ------------");
 		isToRun = false;
 	}
 	
 	private boolean doKeepAlive() {
 		try {
-			System.out.println("---------- REFRESHING PORTAL ------------");
+			//System.out.println("---------- REFRESHING PORTAL ------------");
 			API.get().preventCookieExpire();
 		} catch (IOException e) {
 			//Toast.makeText(context, "Failed to refresh School Loop. Please check your " +

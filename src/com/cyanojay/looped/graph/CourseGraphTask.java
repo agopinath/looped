@@ -214,7 +214,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 		    		if(Double.isInfinite(percent) || Double.isNaN(percent))
 		    			percent = 100.0d;
 		    		
-		    		System.out.println(detail.getDueDate() + " --> " + percent);
+		    		//System.out.println(detail.getDueDate() + " --> " + percent);
 		    		
 		    		series.add(gradeDate, percent);
 	    		}
@@ -265,7 +265,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 				if(Double.isInfinite(grade) || Double.isNaN(grade))
 					grade = 100.0d;
 
-				System.out.println(detail.getDetailName() + " --> " + grade);
+				//System.out.println(detail.getDetailName() + " --> " + grade);
 
 				series.add(gradeDate, grade);
 			}
@@ -285,7 +285,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 			if(currCateg.getWeight() != GradeCategory.UNWEIGHTED) isUnweighted = false;
 		}
 		
-		System.out.println("UNWEIGHTED? " + isUnweighted);
+		//System.out.println("UNWEIGHTED? " + isUnweighted);
 		
 		if(!isUnweighted) {
 			for(GradeDetail detail : details) {
@@ -332,13 +332,13 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	    			overallGrade += currCateg.getScaledWeight() * categGrade;
 	    		}
 	    		
-	    		/*System.out.println("============================");
-	    		System.out.println("Category: " + categ.getName());
-	    		System.out.println("Weight Sum: " + weightSum);
-	    		System.out.println("Scaled Weight: " + categ.getScaledWeight());
-	    		System.out.println("Assign. Count: " + categ.getAssignmentCount());
-	    		System.out.println("Overall Grade: " + overallGrade);
-	    		System.out.println("============================");*/
+	    		/*//System.out.println("============================");
+	    		//System.out.println("Category: " + categ.getName());
+	    		//System.out.println("Weight Sum: " + weightSum);
+	    		//System.out.println("Scaled Weight: " + categ.getScaledWeight());
+	    		//System.out.println("Assign. Count: " + categ.getAssignmentCount());
+	    		//System.out.println("Overall Grade: " + overallGrade);
+	    		//System.out.println("============================");*/
 	    		
 	    		courseGradeSeries.add(gradeDate, overallGrade);
 	    	}

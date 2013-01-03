@@ -202,7 +202,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     	
 		@Override
 		public void onClick(View v) {
-			//System.out.println("on long click received");
+			////System.out.println("on long click received");
 			
 			CourseGraphTask task = new CourseGraphTask(parent, toGraph);
 			task.execute(GraphTaskType.COURSE);
@@ -244,7 +244,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(getSherlockActivity())) return;
 		
-    	System.out.println("Refreshing Grades");
+    	//System.out.println("Refreshing Grades");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
 		Runnable firstJob = new Runnable() {
@@ -274,7 +274,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
-		        System.out.println("Finished refreshing Grades");
+		        //System.out.println("Finished refreshing Grades");
 			}
 		};
 		

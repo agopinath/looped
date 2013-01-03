@@ -267,7 +267,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(getSherlockActivity())) return;
 		
-		System.out.println("Refreshing LoopMail");
+		//System.out.println("Refreshing LoopMail");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
 		Runnable firstJob = new Runnable() {
@@ -297,7 +297,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 					Utils.safelyDismissDialog(progressDialog);
 				}
 		        
-		        System.out.println("Finished refreshing LoopMail");
+		        //System.out.println("Finished refreshing LoopMail");
 			}
 		};
 		
