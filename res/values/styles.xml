@@ -59,7 +59,7 @@
     
     <style name="LoopedButton" >
         <item name="android:background">@drawable/button_background</item>
-        <item name="android:padding">5dp</item>
+        <item name="android:padding">9dp</item>
     </style>
     
     <style name="styleName" parent="@style/LoopedCommon.LoopedMain">
