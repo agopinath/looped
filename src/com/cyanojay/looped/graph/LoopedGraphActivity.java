@@ -66,6 +66,7 @@ public class LoopedGraphActivity extends SherlockActivity {
 	
 	public boolean onPrepareOptionsMenu(Menu menu) {
 	    menu.removeItem(R.id.menu_sort);
+	    menu.removeItem(R.id.menu_refresh);
 	    
 	    return true;
 	}
