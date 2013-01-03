@@ -140,8 +140,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     		
     		chartIntent = new Intent(parent, LoopedGraphActivity.class);
     		
-    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName() + 
-    							": " + course.getPercentGrade() + " " + course.getLetterGrade());
+    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName());
     		
     		Bundle extras = new Bundle();
     		
