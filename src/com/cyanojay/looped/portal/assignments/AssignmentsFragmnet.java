@@ -112,7 +112,7 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     	  private final Context context;
     	  private final CurrentAssignment[] values;
     	  private final String TODAY = Constants.LOOPED_DATE_FORMAT.format(Calendar.getInstance().getTime());
-    	  private boolean sortDir;
+    	  private boolean sortDir = true;
     	  
     	  public CurrentAssignmentsAdapter(Context context, CurrentAssignment[] values) {
     		  super(context, R.layout.curr_assignments_row, values);

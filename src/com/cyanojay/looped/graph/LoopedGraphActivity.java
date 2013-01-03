@@ -53,6 +53,9 @@ public class LoopedGraphActivity extends SherlockActivity {
     	super.onOptionsItemSelected(item);
     	
         switch (item.getItemId()) {
+	        case R.id.menu_about:
+	            Utils.showAbout(this);
+	            return true;
 	        case R.id.menu_logout:
 	            Utils.logOut(this);
 	            return true;
