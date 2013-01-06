@@ -199,6 +199,8 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(this)) return;
 		
+		preRefresh();
+		
 		//System.out.println("Refreshing Grade Details");
 		final ProgressDialog progressDialog = ProgressDialog.show(this, "Looped", "Refreshing...");
 		
@@ -230,6 +232,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 				}
 		        
 		        //System.out.println("Finished refreshing Grade Details");
+				postRefresh();
 			}
 		};
 		
@@ -246,5 +249,15 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 					adapter.getSortOrder() ? DATE_COMPARATOR : Collections.reverseOrder(DATE_COMPARATOR));
 			adapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void preRefresh() {
+		Utils.lockOrientation(this);
+	}
+
+	@Override
+	public void postRefresh() {
+		Utils.unlockOrientation(this);
 	}
 }

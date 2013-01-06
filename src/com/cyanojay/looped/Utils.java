@@ -113,19 +113,29 @@ public class Utils {
 		return Build.VERSION.SDK_INT;
 	}
 	
-	public static void lockOrientation(Activity act) {
-		// lock orientation to avoid crash during login
-		int currOrientation = act.getResources().getConfiguration().orientation;
-		
-		if(currOrientation == Configuration.ORIENTATION_LANDSCAPE)
-			act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		else
-			act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	public static void lockOrientation(final Activity act) {
+		act.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				// lock orientation to avoid crash during login
+				int currOrientation = act.getResources().getConfiguration().orientation;
+				
+				if(currOrientation == Configuration.ORIENTATION_LANDSCAPE)
+					act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				else
+					act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			}
+		});
 	}
 	
-	public static void unlockOrientation(Activity act) {
-		// unlock orientation after logging in
-		act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+	public static void unlockOrientation(final Activity act) {
+		act.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				// unlock orientation after logging in
+				act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+			}
+		});
 	}
 	
 	public static boolean isOnline(Context context) {

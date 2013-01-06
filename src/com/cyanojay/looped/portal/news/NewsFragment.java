@@ -251,6 +251,8 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(getSherlockActivity())) return;
 		
+		preRefresh();
+		
 		//System.out.println("Refreshing News");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
@@ -282,6 +284,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 				}
 		        
 		        //System.out.println("Finished refreshing News");
+				postRefresh();
 			}
 		};
 		
@@ -300,5 +303,15 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 				adapter.notifyDataSetChanged();
 			}
 		}
+	}
+	
+	@Override
+	public void preRefresh() {
+		Utils.lockOrientation(getSherlockActivity());
+	}
+
+	@Override
+	public void postRefresh() {
+		Utils.unlockOrientation(getSherlockActivity());
 	}
 }

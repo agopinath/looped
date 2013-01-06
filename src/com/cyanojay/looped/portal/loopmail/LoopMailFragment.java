@@ -267,6 +267,8 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(getSherlockActivity())) return;
 		
+		preRefresh();
+		
 		//System.out.println("Refreshing LoopMail");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
@@ -298,6 +300,7 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 				}
 		        
 		        //System.out.println("Finished refreshing LoopMail");
+				postRefresh();
 			}
 		};
 		
@@ -314,5 +317,15 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 					adapter.getSortOrder() ? DATE_COMPARATOR : Collections.reverseOrder(DATE_COMPARATOR));
 			adapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void preRefresh() {
+		Utils.lockOrientation(getSherlockActivity());
+	}
+
+	@Override
+	public void postRefresh() {
+		Utils.unlockOrientation(getSherlockActivity());
 	}
 }

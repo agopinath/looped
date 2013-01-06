@@ -244,6 +244,8 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 	public void refresh(FragmentManager manager) {
 		if(Utils.isNetworkOffline(getSherlockActivity())) return;
 		
+		preRefresh();
+		
     	//System.out.println("Refreshing Grades");
 		final ProgressDialog progressDialog = ProgressDialog.show(getSherlockActivity(), "Looped", "Refreshing...");
 		
@@ -275,10 +277,21 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 				}
 		        
 		        //System.out.println("Finished refreshing Grades");
+				postRefresh();
 			}
 		};
 		
 		RefreshTask refreshTask = new RefreshTask(firstJob, secondJob);
 		refreshTask.execute();
+	}
+
+	@Override
+	public void preRefresh() {
+		Utils.lockOrientation(getSherlockActivity());
+	}
+
+	@Override
+	public void postRefresh() {
+		Utils.unlockOrientation(getSherlockActivity());
 	}
 }
