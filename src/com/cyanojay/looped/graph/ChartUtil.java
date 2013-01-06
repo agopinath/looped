@@ -180,9 +180,9 @@ public class ChartUtil {
 	    //renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 	    renderer.setMarginsColor(Color.rgb(219, 230, 188));
 	    
-	    double TWOMONTHS = 81300000 * 60;
-	    double minX = min.getTime() - TWOMONTHS;
-	    double maxX = max.getTime() + TWOMONTHS;
+	    double FOURMONTHS = 81300000 * 120;
+	    double minX = min.getTime() - FOURMONTHS;
+	    double maxX = max.getTime() + FOURMONTHS;
 	    
 	    renderer.setPanLimits(new double[] { minX, maxX, -10, 1000});
 	    
