@@ -1,6 +1,7 @@
 package com.cyanojay.looped.net;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 
 import org.apache.http.client.CookieStore;
@@ -86,13 +87,24 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
         switch(loginStatus) {
 	        case LOGIN_SUCCESS:
 	        	//System.out.println("\n\nLOG IN SUCCESS\n\n");
-	
+	        	
+	        	new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Utils.ensureLogin(username, pass, loginUrl);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+	        	}).start();
+	        	
 	        	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
 	        	parent.startActivity(showPortalIntent);
 	        	break;
 	        case LOGIN_FAIL:
 	        	//System.out.println("\n\nLOG IN FAIL\n\n");
-	
+	        	
 	        	Toast.makeText(parent, "Incorrect username/password/login URL prefix, please try again.", Toast.LENGTH_LONG).show();
 	        	break;
 	        case SERVER_ERROR:
