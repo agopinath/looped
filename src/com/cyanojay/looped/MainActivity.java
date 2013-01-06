@@ -67,16 +67,6 @@ public class MainActivity extends BaseActivity {
         setUpKeys(user);
         setUpKeys(pass);
         setUpKeys(prefix);
-        
-        LinearLayout myLayout = (LinearLayout) findViewById(R.id.main_activity_layout);
-        
-        myLayout.requestFocus();
-        
-        /*for(int i = 0; i < myLayout.getChildCount(); i++) {
-        	myLayout.clearChildFocus(myLayout.getChildAt(i));
-        }
-        
-        myLayout.clearFocus();*/
     }
 
     @Override
