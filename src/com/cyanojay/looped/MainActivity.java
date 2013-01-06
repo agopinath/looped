@@ -58,6 +58,8 @@ public class MainActivity extends BaseActivity {
         	if(isLoginSaved()) {
         		loadPreferences();
         		rem_me.setChecked(true);
+        		
+        		logIn(null);
         	}
         } else {
         	editor.clear();
