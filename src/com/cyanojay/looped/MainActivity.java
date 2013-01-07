@@ -7,21 +7,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
-import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.LogInTask;
 import com.cyanojay.looped.portal.BaseActivity;
 
@@ -44,12 +39,6 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        try {
-        	throw new ArithmeticException();
-        } catch(Exception e) {
-        	RemoteDebug.debugException("Test Exception", e);
-        }
         
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();

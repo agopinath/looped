@@ -1,7 +1,6 @@
 package com.cyanojay.looped.net;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 
 import org.apache.http.client.CookieStore;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.portal.PortalActivity;
 
 public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> {

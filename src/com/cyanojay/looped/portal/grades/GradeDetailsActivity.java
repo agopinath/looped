@@ -8,13 +8,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +31,6 @@ import com.cyanojay.looped.portal.BaseListActivity;
 import com.cyanojay.looped.portal.common.Refreshable;
 import com.cyanojay.looped.portal.common.SortType;
 import com.cyanojay.looped.portal.common.Sortable;
-import com.cyanojay.looped.portal.loopmail.MailEntry;
-import com.cyanojay.looped.portal.news.NewsArticle;
 
 public class GradeDetailsActivity extends BaseListActivity implements Refreshable, Sortable {
 	private GradeDetailsAdapter adapter;

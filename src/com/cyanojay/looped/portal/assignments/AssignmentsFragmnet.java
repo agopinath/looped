@@ -9,8 +9,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;

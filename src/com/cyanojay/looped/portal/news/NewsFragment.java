@@ -35,7 +35,6 @@ import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
-import com.cyanojay.looped.portal.assignments.CurrentAssignment;
 import com.cyanojay.looped.portal.common.Refreshable;
 import com.cyanojay.looped.portal.common.SortType;
 import com.cyanojay.looped.portal.common.Sortable;

@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.achartengine.chart.ScatterChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.graphics.Canvas;

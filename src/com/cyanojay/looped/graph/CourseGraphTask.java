@@ -1,6 +1,5 @@
 package com.cyanojay.looped.graph;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +16,6 @@ import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.util.MathHelper;
-import org.apache.http.client.ClientProtocolException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
