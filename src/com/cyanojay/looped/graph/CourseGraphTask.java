@@ -120,34 +120,39 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	        		"MMM dd, yy", 
 	        		"Graph for " + course.getName());
     	} else if(taskType == GraphTaskType.COURSE) {
-    		Date min = null;
-    		Date max = null;
-    		
-    		for(GradeDetail detail : details) {
-    			Date curr = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
-    			
-    			if(min == null || curr.before(min)) 
-    				min = curr;
-    			
-    			if(max == null || curr.after(max))
-    				max = curr;
+    		try {
+	    		Date min = null;
+	    		Date max = null;
+	    		
+	    		for(GradeDetail detail : details) {
+	    			Date curr = parseDate(detail.getDueDate(), Constants.LOOPED_DATE_FORMAT);
+	    			
+	    			if(min == null || curr.before(min)) 
+	    				min = curr;
+	    			
+	    			if(max == null || curr.after(max))
+	    				max = curr;
+	    		}
+	    		
+	    		XYMultipleSeriesRenderer renderer = 
+	    				ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true, min, max);
+	    		
+	    		chartIntent = new Intent(parent, LoopedGraphActivity.class);
+	    		
+	    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName());
+	    		
+	    		Bundle extras = new Bundle();
+	    		
+	    		TimeChart chart = new TimeChart(graphData, renderer);
+	    		chart.setDateFormat("MMM dd, 'yy");
+	    		
+	    		extras.putSerializable(LoopedGraphActivity.GRAPH_CHART, chart);
+	    		extras.putSerializable(LoopedGraphActivity.GRADE_DETAILS, (Serializable) details);
+	    		
+	    		chartIntent.putExtras(extras);
+    		} catch(Exception e) {
+    			RemoteDebug.debugException("Graph error", e);
     		}
-    		
-    		XYMultipleSeriesRenderer renderer = ChartUtil.getMultiSeriesRenderer(graphData.getSeriesCount(), true, min, max);
-    		
-    		chartIntent = new Intent(parent, LoopedGraphActivity.class);
-    		
-    		chartIntent.putExtra(LoopedGraphActivity.GRAPH_TITLE, "Graph for " + course.getName());
-    		
-    		Bundle extras = new Bundle();
-    		
-    		TimeChart chart = new TimeChart(graphData, renderer);
-    		chart.setDateFormat("MMM dd, yy");
-    		
-    		extras.putSerializable(LoopedGraphActivity.GRAPH_CHART, chart);
-    		extras.putSerializable(LoopedGraphActivity.GRADE_DETAILS, (Serializable) details);
-    		
-    		chartIntent.putExtras(extras);
     	}
         
         handleWarnings();
