@@ -35,6 +35,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.common.Refreshable;
@@ -82,7 +83,13 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
     private class ScrapeAssignmentsTask extends AsyncTask<String, Void, List<CurrentAssignment>> {
 		@Override
 		protected List<CurrentAssignment> doInBackground(String... params) {
-	        return API.get().getCurrentAssignments();
+	        try {
+				return API.get().getCurrentAssignments();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
+			}
+	        
+			return null;
 		}
 		
 		@Override
@@ -174,10 +181,8 @@ public class AssignmentsFragmnet extends SherlockListFragment implements Refresh
 		protected AssignmentDetail doInBackground(CurrentAssignment... params) {
 	        try {
 				return API.get().getAssignmentDetails(params[0]);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
 			}
 	        
 			return null;

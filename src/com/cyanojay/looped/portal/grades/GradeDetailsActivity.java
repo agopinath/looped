@@ -27,6 +27,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.BaseListActivity;
@@ -110,10 +111,8 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 		protected List<GradeDetail> doInBackground(Course... params) {
 			try {
 				return API.get().getGradeDetails(params[0]);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
 			}
 			
 			return null;

@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.portal.grades.Course;
 import com.cyanojay.looped.portal.grades.GradeCategory;
@@ -76,10 +77,8 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
     	try {
 			details = API.get().getGradeDetails(course);
 			categWeights = API.get().getCourseCategories(course);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			RemoteDebug.debugException(e);
 		}
     	
     	if(details == null || categWeights == null) return null;

@@ -32,6 +32,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.common.Refreshable;
@@ -87,10 +88,8 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
     			case INBOX:
 					try {
 						return API.get().getMailInbox();
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
+					} catch (Exception e) {
+						RemoteDebug.debugException(e);
 					}
     			default:
     				// TODO: handle the case if user doesn't request for inbox
@@ -182,10 +181,8 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 		protected MailDetail doInBackground(MailEntry... params) {
 			try {
 				return API.get().getMailDetails(params[0]);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
 			}
 			
 			return null;

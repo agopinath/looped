@@ -32,6 +32,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.RefreshTask;
 import com.cyanojay.looped.portal.assignments.CurrentAssignment;
@@ -80,7 +81,13 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
     private class ScrapeNewsTask extends AsyncTask<String, Void, List<NewsArticle>> {
     	@Override
 		protected List<NewsArticle> doInBackground(String... params) {
-			return API.get().getNews();
+			try {
+				return API.get().getNews();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
+			}
+			
+			return null;
 		}
 		
 		@Override
@@ -173,10 +180,8 @@ public class NewsFragment extends SherlockListFragment implements Refreshable, S
 		protected NewsDetail doInBackground(NewsArticle... params) {
 			try {
 				return API.get().getNewsDetails(params[0]);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
 			}
 			
 			return null;

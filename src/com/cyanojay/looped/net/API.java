@@ -27,6 +27,7 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.portal.assignments.AssignmentDetail;
 import com.cyanojay.looped.portal.assignments.CurrentAssignment;
 import com.cyanojay.looped.portal.grades.Course;
@@ -169,7 +170,7 @@ public final class API {
 		return portal.title();
 	}
 	
-	public List<Course> getCourses() {
+	public List<Course> getCourses() throws Exception {
 		List<Course> courses = new ArrayList<Course>();
 		
 		// select everything in the table holding the grades
@@ -214,7 +215,6 @@ public final class API {
 		    		try {
 		    			newCourse.setNumZeros(Integer.parseInt(currGradeTxt));
 		    		} catch(NumberFormatException e) {
-		    			e.printStackTrace();
 		    			newCourse.setNumZeros(0);
 		    		}
 		    	}
@@ -234,7 +234,7 @@ public final class API {
 	    return courses;
 	}
 	
-	public List<CurrentAssignment> getCurrentAssignments() {
+	public List<CurrentAssignment> getCurrentAssignments() throws Exception {
 		List<CurrentAssignment> assignments = new ArrayList<CurrentAssignment>();
 		
 		// select everything in the table holding the assignments
@@ -277,7 +277,7 @@ public final class API {
 	    return assignments;
 	}
 	
-	public List<NewsArticle> getNews() {
+	public List<NewsArticle> getNews() throws Exception {
 		List<NewsArticle> news = new ArrayList<NewsArticle>();
 		
 		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
@@ -333,7 +333,7 @@ public final class API {
 	    return news;
 	}
 	
-	public List<MailEntry> getMailInbox() throws IllegalStateException, IOException {
+	public List<MailEntry> getMailInbox() throws IllegalStateException, IOException, Exception {
 		List<MailEntry> mail = new ArrayList<MailEntry>();
 		
 		// retrieve the table listing the emails
@@ -374,7 +374,7 @@ public final class API {
 		return mail;
 	}
 	
-	public List<GradeDetail> getGradeDetails(Course course) throws ClientProtocolException, IOException {
+	public List<GradeDetail> getGradeDetails(Course course) throws ClientProtocolException, IOException, Exception {
 		List<GradeDetail> detailsList = new ArrayList<GradeDetail>();
 		
 		// construct and send a GET request to the URL where the Course grade details are stored
@@ -471,7 +471,7 @@ public final class API {
 	    return detailsList;
 	}
 
-	public AssignmentDetail getAssignmentDetails(CurrentAssignment assignment) throws ClientProtocolException, IOException {
+	public AssignmentDetail getAssignmentDetails(CurrentAssignment assignment) throws ClientProtocolException, IOException, Exception {
 		AssignmentDetail details = new AssignmentDetail();
 		
 		// construct and send a GET request to the URL where the assignment details are stored
@@ -501,7 +501,7 @@ public final class API {
 		return details;
 	}
 	
-	public NewsDetail getNewsDetails(NewsArticle article) throws IllegalStateException, IOException {
+	public NewsDetail getNewsDetails(NewsArticle article) throws IllegalStateException, IOException, Exception {
 		NewsDetail details = new NewsDetail();
 
 		// construct and send a GET request to the URL where the news article info is stored
@@ -528,7 +528,7 @@ public final class API {
 		return details;
 	}
 	
-	public MailDetail getMailDetails(MailEntry entry) throws IllegalStateException, IOException {
+	public MailDetail getMailDetails(MailEntry entry) throws IllegalStateException, IOException, Exception {
 		MailDetail details = new MailDetail();
 
 		// construct and send a GET request to the URL where the mail content is stored
@@ -576,7 +576,7 @@ public final class API {
 		return details;
 	}
 
-	public Set<GradeCategory> getCourseCategories(Course course) throws IllegalStateException, IOException {
+	public Set<GradeCategory> getCourseCategories(Course course) throws IllegalStateException, IOException, Exception {
 		Set<GradeCategory> categs = new LinkedHashSet<GradeCategory>();
 		
 		// construct and send a GET request to the URL where the Course grade categories are stored	

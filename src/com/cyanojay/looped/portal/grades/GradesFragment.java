@@ -28,6 +28,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.graph.CourseGraphTask;
 import com.cyanojay.looped.graph.CourseGraphTask.GraphTaskType;
 import com.cyanojay.looped.net.API;
@@ -56,7 +57,13 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     private class ScrapeGradesTask extends AsyncTask<String, Void, List<Course>> {
     	@Override
 		protected List<Course> doInBackground(String... params) {
-			return API.get().getCourses();
+			try {
+				return API.get().getCourses();
+			} catch (Exception e) {
+				RemoteDebug.debugException(e);
+			}
+			
+			return null;
 		}
 		
 		@Override
