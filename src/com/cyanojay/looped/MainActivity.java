@@ -1,5 +1,7 @@
 package com.cyanojay.looped;
 
+import java.util.Locale;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -96,7 +98,7 @@ public class MainActivity extends BaseActivity {
     }
     
     private String fixLoginPrefix(String pref) {
-    	return pref.toLowerCase().replace(" ", "").replace("\n", "").replace("\r", "");
+    	return pref.toLowerCase(Locale.US).replace(" ", "").replace("\n", "").replace("\r", "");
     }
     
     private void startLogIn(String username, String passwd, String prefix) {
