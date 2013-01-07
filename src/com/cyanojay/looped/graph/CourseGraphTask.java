@@ -144,7 +144,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	    		Bundle extras = new Bundle();
 	    		
 	    		TimeChart chart = new TimeChart(graphData, renderer);
-	    		chart.setDateFormat("MMM dd, 'yy");
+	    		chart.setDateFormat("MMM/dd/yy");
 	    		
 	    		extras.putSerializable(LoopedGraphActivity.GRAPH_CHART, chart);
 	    		extras.putSerializable(LoopedGraphActivity.GRADE_DETAILS, (Serializable) details);
