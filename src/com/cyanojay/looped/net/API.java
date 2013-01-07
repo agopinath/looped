@@ -27,7 +27,6 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.portal.assignments.AssignmentDetail;
 import com.cyanojay.looped.portal.assignments.CurrentAssignment;
 import com.cyanojay.looped.portal.grades.Course;

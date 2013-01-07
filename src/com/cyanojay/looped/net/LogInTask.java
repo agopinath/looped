@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
 import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.portal.PortalActivity;
@@ -88,6 +89,7 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
         switch(loginStatus) {
 	        case LOGIN_SUCCESS:
 	        	//System.out.println("\n\nLOG IN SUCCESS\n\n");
+	        	Constants.SCHOOL_URL = loginUrl;
 	        	
 	        	new Thread(new Runnable() {
 					@Override
