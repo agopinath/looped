@@ -227,6 +227,9 @@ public final class API {
 						String detailsUrl = portalUrl + link.first().attr("href");
 						newCourse.setDetailsUrl(Utils.getPrintViewifiedUrl(detailsUrl));
 					}
+					
+					if(newCourse.getDetailsUrl() == null && link != null) 
+						RemoteDebug.debug("course details is null", link.outerHtml());
 		    	}
 	    	}
 	    	
@@ -267,7 +270,10 @@ public final class API {
 						String detailsUrl = Utils.getPrintViewifiedUrl(portalUrl + link.first().attr("href"));
 						assignment.setDetailsUrl(detailsUrl);
 					}
-
+					
+					if(assignment.getDetailsUrl() == null && link != null) 
+						RemoteDebug.debug("mail details is null", link.outerHtml());
+					
 					assignment.setName(currAssignmentTxt);
 				}
 
@@ -332,7 +338,10 @@ public final class API {
 				String detailsUrl = Utils.getPrintViewifiedUrl(portalUrl + title.attr("href"));
 				article.setArticleUrl(detailsUrl);
 			}
-		    
+			
+			if(article.getArticleUrl() == null && title != null) 
+				RemoteDebug.debug("mail details is null", title.outerHtml());
+			
 		    news.add(article);
 	    }
 	    
@@ -371,6 +380,9 @@ public final class API {
 						String mailContentUrl = Utils.getPrintViewifiedUrl(portalUrl + link.first().attr("href"));
 						currEntry.setContentUrl(mailContentUrl);
 					}
+					
+					if(currEntry.getContentUrl() == null && link != null) 
+						RemoteDebug.debug("mail details is null", link.outerHtml());
 					
 					currEntry.setSubject(currInfoTxt);
 				}
