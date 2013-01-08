@@ -1,6 +1,5 @@
 package com.cyanojay.looped.graph;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -147,7 +146,7 @@ public class CourseGraphTask extends AsyncTask<CourseGraphTask.GraphTaskType, Vo
 	    		chart.setDateFormat("MMM/dd/yy");
 	    		
 	    		extras.putSerializable(LoopedGraphActivity.GRAPH_CHART, chart);
-	    		extras.putSerializable(LoopedGraphActivity.GRADE_DETAILS, (Serializable) details);
+	    		//extras.putSerializable(LoopedGraphActivity.GRADE_DETAILS, (Serializable) details);
 	    		
 	    		chartIntent.putExtras(extras);
     		} catch(Exception e) {

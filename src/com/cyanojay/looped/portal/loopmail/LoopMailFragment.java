@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.cyanojay.looped.Constants;
@@ -191,7 +192,13 @@ public class LoopMailFragment extends SherlockListFragment implements Refreshabl
 		@Override
 	    protected void onPostExecute(MailDetail mailDetail) {
 	        super.onPostExecute(mailDetail);
-
+	        
+	        if(mailDetail == null) {
+	        	Toast.makeText(getSherlockActivity(), 
+	        			"Session may be expired, try logging out and back in again.", Toast.LENGTH_LONG).show();
+	        	return;
+	        }
+	        
 	        TextView to = (TextView) flow.findViewById(R.id.maildet_to);
 	        TextView from = (TextView) flow.findViewById(R.id.maildet_from);
 	        TextView rest = (TextView) flow.findViewById(R.id.maildet_rest);

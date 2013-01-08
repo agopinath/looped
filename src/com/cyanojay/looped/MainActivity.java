@@ -42,6 +42,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        /*try {
+        	throw new ArithmeticException();
+        } catch (Exception e) {
+        	RemoteDebug.debugException("Test exception", e);
+        }*/
+        
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();
         

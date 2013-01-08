@@ -6,7 +6,7 @@ import android.content.Intent;
 
 
 public class KeepAliveService extends IntentService  {
-	private static final int UPDATE_INTERVAL = (int) (60 * 1000 * 12); // set to update every 12 minutes
+	private static final int UPDATE_INTERVAL = (int) (60 * 1000 * 8); // set to update every 8 minutes
 	private volatile boolean isToRun;
 	
 	public KeepAliveService() {

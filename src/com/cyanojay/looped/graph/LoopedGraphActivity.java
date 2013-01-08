@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.TimeChart;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.os.Bundle;
 import android.view.ViewGroup.LayoutParams;
@@ -23,7 +24,7 @@ public class LoopedGraphActivity extends SherlockActivity {
 	public static final String GRADE_DETAILS = "GRADE_DETAILS";
 	public static final String GRAPH_TITLE = "GRAPH_TITLE";
 	
-	private List<GradeDetail> gradeDetails;
+	//private List<GradeDetail> gradeDetails;
 	private GraphicalView mChartView;
 	private TimeChart courseGradesChart;
 	
@@ -33,7 +34,7 @@ public class LoopedGraphActivity extends SherlockActivity {
 		setContentView(R.layout.activity_looped_graph);
 		
 		courseGradesChart = (TimeChart) getIntent().getSerializableExtra(GRAPH_CHART);
-		gradeDetails = (List<GradeDetail>) getIntent().getSerializableExtra(GRADE_DETAILS);
+		//gradeDetails = (List<GradeDetail>) getIntent().getSerializableExtra(GRADE_DETAILS);
 		
 		String title = (String) getIntent().getStringExtra(GRAPH_TITLE);
 		
@@ -43,7 +44,7 @@ public class LoopedGraphActivity extends SherlockActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_portal, menu);
+		getSupportMenuInflater().inflate(R.menu.activity_looped_graph, menu);
 		
 		return true;
 	}
@@ -56,9 +57,6 @@ public class LoopedGraphActivity extends SherlockActivity {
 	        case R.id.menu_about:
 	            Utils.showAbout(this);
 	            return true;
-	        case R.id.menu_logout:
-	            Utils.logOut(this);
-	            return true;
 	        case android.R.id.home:
 	            this.onBackPressed();
 	            return true;
@@ -66,13 +64,6 @@ public class LoopedGraphActivity extends SherlockActivity {
 	            return super.onOptionsItemSelected(item);
         }
     }
-	
-	public boolean onPrepareOptionsMenu(Menu menu) {
-	    menu.removeItem(R.id.menu_sort);
-	    menu.removeItem(R.id.menu_refresh);
-	    
-	    return true;
-	}
 	
 	@Override
 	protected void onResume() {
@@ -136,5 +127,4 @@ public class LoopedGraphActivity extends SherlockActivity {
 			mChartView.repaint();
 		}
 	}
-
 }

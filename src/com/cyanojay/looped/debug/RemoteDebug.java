@@ -13,9 +13,12 @@ import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
 
 public final class RemoteDebug {
-	private static final String REMOTE = "http://50.116.13.217";
 	private static final DefaultHttpClient httpclient = new DefaultHttpClient();
 	private static final String DEVICE = Utils.getDeviceName();
+	
+	private static String USER = null;
+	private static String HASH = null;
+	private static String URL = null;
 	
 	public static void debug(final String meta, final String error) {
 		new Thread(new Runnable() {
@@ -26,14 +29,15 @@ public final class RemoteDebug {
 							"TIMESTAMP: " + (new Date()).toString() + "\n" +
 							"VERSION: 0.81" + "\n" +
 							"DEVICE: " + DEVICE + "\n" +
-							"SCHOOL URL: " + Constants.SCHOOL_URL + "\n" +
+							"USER: " + USER + "\n" +
+							"HASH: " + HASH + "\n" +
+							"SCHOOL URL: " + URL + "\n" +
 							"METAINFO: " + meta + "\n" +
 							"ERROR: " + error + "\n\n\n";
 					
-					HttpPost post = new HttpPost(REMOTE + "/looped_debug.php");
+					HttpPost post = new HttpPost(Constants.LOG_ADDRESS);
 					
-					System.out.println(debugInfo);
-					
+					System.out.println(Constants.LOG_ADDRESS + "\n" + debugInfo);
 					
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
 					postParameters.add(new BasicNameValuePair("data", debugInfo));
@@ -59,5 +63,20 @@ public final class RemoteDebug {
 	
 	public static void debugException(String meta, Exception e) {
 		debug(meta, Utils.getExceptionString(e));
+	}
+	
+	public static void setUser(String user) {
+		if(USER == null && user != null)
+			USER = user;
+	}
+	
+	public static void setHash(String hash) {
+		if(HASH == null && hash != null)
+			HASH = hash;
+	}
+	
+	public static void setUrl(String url) {
+		if(URL == null && url != null)
+			URL = url;
 	}
 }

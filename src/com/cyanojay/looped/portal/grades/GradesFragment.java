@@ -186,7 +186,9 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 	    	
 	    	Course selectedCourse = (Course) adapter.getItem(position);
 	    	
-	    	if(selectedCourse.getDetailsUrl().length() == 0) {
+	    	if(selectedCourse == null ||
+	    		selectedCourse.getDetailsUrl() == null ||
+	    		selectedCourse.getDetailsUrl().length() == 0) {
 	    		Toast.makeText(parent, "Progress report for course is unpublished/unavailable.", Toast.LENGTH_LONG).show();
 	    		return;
 	    	}

@@ -27,6 +27,7 @@ import org.jsoup.select.Elements;
 
 import com.cyanojay.looped.Constants;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.debug.RemoteDebug;
 import com.cyanojay.looped.portal.assignments.AssignmentDetail;
 import com.cyanojay.looped.portal.assignments.CurrentAssignment;
 import com.cyanojay.looped.portal.grades.Course;
@@ -172,6 +173,8 @@ public final class API {
 	public List<Course> getCourses() throws Exception {
 		List<Course> courses = new ArrayList<Course>();
 		
+		if(coursePortal == null || coursePortal.body() == null) return courses;
+		
 		// select everything in the table holding the grades
 	    Elements courseBlock = coursePortal.body().select("tbody.hub_general_body tr");
 	    
@@ -236,6 +239,8 @@ public final class API {
 	public List<CurrentAssignment> getCurrentAssignments() throws Exception {
 		List<CurrentAssignment> assignments = new ArrayList<CurrentAssignment>();
 		
+		if(portal == null || portal.body() == null) return assignments;
+		
 		// select everything in the table holding the assignments
 	    Elements assignmentsBlock = portal.body().select("tbody.hub_general_body tr");
 	    
@@ -278,6 +283,8 @@ public final class API {
 	
 	public List<NewsArticle> getNews() throws Exception {
 		List<NewsArticle> news = new ArrayList<NewsArticle>();
+		
+		if(portal == null || portal.body() == null) return news;
 		
 		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
 		
@@ -335,6 +342,8 @@ public final class API {
 	public List<MailEntry> getMailInbox() throws IllegalStateException, IOException, Exception {
 		List<MailEntry> mail = new ArrayList<MailEntry>();
 		
+		if(loopMail == null) return mail;
+		
 		// retrieve the table listing the emails
 		Elements tables = loopMail.select("table.list_padding");
 		
@@ -379,10 +388,15 @@ public final class API {
 		// construct and send a GET request to the URL where the Course grade details are stored
 		Document detailsPage = Utils.getJsoupDocFromUrl(course.getDetailsUrl(), portalUrl, authCookies);
 		
+		if(detailsPage == null) {
+			RemoteDebug.debug("detailsPage is null", "Points data for grade details is weird");
+			return detailsList;
+		}
+		
 		// select all rows of the table containing grade details
 	    Elements details = detailsPage.body().select("tbody.general_body tr");
 	    
-	    if(details.size() == 0) return detailsList;
+	    if(details == null) RemoteDebug.debug("details is null in getGradeDetails", detailsPage.html());
 	    
 	    for(Element detail: details) {
 		    GradeDetail newDetail = new GradeDetail();
@@ -400,17 +414,17 @@ public final class API {
 		    
 			if (data.size() >= 5) {
 				// should be an entry of the form 'n / m = x%', where n, m, and x are numbers
-				String scoreData = data.get(4).text().trim().replaceAll(" ", "");
+				String scoreData = data.get(4).text().trim();
 
 				// if the score is a numerical and properly formatted entry, split the grade into total
 				// points and earned points
 				if (!(scoreData.length() == 0)
 					&& Character.isDigit(scoreData.charAt(0))
-					&& scoreData.indexOf("=") != -1
-					&& scoreData.indexOf("/") != -1) {
+					&& scoreData.indexOf(" = ") != -1
+					&& scoreData.indexOf(" / ") != -1) {
 					
 					// split into 2 halves: one for percent, and other for raw score
-					String[] scoreComps = scoreData.split("=");
+					String[] scoreComps = scoreData.split(" = ");
 					
 					// store the percent value from the appropriate half
 					String displayPct = scoreComps[1].trim();
@@ -418,13 +432,13 @@ public final class API {
 					newDetail.setDisplayPercent(displayPct);
 
 					// split the part before the percent and '=' into respective parts and parse
-					String[] scoreParts = scoreComps[0].split("/");
+					String[] scoreParts = scoreComps[0].split(" / ");
 
 					try {
 						newDetail.setPointsEarned(Double.parseDouble(scoreParts[0].trim()));
 						newDetail.setTotalPoints(Double.parseDouble(scoreParts[1].trim()));
 					} catch (NumberFormatException e) {
-						e.printStackTrace();
+						RemoteDebug.debugException("Points data for grade details is weird", e);
 						// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
 						newDetail.setPointsEarned(0.0d);
 						newDetail.setTotalPoints(0.0d);
@@ -433,7 +447,7 @@ public final class API {
 						newDetail.setDisplayScore("");
 					}
 
-					String displayScore = scoreComps[0];
+					String displayScore = scoreComps[0].replaceAll(" ", "");
 					newDetail.setDisplayScore(displayScore);
 				} else {
 					boolean isExtraCredit = false;
@@ -450,6 +464,7 @@ public final class API {
 						try {
 							newDetail.setPointsEarned(Double.parseDouble(data.get(3).text().trim()));
 						} catch(NumberFormatException e) {
+							RemoteDebug.debugException("Detail data for extra credit is weird", e);
 							// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
 							newDetail.setPointsEarned(0.0d);
 							newDetail.setTotalPoints(0.0d);
@@ -479,6 +494,8 @@ public final class API {
 		// select the div containing assignment details
 		Elements detailBlock = detailsPage.body().select("div.course");
 		
+		if(detailBlock == null) RemoteDebug.debug("detailBlock is null in getAssignmentDetails", detailsPage.html());
+		
 		if(detailBlock.size() == 0) return details;
 		
 		String assignTitle = detailBlock.select("div.title_page").text().trim();
@@ -505,9 +522,11 @@ public final class API {
 
 		// construct and send a GET request to the URL where the news article info is stored
 		Document detailsPage = Utils.getJsoupDocFromUrl(article.getArticleUrl(), portalUrl, authCookies);
-		
+
 		// select the block containing news article info
 		Elements infoBlock = detailsPage.body().select("div.published");
+		
+		if(infoBlock == null) RemoteDebug.debug("v is null in getNewsDetails", detailsPage.html());
 		
 		if(infoBlock.size() == 0) return details;
 		
