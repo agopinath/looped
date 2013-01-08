@@ -173,7 +173,7 @@ public final class API {
 	public List<Course> getCourses() throws Exception {
 		List<Course> courses = new ArrayList<Course>();
 		
-		if(coursePortal == null || coursePortal.body() == null) return courses;
+		if(coursePortal == null) return courses;
 		
 		// select everything in the table holding the grades
 	    Elements courseBlock = coursePortal.body().select("tbody.hub_general_body tr");
@@ -242,7 +242,7 @@ public final class API {
 	public List<CurrentAssignment> getCurrentAssignments() throws Exception {
 		List<CurrentAssignment> assignments = new ArrayList<CurrentAssignment>();
 		
-		if(portal == null || portal.body() == null) return assignments;
+		if(portal == null) return assignments;
 		
 		// select everything in the table holding the assignments
 	    Elements assignmentsBlock = portal.body().select("tbody.hub_general_body tr");
@@ -290,7 +290,7 @@ public final class API {
 	public List<NewsArticle> getNews() throws Exception {
 		List<NewsArticle> news = new ArrayList<NewsArticle>();
 		
-		if(portal == null || portal.body() == null) return news;
+		if(portal == null) return news;
 		
 		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
 		
@@ -476,7 +476,7 @@ public final class API {
 						try {
 							newDetail.setPointsEarned(Double.parseDouble(data.get(3).text().trim()));
 						} catch(NumberFormatException e) {
-							RemoteDebug.debugException("Detail data for extra credit is weird", e);
+							e.printStackTrace();
 							// if numbers aren't formatted properly, something is weird, so set to empty/invalid to be safe
 							newDetail.setPointsEarned(0.0d);
 							newDetail.setTotalPoints(0.0d);

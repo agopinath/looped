@@ -1,10 +1,7 @@
 package com.cyanojay.looped.graph;
 
-import java.util.List;
-
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.TimeChart;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.os.Bundle;
 import android.view.ViewGroup.LayoutParams;
@@ -15,7 +12,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
-import com.cyanojay.looped.portal.grades.GradeDetail;
 
 
 
