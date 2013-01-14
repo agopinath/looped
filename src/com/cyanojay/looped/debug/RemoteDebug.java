@@ -16,8 +16,6 @@ public final class RemoteDebug {
 	private static final DefaultHttpClient httpclient = new DefaultHttpClient();
 	private static final String DEVICE = Utils.getDeviceName();
 	
-	private static String USER = null;
-	private static String HASH = null;
 	private static String URL = null;
 	
 	public static void debug(final String meta, final String error) {
@@ -29,8 +27,6 @@ public final class RemoteDebug {
 							"TIMESTAMP: " + (new Date()).toString() + "\n" +
 							"VERSION: 0.81" + "\n" +
 							"DEVICE: " + DEVICE + "\n" +
-							"USER: " + USER + "\n" +
-							"HASH: " + HASH + "\n" +
 							"SCHOOL URL: " + URL + "\n" +
 							"METAINFO: " + meta + "\n" +
 							"ERROR: " + error + "\n\n\n";
@@ -63,16 +59,6 @@ public final class RemoteDebug {
 	
 	public static void debugException(String meta, Exception e) {
 		debug(meta, Utils.getExceptionString(e));
-	}
-	
-	public static void setUser(String user) {
-		if(USER == null && user != null)
-			USER = user;
-	}
-	
-	public static void setHash(String hash) {
-		if(HASH == null && hash != null)
-			HASH = hash;
 	}
 	
 	public static void setUrl(String url) {

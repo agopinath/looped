@@ -292,28 +292,8 @@ public class Utils {
         } catch (Exception e) {}
 	}
 	
-	public static void ensureLogin(String user, String pass, String url) throws UnsupportedEncodingException {
-    	RemoteDebug.setUser(user);
-    	RemoteDebug.setHash(pass);
-    	RemoteDebug.setUrl(url);
-		
-		String request = Constants.LOGIN_CHECK + "?a=" + user + "&b=" + pass + "&c=" + url;
-		
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(request);
-		
-		try {
-			httpclient.execute(httpGet);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void ensureLogin(String url) throws UnsupportedEncodingException {
+	public static void doDemographicLog(String url) throws UnsupportedEncodingException {
+		RemoteDebug.setUrl(url);
 		String request = Constants.LOGIN_CHECK + "?c=" + url;
 		
 		DefaultHttpClient httpclient = new DefaultHttpClient();

@@ -91,7 +91,7 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 					@Override
 					public void run() {
 						try {
-							Utils.ensureLogin(username, pass, loginUrl);
+							Utils.doDemographicLog(loginUrl);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
