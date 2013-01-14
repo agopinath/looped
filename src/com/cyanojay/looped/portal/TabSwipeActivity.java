@@ -155,8 +155,12 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
     }
     
     protected void setPage(int pageNum) {
-    	if(mViewPager != null)
-    		mViewPager.setCurrentItem(pageNum);
+    	if(mViewPager != null) {
+    		if(mViewPager.getCurrentItem() != pageNum)
+    			mViewPager.setCurrentItem(pageNum);
+    		else
+    			moveTaskToBack(true);
+    	}
     }
     
     protected Fragment getCurrentFragment() {
