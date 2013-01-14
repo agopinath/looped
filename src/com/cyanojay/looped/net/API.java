@@ -130,7 +130,7 @@ public final class API {
 		if(!isLoggedIn(true)) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
-		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/student_home?d=x"), portalUrl, authCookies);
+		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/parent_home?d=x"), portalUrl, authCookies);
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
@@ -143,7 +143,7 @@ public final class API {
 	public void refreshCoursePortal() throws IOException {
 		if(!isLoggedIn(true)) return;
 		
-		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/student_home?d=x"), portalUrl, authCookies);
+		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/parent_home?d=x"), portalUrl, authCookies);
 	}
 	
 	public void refreshLoopMail() throws IOException {
@@ -292,9 +292,14 @@ public final class API {
 		
 		if(portal == null) return news;
 		
-		Elements newsBlock = portal.body().select("td.home_right table.module:eq(2)");
+		Elements newsModules = portal.body().select("td.home_right table.module");
 		
-		if(newsBlock.size() == 0) return news;
+		if(newsModules.size() == 0) return news;
+		
+		// get 3 'module' tables from the last one.
+		Element newsBlock = newsModules.get(newsModules.size()-3);
+		
+		if(newsBlock == null) return news;
 		
 		// select everything in the div holding the article names
 		Elements articleNames = newsBlock.select("a.module_link");
