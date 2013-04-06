@@ -3,7 +3,9 @@ package com.cyanojay.looped.net;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -292,52 +294,56 @@ public final class API {
 		
 		if(portal == null) return news;
 		
-		Elements newsModules = portal.body().select("td.home_right table.module");
+		Elements newsModules = portal.body().select("div.home_right div.module");
 		
 		if(newsModules.size() == 0) return news;
 		
-		// get 3 'module' tables from the last one.
-		Element newsBlock = newsModules.get(newsModules.size()-3);
+		// get 1 'module' tables from the last one.
+		Element newsBlock = newsModules.get(newsModules.size()-2);
 		
 		if(newsBlock == null) return news;
 		
 		// select everything in the div holding the article names
-		Elements articleNames = newsBlock.select("a.module_link");
-	    
-	    // select everything in the div holding the article info (date posted and author)
-	    Elements articleInfo = newsBlock.select("td.list_text");
-	    
-	    for(int i = 0; i < articleNames.size(); i++) {
+		Elements articles = newsBlock.select("div.content_item");
+		
+	    for(int i = 0; i < articles.size(); i++) {
 		    // create new empty news article to store the article info
 		    NewsArticle article = new NewsArticle();
+		    Element articleDiv = articles.get(i);
 		    
 		    // select info according to how it is ordered/structured in the HTML
-		    Element title = articleNames.get(i);
-		    Element author = articleInfo.get(2*i);
-		    Element date = articleInfo.get((2*i)+1);
-		   	
+		    Element title = articleDiv.select("a.title_link").first();
+		    String meta = articleDiv.ownText();
+		    String articleDateText = null;
+		    
+		    int idx = 0;
+		    while (!Character.isDigit(meta.charAt(idx))) idx++;
+		    
+	    	articleDateText = meta.substring(idx);
+	    	
+	    	meta = meta.substring(0, idx);
+	    	
 		    // split the author field into the author's name and the author's type
 		    String authorData[] = null;
 		    	
 		   	try {
-		   		authorData = author.text().trim().split(" - ");
+		   		authorData = meta.trim().split(" - ");
 		   	} catch(NullPointerException e) {
 		   		e.printStackTrace();
 		    	authorData = null;
 		    }
-		    	
-		    article.setArticleName(title.text().trim());
-		    
+		   	
 		    if(authorData != null) {
 			   	for(int j = 0; j < authorData.length; j++) {
 			   		if(j == 0) article.setAuthor(authorData[0].trim());
 			   		else if(j == 1) article.setAuthorType(authorData[1].trim());
 			   	}
 		   	} else {
-		   		article.setDisplayAuthor(author.text().trim());
+		   		article.setDisplayAuthor(meta.trim());
 		   	}
-		   		
-		    article.setDatePosted(date.text().trim());
+		    
+		    article.setArticleName(title.text().trim());
+		    article.setDatePosted(articleDateText.trim());
 			
 			if(title.hasAttr("href")) {
 				String detailsUrl = Utils.getPrintViewifiedUrl(portalUrl + title.attr("href"));

@@ -19,7 +19,8 @@ public final class RemoteDebug {
 	private static String URL = null;
 	
 	public static void debug(final String meta, final String error) {
-		new Thread(new Runnable() {
+		return;
+		/*new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -46,7 +47,7 @@ public final class RemoteDebug {
 					e.printStackTrace();
 				}
 			}
-		}).start();
+		}).start();*/
 	}
 	
 	public static void debug(String error) {
