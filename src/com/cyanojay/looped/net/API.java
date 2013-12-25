@@ -235,7 +235,7 @@ public final class API {
 		if(portal == null) return assignments;
 		
 		// select everything in the table holding the assignments
-	    Elements assignmentsBlock = portal.body().select("tbody.hub_general_body tr");
+	    Elements assignmentsBlock = portal.body().select("table.table_basic");
 	    
 		for (Element assignmentRow : assignmentsBlock) {
 			
@@ -244,16 +244,16 @@ public final class API {
 
 			// select the assignment details that include the title, respective
 			// course, and due date
-			Elements details = assignmentRow.select("div.list_text");
+			Elements details = assignmentRow.select("td.column.padding_5");
 
 			// if assignments are empty, they are invalid, so skip
 			if (details.size() == 0) continue;
 
-			for (int i = 0; i < details.size(); i++) {
+			for (int i = 2; i <= 4; i++) {
 				Element currAssignment = details.get(i);
 				String currAssignmentTxt = currAssignment.text().trim();
 
-				if (i == 0) {
+				if (i == 2) {
 					Elements link = currAssignment.select("a[href]");
 					
 					if(!(link.size() == 0) && link.size() == 1) {
@@ -267,8 +267,8 @@ public final class API {
 					assignment.setName(currAssignmentTxt);
 				}
 
-				else if (i == 1) assignment.setCourseName(currAssignmentTxt);
-				else if (i == 2) assignment.setDueDate(currAssignmentTxt);
+				else if (i == 3) assignment.setCourseName(currAssignmentTxt);
+				else if (i == 4) assignment.setDueDate(currAssignmentTxt);
 			}
 
 			assignments.add(assignment);
