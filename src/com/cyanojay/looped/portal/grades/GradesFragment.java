@@ -108,14 +108,16 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 	  			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	  			  rowView = inflater.inflate(R.layout.curr_grades_row, parent, false);
 	  		  }
-	  		  
+	  		   
+	  		  TextView coursePer = (TextView) rowView.findViewById(R.id.course_period);
     		  TextView courseName = (TextView) rowView.findViewById(R.id.grades_course_name);
     		  TextView lettGrade = (TextView) rowView.findViewById(R.id.grades_lett_grade);
     		  TextView pctGrade = (TextView) rowView.findViewById(R.id.grades_pct_grade);
-    		  ImageButton graphBtn = (ImageButton) rowView.findViewById(R.id.graph_btn);
+    		  //ImageButton graphBtn = (ImageButton) rowView.findViewById(R.id.graph_btn);
     		  
     		  Course course = values[position];
     		  
+    		  coursePer.setText(course.getPeriod());
     		  courseName.setText(course.getName());
     		  
     		  if(!(course.getLetterGrade().length() == 0))
@@ -123,13 +125,13 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     		  else
     			  lettGrade.setText(Constants.EMPTY_INDIC);
     		  
-    		  boolean isGraphingDisabled = false;
+    		  //boolean isGraphingDisabled = true;
     		  
-    		  if(course.getDetailsUrl().length() == 0) {
-    			  graphBtn.setVisibility(View.INVISIBLE);
+    		  /*if(course.getDetailsUrl().length() == 0) {
+    			  //graphBtn.setVisibility(View.INVISIBLE);
     			  
     			  isGraphingDisabled = true;
-    		  }
+    		  }*/
     		  
     		  if(!(course.getPercentGrade().length() == 0)) {
     			  char tensPlace = course.getPercentGrade().charAt(0);
@@ -162,11 +164,11 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
     		  }
     		  
-    		  if(!isGraphingDisabled) {
+    		  /*if(!isGraphingDisabled) {
     			  graphBtn.setFocusable(false);
     			  graphBtn.setFocusableInTouchMode(false);
     			  graphBtn.setOnClickListener(new GraphButtonLongClickAdapter(course, getSherlockActivity()));
-    		  }
+    		  }*/
     		  
     		  return rowView;
     	}
@@ -201,7 +203,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 		}
     }
     
-    private class GraphButtonLongClickAdapter implements OnClickListener {
+    /*private class GraphButtonLongClickAdapter implements OnClickListener {
     	private final Course toGraph;
     	private Context parent;
     	
@@ -248,7 +250,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 			
 	        return builder.create();
 	    }
-    }
+    }*/
     
 	@Override
 	public void refresh(FragmentManager manager) {

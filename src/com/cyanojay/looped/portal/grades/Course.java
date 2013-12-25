@@ -7,6 +7,7 @@ public class Course implements Serializable {
 	private String percentGrade;
 	private String letterGrade;
 	private String detailsUrl;
+	private String period;
 	private int numZeros;
 	
 	public Course() {
@@ -63,5 +64,13 @@ public class Course implements Serializable {
 
 	public void setDetailsUrl(String detailsUrl) {
 		this.detailsUrl = detailsUrl;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
 	}
 }

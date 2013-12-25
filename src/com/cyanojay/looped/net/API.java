@@ -203,26 +203,29 @@ public final class API {
 	    		courses.add(newCourse);
 	    		continue;
 	    	}*/
-	    	
-		    	newCourse.setLetterGrade(letterGrade);
-		    	newCourse.setPercentGrade(pctGrade);
-		    		try {
-		    			newCourse.setNumZeros(Integer.parseInt(numZeros));
-		    		} catch(NumberFormatException e) {
-		    			newCourse.setNumZeros(0);
-		    		}
-		    		
-		    		Elements link = progReport.select("a[href]");
-		    		
-					if(!(link.size() == 0) && link.size() == 1) {
-						String detailsUrl = portalUrl + link.first().attr("href");
-						newCourse.setDetailsUrl(Utils.getPrintViewifiedUrl(detailsUrl));
-						System.out.println("Checking URL: " + Utils.getPrintViewifiedUrl(detailsUrl));
-					}
-					
-					if(newCourse.getDetailsUrl() == null && link != null) 
-						RemoteDebug.debug("course details is null", link.outerHtml());
-	    	
+
+			newCourse.setLetterGrade(letterGrade);
+			newCourse.setPercentGrade(pctGrade);
+			try {
+				newCourse.setNumZeros(Integer.parseInt(numZeros));
+			} catch (NumberFormatException e) {
+				newCourse.setNumZeros(0);
+			}
+
+			Elements link = progReport.select("a[href]");
+
+			if (!(link.size() == 0) && link.size() == 1) {
+				String detailsUrl = portalUrl + link.first().attr("href");
+				newCourse.setDetailsUrl(Utils.getPrintViewifiedUrl(detailsUrl));
+				System.out.println("Checking URL: "
+						+ Utils.getPrintViewifiedUrl(detailsUrl));
+			}
+
+			if (newCourse.getDetailsUrl() == null && link != null)
+				RemoteDebug.debug("course details is null", link.outerHtml());
+			
+			newCourse.setPeriod("P" + period);
+			
 	    	courses.add(newCourse);
 	    }
 	    
