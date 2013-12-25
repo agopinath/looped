@@ -1,7 +1,7 @@
 package com.cyanojay.looped;
 
 import java.util.Locale;
-
+import com.cyanojay.looped.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;

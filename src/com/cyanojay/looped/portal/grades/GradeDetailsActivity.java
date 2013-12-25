@@ -202,7 +202,7 @@ public class GradeDetailsActivity extends BaseListActivity implements Refreshabl
 			@Override
 			public void run() {
 				try {
-					API.get().refreshCoursePortal();
+					API.get().refreshMainPortal();
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {

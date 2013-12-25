@@ -37,6 +37,7 @@ import com.cyanojay.looped.portal.common.Refreshable;
 
 public class GradesFragment extends SherlockListFragment implements Refreshable {
 	public static final String COURSE_SELECTED = "COURSE_SELECTED";
+	public static final String GRAPH_DATA = "GRAPH_DATA";
 	private GradesAdapter adapter;
 	
     @Override
@@ -262,7 +263,7 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
 			@Override
 			public void run() {
 				try {
-					API.get().refreshCoursePortal();
+					API.get().refreshMainPortal();
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {

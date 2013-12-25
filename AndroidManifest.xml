@@ -23,7 +23,7 @@
             android:name="com.cyanojay.looped.MainActivity"
             android:label="@string/title_activity_main"
             android:windowSoftInputMode="stateHidden" >
-            <intent-filter android:label="@string/app_name">
+            <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -57,8 +57,7 @@
         <activity android:name="org.achartengine.GraphicalActivity" />
         <activity
             android:name="com.cyanojay.looped.graph.LoopedGraphActivity"
-            android:label="@string/title_activity_looped_graph" >
-        </activity>
+            android:label="@string/title_activity_looped_graph" />
     </application>
 
 </manifest>

@@ -3,9 +3,7 @@ package com.cyanojay.looped.net;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +44,6 @@ public final class API {
 	
 	private CookieStore authCookies;
 	private Document portal;
-	private Document coursePortal;
 	private Document loopMail;
 	
 	private String username;
@@ -132,7 +129,6 @@ public final class API {
 		if(!isLoggedIn(true)) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
-		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/parent_home?d=x"), portalUrl, authCookies);
 		loopMail = Utils.getJsoupDocFromUrl(portalUrl + "/mail/inbox?d=x", portalUrl, authCookies);
 	}
 	
@@ -140,12 +136,6 @@ public final class API {
 		if(!isLoggedIn(true)) return;
 		
 		portal = Utils.getJsoupDocFromUrl(portalUrl, portalUrl, authCookies);
-	}
-	
-	public void refreshCoursePortal() throws IOException {
-		if(!isLoggedIn(true)) return;
-		
-		coursePortal = Utils.getJsoupDocFromUrl(Utils.getPrintViewifiedUrl(portalUrl + "/portal/parent_home?d=x"), portalUrl, authCookies);
 	}
 	
 	public void refreshLoopMail() throws IOException {
@@ -175,65 +165,63 @@ public final class API {
 	public List<Course> getCourses() throws Exception {
 		List<Course> courses = new ArrayList<Course>();
 		
-		if(coursePortal == null) return courses;
+		if(portal == null) return courses;
 		
 		// select everything in the table holding the grades
-	    Elements courseBlock = coursePortal.body().select("tbody.hub_general_body tr");
+	    Elements courseBlock = portal.body().select("table.row tr");
 	    
-	    for(Element courseRow : courseBlock) {
+	    // select all the progress report links for the courses
+	    Elements progReports = portal.body().select("div.course_links a:eq(0)");
+	    
+	    for(int i = 0; i < courseBlock.size(); i++) {
+	    	Element courseRow = courseBlock.get(i);
+	    	Element progReport = progReports.get(i);
 	    	boolean isNotPublished = false;
 	    	
 	    	// create new empty course to store course information
 	    	Course newCourse = new Course();
 	    	
 	    	// only single element present for subject, select the name
-	    	Elements subject = courseRow.select("td.left a");
-	    	
-	    	// select the four grade elements (percent, letter grade, num of zeroes, progress report link)
-	    	Elements grades = courseRow.select("td.list_text");
-	    	
+	    	Elements subject = courseRow.select("td.course");
 	    	newCourse.setName(subject.text());
 	    	
-	    	// if no grades listed, grade must be listed as 'None Published', so select that
+	    	String period = courseRow.select("td.period").text().trim();
+	    	String letterGrade = courseRow.select("td.grade").text().trim();
+	    	String pctGrade = courseRow.select("td.percent").text().trim();
+	    	String numZeros = courseRow.select("td.zeros").text().replace("Zeros:", "").trim();
+	    	/*// if no grades listed, grade must be listed as 'None Published', so select that
 	    	if(grades.size() == 0) {
 	    		grades = courseRow.select("td.list_text_light");
 	    		isNotPublished = true;
-	    	}
+	    	}*/
 	    	
 	    	// if grades is still empty, row is invalid, so skip
-	    	if(grades.size() == 0) continue;
+	    	//if(courseRow..size() == 0) continue;
 	    	
 	    	// if grades aren't published, add to the list and skip to the next row
-	    	if(isNotPublished) {
+	    	/*if(isNotPublished) {
 	    		courses.add(newCourse);
 	    		continue;
-	    	}
+	    	}*/
 	    	
-	    	for(int i = 0; i < grades.size(); i++) {
-	    		Element currGrade = grades.get(i);
-	    		String currGradeTxt = currGrade.text().trim();
-	    		
-		    	if(i == 0) newCourse.setLetterGrade(currGradeTxt);
-		    	else if(i == 1) newCourse.setPercentGrade(currGradeTxt);
-		    	else if(i == 2) {
+		    	newCourse.setLetterGrade(letterGrade);
+		    	newCourse.setPercentGrade(pctGrade);
 		    		try {
-		    			newCourse.setNumZeros(Integer.parseInt(currGradeTxt));
+		    			newCourse.setNumZeros(Integer.parseInt(numZeros));
 		    		} catch(NumberFormatException e) {
 		    			newCourse.setNumZeros(0);
 		    		}
-		    	}
-		    	else if(i == 3) {
-		    		Elements link = currGrade.select("a[href]");
+		    		
+		    		Elements link = progReport.select("a[href]");
 		    		
 					if(!(link.size() == 0) && link.size() == 1) {
 						String detailsUrl = portalUrl + link.first().attr("href");
 						newCourse.setDetailsUrl(Utils.getPrintViewifiedUrl(detailsUrl));
+						System.out.println("Checking URL: " + Utils.getPrintViewifiedUrl(detailsUrl));
 					}
 					
 					if(newCourse.getDetailsUrl() == null && link != null) 
 						RemoteDebug.debug("course details is null", link.outerHtml());
-		    	}
-	    	}
 	    	
 	    	courses.add(newCourse);
 	    }
