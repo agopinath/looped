@@ -1,9 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_refresh"
         android:title="@string/refresh_text"
-        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="never" />
     <item android:id="@+id/menu_sort"
         android:title="@string/sort_text"
         android:orderInCategory="101"

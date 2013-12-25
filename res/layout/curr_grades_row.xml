@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/LinearLayout2"
+        android:id="@+id/LinearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:gravity="left"
-            android:text="Lett"
+            android:text="Letter"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -69,8 +69,10 @@
             android:layout_gravity="left"
             android:alpha="0.8"
             android:gravity="left"
+            android:maxLines="1"
             android:text="Pct"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </LinearLayout>
 
 </LinearLayout>
