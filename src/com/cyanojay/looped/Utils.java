@@ -87,6 +87,15 @@ public class Utils {
 		return Jsoup.parse((InputStream) response.getEntity().getContent(), null, baseUrl);
 	}
 	
+	public static Document getJsoupDocFromUrl(DefaultHttpClient client, String url, String baseUrl, CookieStore cookies) throws IllegalStateException, IOException {
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(cookies);
+    	HttpGet httpGet = new HttpGet(url);
+    	
+		HttpResponse response = client.execute(httpGet, context);
+		
+		return Jsoup.parse((InputStream) response.getEntity().getContent(), null, baseUrl);
+	}
+	
 	public static HttpClient getNewHttpClient() {
 	    try {
 	        KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -175,6 +184,18 @@ public class Utils {
 	
 	public static CookieStore getCookies(String url) {
     	DefaultHttpClient client = (DefaultHttpClient) Utils.getNewHttpClient();
+    	HttpGet httpGet = new HttpGet(url);
+    	
+    	try {
+    		client.execute(httpGet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+    	return client.getCookieStore();
+    }
+	
+	public static CookieStore getCookies(DefaultHttpClient client, String url) {
     	HttpGet httpGet = new HttpGet(url);
     	
     	try {

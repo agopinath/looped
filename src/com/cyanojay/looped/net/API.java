@@ -18,6 +18,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
@@ -76,14 +77,23 @@ public final class API {
 	
 	public void logIn() throws ClientProtocolException, IOException {
 		HttpClient client = Utils.getNewHttpClient();
-    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
-    	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
+		
+    	Document loginForm = Utils.getJsoupDocFromUrl((DefaultHttpClient) client, portalUrl + "/portal/login?d=x", portalUrl, authCookies);
+		String formDataId = loginForm.select("input#form_data_id").attr("value");
+		//System.out.println("FORM DATA ID: " + formDataId);
     	
+    	CookieStore cookies = ((DefaultHttpClient) client).getCookieStore();
+    	setAuthCookies(cookies);
+    	
+    	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
+    	
+    	HttpPost httpPost = new HttpPost(portalUrl + "/portal/login?etarget=login_form");
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
         nameValuePairs.add(new BasicNameValuePair("login_name", username));
         nameValuePairs.add(new BasicNameValuePair("password", password));
         nameValuePairs.add(new BasicNameValuePair("event.login.x", "0"));
         nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
+        nameValuePairs.add(new BasicNameValuePair("form_data_id", formDataId));
         
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);

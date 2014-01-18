@@ -43,10 +43,7 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 
     @Override
     protected LoginStatus doInBackground(String... args) {
-    	CookieStore cookies = Utils.getCookies(loginUrl + "/portal/login");
-    	
     	API.get().setCredentials(username, pass, loginUrl);
-    	API.get().setAuthCookies(cookies);
 		
     	try {
     		API.get().logIn();
