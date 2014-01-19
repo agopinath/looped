@@ -1,9 +1,13 @@
 package com.cyanojay.looped.portal;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
@@ -111,4 +115,43 @@ public class PortalActivity extends TabSwipeActivity {
     	builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
     	    	.setNegativeButton("No", dialogClickListener).show();*/
     }
+    
+    
+    public void onRateClick(View v) {
+		System.out.println("RATE CLICKED");
+		try
+        {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+        }catch (ActivityNotFoundException e) {
+                Toast.makeText(this, "No Play Store installed on device", Toast.LENGTH_SHORT).show();
+        }
+	}
+    
+	public void onLikeClick(View v) {
+		System.out.println("LIKE CLICKED");
+		startActivity(getOpenFacebookIntent(this));
+	}
+	
+	public void onEmailClick(View v) {
+		System.out.println("EMAIL CLICKED");
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("plain/text");
+		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "cyanojayworks@outlook.com" });
+		intent.putExtra(Intent.EXTRA_SUBJECT, "Looped Feeback");
+		startActivity(Intent.createChooser(intent, "Send email to developer"));
+	}
+	
+	public void onAppVerClick(View v) {
+		System.out.println("APP VER CLICKED");
+		Utils.showAbout(this);
+	}
+	
+	public static Intent getOpenFacebookIntent(Context context) {
+		   try {
+		    context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+		    return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/172290182895318"));
+		   } catch (Exception e) {
+		    return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/LoopedForSchoolLoop"));
+		   }
+		}
 }

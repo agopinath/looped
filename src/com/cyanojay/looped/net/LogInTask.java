@@ -84,7 +84,7 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 	        case LOGIN_SUCCESS:
 	        	//System.out.println("\n\nLOG IN SUCCESS\n\n");
 	        	
-	        	new Thread(new Runnable() {
+	        	/*new Thread(new Runnable() {
 					@Override
 					public void run() {
 						try {
@@ -93,7 +93,7 @@ public class LogInTask extends AsyncTask<String, String, LogInTask.LoginStatus> 
 							e.printStackTrace();
 						}
 					}
-	        	}).start();
+	        	}).start();*/
 	        	
 	        	Intent showPortalIntent = new Intent(parent, PortalActivity.class);
 	        	parent.startActivity(showPortalIntent);

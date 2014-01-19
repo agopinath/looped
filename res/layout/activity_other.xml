@@ -1,6 +1,178 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/LoopedCommon.LoopedOther"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/LoopedCommon.LoopedOther" >
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:divider="@drawable/horizontal_divider"
+        android:dividerPadding="4dp"
+        android:orientation="vertical"
+        android:showDividers="middle" >
+
+        <LinearLayout
+            android:layout_width="228dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:divider="@drawable/vertical_divider"
+            android:dividerPadding="4dp"
+            android:onClick="onRateClick"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/TextView04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:layout_toLeftOf="@+id/rate_btn"
+                android:layout_weight="0.66"
+                android:text="Like it? Rate it!"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/rate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.11"
+                android:background="@null"
+                android:onClick="onRateClick"
+                android:src="@drawable/play_logo" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:divider="@drawable/vertical_divider"
+            android:dividerPadding="4dp"
+            android:onClick="onLikeClick"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:layout_toLeftOf="@+id/fb_btn"
+                android:layout_weight=".8"
+                android:text="Like us on FB"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/fb_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.10"
+                android:background="@null"
+                android:onClick="onLikeClick"
+                android:src="@drawable/fb_logo" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:divider="@drawable/vertical_divider"
+            android:dividerPadding="4dp"
+            android:onClick="onEmailClick"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:layout_toLeftOf="@+id/email_btn"
+                android:layout_weight=".8"
+                android:text="Email us"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/email_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.10"
+                android:background="@null"
+                android:onClick="onEmailClick"
+                android:src="@drawable/email_red" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:divider="@drawable/vertical_divider"
+            android:dividerPadding="4dp"
+            android:onClick="onAppVerClick"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:layout_toLeftOf="@+id/appver_btn"
+                android:layout_weight=".8"
+                android:text="App Version 1.1"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/appver_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.12"
+                android:background="@null"
+                android:onClick="onAppVerClick"
+                android:src="@drawable/ver_logo" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

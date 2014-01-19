@@ -30,5 +30,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_looped_graph">LoopedGraphActivity</string>
     <string name="title_activity_other_fragment">OtherFragment</string>
+    <string name="version">1.1</string>
 
 </resources>
