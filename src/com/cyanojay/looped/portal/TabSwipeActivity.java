@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.cyanojay.looped.R;
 import com.cyanojay.looped.Utils;
+import com.cyanojay.looped.net.API;
  
 public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
@@ -148,6 +149,12 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
             mActionBar.getTabAt(position).select();
             ViewParent root = findViewById(android.R.id.content).getParent();
             findAndUpdateSpinner(root, position);
+            
+
+			if(position == mTabs.size()-1)
+				getSupportActionBar().setTitle("About the App");
+			else
+				getSupportActionBar().setTitle(API.get().getPortalTitle());
         }
  
         private boolean findAndUpdateSpinner(Object root, int position) {

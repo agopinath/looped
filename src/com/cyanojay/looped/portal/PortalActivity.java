@@ -43,7 +43,7 @@ public class PortalActivity extends TabSwipeActivity {
         
         new AppRate(this)
 	        .setShowIfAppHasCrashed(false)
-	        .setMinDaysUntilPrompt(5)
+	        .setMinDaysUntilPrompt(6)
 	        .setMinLaunchesUntilPrompt(10)
 	        .init();
 	        
@@ -63,6 +63,7 @@ public class PortalActivity extends TabSwipeActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch(item.getItemId()) {
     	case R.id.menu_about:
+    		setPage(4);
     		Utils.showAbout(this);
             return true;
         case R.id.menu_logout:
@@ -98,7 +99,7 @@ public class PortalActivity extends TabSwipeActivity {
     
     @Override
     public void onBackPressed() {
-    	setPage(0);
+    	setPage(4);
     	
     	/*DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
     	    @Override
@@ -118,7 +119,7 @@ public class PortalActivity extends TabSwipeActivity {
     
     
     public void onRateClick(View v) {
-		System.out.println("RATE CLICKED");
+		//System.out.println("RATE CLICKED");
 		try
         {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
@@ -128,12 +129,12 @@ public class PortalActivity extends TabSwipeActivity {
 	}
     
 	public void onLikeClick(View v) {
-		System.out.println("LIKE CLICKED");
+		//System.out.println("LIKE CLICKED");
 		startActivity(getOpenFacebookIntent(this));
 	}
 	
 	public void onEmailClick(View v) {
-		System.out.println("EMAIL CLICKED");
+		//System.out.println("EMAIL CLICKED");
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("plain/text");
 		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "cyanojayworks@outlook.com" });
@@ -142,7 +143,7 @@ public class PortalActivity extends TabSwipeActivity {
 	}
 	
 	public void onAppVerClick(View v) {
-		System.out.println("APP VER CLICKED");
+		//System.out.println("APP VER CLICKED");
 		Utils.showAbout(this);
 	}
 	

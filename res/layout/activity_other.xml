@@ -15,10 +15,21 @@
         android:orientation="vertical"
         android:showDividers="middle" >
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="Help support the developer to continue updates for Looped!"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="24dp" />
+
         <LinearLayout
-            android:layout_width="228dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+
         </LinearLayout>
 
         <RelativeLayout
@@ -173,6 +184,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>
