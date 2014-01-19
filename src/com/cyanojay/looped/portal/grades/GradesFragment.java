@@ -159,10 +159,10 @@ public class GradesFragment extends SherlockListFragment implements Refreshable 
     			  pctGrade.setText("             ");
     		  }
     		  
-    		  if(course.getNumZeros() >= 1) {
+    		  //if(course.getNumZeros() >= 1) {
     			  TextView numZeros = (TextView) rowView.findViewById(R.id.grades_num_zeros);
-    			  numZeros.setText(course.getNumZeros() + " missing assignment(s)");
-    		  }
+    			  numZeros.setText("Zeros: " + course.getNumZeros());
+    		  //}
     		  
     		  /*if(!isGraphingDisabled) {
     			  graphBtn.setFocusable(false);

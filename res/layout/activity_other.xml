@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
-            android:text="Help support the developer to continue updates for Looped!"
+            android:text="Help support the developer continue updates for Looped!"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="24dp" />
 

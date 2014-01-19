@@ -1,8 +1,12 @@
 package com.cyanojay.looped.portal;
 
+import java.util.List;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -99,7 +103,7 @@ public class PortalActivity extends TabSwipeActivity {
     
     @Override
     public void onBackPressed() {
-    	setPage(4);
+    	setPage(0);
     	
     	/*DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
     	    @Override
@@ -148,11 +152,14 @@ public class PortalActivity extends TabSwipeActivity {
 	}
 	
 	public static Intent getOpenFacebookIntent(Context context) {
-		   try {
-		    context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-		    return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/172290182895318"));
-		   } catch (Exception e) {
-		    return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/LoopedForSchoolLoop"));
-		   }
+		try {
+			context.getPackageManager()
+					.getPackageInfo("com.facebook.katana", 0);
+			return new Intent(Intent.ACTION_VIEW,
+					Uri.parse("fb://profile/172290182895318"));
+		} catch (Exception e) {
+			return new Intent(Intent.ACTION_VIEW,
+					Uri.parse("https://www.facebook.com/LoopedForSchoolLoop"));
 		}
+	}
 }

@@ -2,59 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_wrapper"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    style="@style/LoopedPopup" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include layout="@layout/popup_dismiss" />
+    </LinearLayout>
 
     <ScrollView
-        style="@style/LoopedPopup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <LinearLayout
+            android:id="@+id/newsdet_contwrap"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <include layout="@layout/popup_dismiss" />
+            <TextView
+                android:id="@+id/newsdet_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/black" />
 
-            <LinearLayout
-                android:id="@+id/newsdet_contwrap"
+            <include layout="@layout/popup_spacer" />
+
+            <TextView
+                android:id="@+id/newsdet_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
+
+            <include layout="@layout/popup_spacer" />
+
+            <WebView
+                android:id="@+id/newsdet_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/newsdet_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/black" />
-
-                <include layout="@layout/popup_spacer" />
-
-                <TextView
-                    android:id="@+id/newsdet_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:text="Medium Text"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/black" />
-
-                <include layout="@layout/popup_spacer" />
-
-                <WebView
-                    android:id="@+id/newsdet_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:focusable="true" />
-            </LinearLayout>
+                android:layout_margin="5dp"
+                android:focusable="true" />
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

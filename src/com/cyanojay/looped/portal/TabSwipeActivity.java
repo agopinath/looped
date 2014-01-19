@@ -205,7 +205,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
     	if(mViewPager != null) {
     		if(mViewPager.getCurrentItem() != pageNum)
     			mViewPager.setCurrentItem(pageNum);
-    		else {
+    		else if(pageNum == 0) {
     			Utils.logOut(this); // prompt to logout if back pressed on grades page
     		}
     	}
