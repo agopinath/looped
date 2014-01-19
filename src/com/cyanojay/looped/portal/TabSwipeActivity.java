@@ -10,23 +10,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.Spinner;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.cyanojay.looped.R;
+import com.cyanojay.looped.Utils;
  
 public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
     private ViewPager mViewPager;
     private TabsAdapter adapter;
- 
+    private TabSwipeActivity act;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         /*
          * Create the ViewPager and our custom adapter
          */
+    	act = this;
         mViewPager = new ViewPager(this);
         mViewPager.setId(R.id.pager);
         
@@ -74,7 +80,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
         adapter.addTab( title, fragmentClass, args );
     }
  
-    private static class TabsAdapter extends FragmentPagerAdapter implements TabListener, ViewPager.OnPageChangeListener {
+    private class TabsAdapter extends FragmentPagerAdapter implements TabListener, ViewPager.OnPageChangeListener {
  
         private final SherlockFragmentActivity mActivity;
         private final ActionBar mActionBar;
@@ -94,7 +100,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
             mActionBar.setDisplayOptions(1, ActionBar.DISPLAY_SHOW_TITLE);
         }
  
-        private static class TabInfo {
+        private class TabInfo {
             public final Class<?> fragmentClass;
             public final Bundle args;
             public TabInfo(Class<?> fragmentClass, Bundle args) {
@@ -138,9 +144,41 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
         public void onPageSelected(int position) {
             mActionBar.setSelectedNavigationItem( position );
+            
+            mActionBar.getTabAt(position).select();
+            ViewParent root = findViewById(android.R.id.content).getParent();
+            findAndUpdateSpinner(root, position);
         }
  
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        private boolean findAndUpdateSpinner(Object root, int position) {
+        	if (root instanceof android.widget.Spinner)
+            {
+               // Found the Spinner
+               Spinner spinner = (Spinner) root;
+               spinner.setSelection(position);
+               return true;
+            }
+            else if (root instanceof ViewGroup)
+            {
+               ViewGroup group = (ViewGroup) root;
+               if (group.getId() != android.R.id.content)
+               {
+                  // Found a container that isn't the container holding our screen layout
+                  for (int i = 0; i < group.getChildCount(); i++)
+                  {
+                     if (findAndUpdateSpinner(group.getChildAt(i), position))
+                     {
+                        // Found and done searching the View tree
+                        return true;
+                     }
+                  }
+               }
+            }
+            // Nothing found
+            return false;
+		}
+
+		public void onTabSelected(Tab tab, FragmentTransaction ft) {
             TabInfo tabInfo = (TabInfo) tab.getTag();
             for ( int i = 0; i < mTabs.size(); i++ ) {
                 if ( mTabs.get( i ) == tabInfo ) {
@@ -161,19 +199,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
     		if(mViewPager.getCurrentItem() != pageNum)
     			mViewPager.setCurrentItem(pageNum);
     		else {
-    			new AlertDialog.Builder(this)
-    			.setIcon(android.R.drawable.ic_dialog_alert)
-    			.setTitle("Exit Looped?")
-    			.setMessage("Are you sure you want to exit?")
-    			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-    				@Override
-    				public void onClick(DialogInterface dialog, int which) {
-    					finish();    
-    				}
-
-    			})
-    			.setNegativeButton("No", null)
-    			.show();
+    			Utils.logOut(this); // prompt to logout if back pressed on grades page
     		}
     	}
     }

@@ -76,14 +76,13 @@ public final class API {
 	}
 	
 	public void logIn() throws ClientProtocolException, IOException {
-		HttpClient client = Utils.getNewHttpClient();
-		
-    	Document loginForm = Utils.getJsoupDocFromUrl((DefaultHttpClient) client, portalUrl + "/portal/login?d=x", portalUrl, authCookies);
-		String formDataId = loginForm.select("input#form_data_id").attr("value");
-		//System.out.println("FORM DATA ID: " + formDataId);
-    	
-    	CookieStore cookies = ((DefaultHttpClient) client).getCookieStore();
+		// make request to portal URL and store cookies
+    	CookieStore cookies = Utils.getCookies(portalUrl); 
     	setAuthCookies(cookies);
+    	
+    	// make request to login page and store form_data_id value
+    	Document loginForm = Utils.getJsoupDocFromUrl(portalUrl + "/portal/login?d=x", portalUrl, authCookies);
+		String formDataId = loginForm.select("input#form_data_id").attr("value");
     	
     	BasicHttpContext context = Utils.getCookifiedHttpContext(authCookies);
     	
@@ -93,8 +92,10 @@ public final class API {
         nameValuePairs.add(new BasicNameValuePair("password", password));
         nameValuePairs.add(new BasicNameValuePair("event.login.x", "0"));
         nameValuePairs.add(new BasicNameValuePair("event.login.y", "0"));
-        nameValuePairs.add(new BasicNameValuePair("form_data_id", formDataId));
+        // supply stored form_data_id value as necessary parameter
+        nameValuePairs.add(new BasicNameValuePair("form_data_id", formDataId)); 
         
+        HttpClient client = Utils.getNewHttpClient();
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         client.execute(httpPost, context);
 	}
@@ -131,7 +132,7 @@ public final class API {
     	}
         
         BasicStatusLine responseStatus = (BasicStatusLine) response.getStatusLine();
-        //System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
+        System.out.println("CODE: " + responseStatus.getStatusCode() + " " + responseStatus.getReasonPhrase());
         return (loginStatus = (responseStatus.getStatusCode() == HttpStatus.SC_OK));
 	}
 	

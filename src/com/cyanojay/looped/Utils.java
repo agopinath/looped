@@ -32,8 +32,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -79,15 +81,6 @@ public class Utils {
 	
 	public static Document getJsoupDocFromUrl(String url, String baseUrl, CookieStore cookies) throws IllegalStateException, IOException {
 		HttpClient client = getNewHttpClient();
-    	BasicHttpContext context = Utils.getCookifiedHttpContext(cookies);
-    	HttpGet httpGet = new HttpGet(url);
-    	
-		HttpResponse response = client.execute(httpGet, context);
-		
-		return Jsoup.parse((InputStream) response.getEntity().getContent(), null, baseUrl);
-	}
-	
-	public static Document getJsoupDocFromUrl(DefaultHttpClient client, String url, String baseUrl, CookieStore cookies) throws IllegalStateException, IOException {
     	BasicHttpContext context = Utils.getCookifiedHttpContext(cookies);
     	HttpGet httpGet = new HttpGet(url);
     	
@@ -195,18 +188,6 @@ public class Utils {
     	return client.getCookieStore();
     }
 	
-	public static CookieStore getCookies(DefaultHttpClient client, String url) {
-    	HttpGet httpGet = new HttpGet(url);
-    	
-    	try {
-    		client.execute(httpGet);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-    	return client.getCookieStore();
-    }
-	
 	public static String getExceptionString(Exception e) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
@@ -234,24 +215,35 @@ public class Utils {
 	}
 	
 	public static void logOut(final Activity activity) {
-		Toast.makeText(activity, "Logged out successfully.", Toast.LENGTH_SHORT).show();
-    	
-		Thread logOutThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-		    	if(Utils.isOnline(activity)) {
-		    		API.get().logOut();
-		    	}
-			}
-		});
-		
-		logOutThread.start();
-		
-    	Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
-    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
-    	
-    	activity.startActivity(intent);
+		new AlertDialog.Builder(activity)
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setTitle("Exit Looped?")
+			.setMessage("Are you sure you want to logout?")
+			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Toast.makeText(activity, "Logged out successfully.", Toast.LENGTH_SHORT).show();
+			    	
+					Thread logOutThread = new Thread(new Runnable() {
+						@Override
+						public void run() {
+					    	if(Utils.isOnline(activity)) {
+					    		API.get().logOut();
+					    	}
+						}
+					});
+					
+					logOutThread.start();
+					
+			    	Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
+			    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    	intent.putExtra(MainActivity.IS_FROM_LOGOUT, true);
+			    	
+			    	activity.startActivity(intent);
+				}
+			})
+			.setNegativeButton("No", null)
+			.show();
 	}
 	
 	public static TextView getCenteredTextView(Context c, String s) {
