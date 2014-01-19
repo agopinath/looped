@@ -58,6 +58,10 @@
         <activity
             android:name="com.cyanojay.looped.graph.LoopedGraphActivity"
             android:label="@string/title_activity_looped_graph" />
+        <activity
+            android:name="com.cyanojay.looped.portal.otherOtherFragment"
+            android:label="@string/title_activity_other_fragment" >
+        </activity>
     </application>
 
 </manifest>

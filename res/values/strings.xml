@@ -29,5 +29,6 @@
     <string name="sort_text">Sort by Date</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_looped_graph">LoopedGraphActivity</string>
+    <string name="title_activity_other_fragment">OtherFragment</string>
 
 </resources>

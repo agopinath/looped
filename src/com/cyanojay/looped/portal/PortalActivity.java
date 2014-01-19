@@ -20,6 +20,8 @@ import com.cyanojay.looped.portal.common.Sortable;
 import com.cyanojay.looped.portal.grades.GradesFragment;
 import com.cyanojay.looped.portal.loopmail.LoopMailFragment;
 import com.cyanojay.looped.portal.news.NewsFragment;
+import com.cyanojay.looped.portal.other.OtherFragment;
+import com.tjeannin.apprate.AppRate;
 
 public class PortalActivity extends TabSwipeActivity {
     @Override
@@ -33,7 +35,14 @@ public class PortalActivity extends TabSwipeActivity {
         addTab("Assignments", AssignmentsFragmnet.class, null);
         addTab("News", NewsFragment.class, null);
         addTab("Mail", LoopMailFragment.class, null);
+        addTab("About", OtherFragment.class, null);
         
+        new AppRate(this)
+	        .setShowIfAppHasCrashed(false)
+	        .setMinDaysUntilPrompt(5)
+	        .setMinLaunchesUntilPrompt(10)
+	        .init();
+	        
         Intent KEEP_ALIVE_TASK = new Intent(this, KeepAliveService.class);
         startService(KEEP_ALIVE_TASK);
     }
